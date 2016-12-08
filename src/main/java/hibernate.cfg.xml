@@ -1,0 +1,17 @@
+<?xml version='1.0' encoding='utf-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+        "-//Hibernate/Hibernate Configuration DTD//EN"
+        "http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+        <property name="connection.url">jdbc:postgresql://119.29.224.238:5432/cookabuy_pc_dev</property>
+        <property name="connection.driver_class">org.postgresql.Driver</property>
+        <mapping class="com.cookabuy.entity.po.Recommend"/>
+        <mapping class="com.cookabuy.entity.po.Item"/>
+        <mapping class="com.cookabuy.entity.po.Store"/>
+        <mapping class="com.cookabuy.entity.tmp.Prop"/>
+        <mapping class="com.cookabuy.entity.po.Recommend"/>
+        <!-- DB schema will be updated if needed -->
+        <!-- <property name="hbm2ddl.auto">update</property> -->
+    </session-factory>
+</hibernate-configuration>
