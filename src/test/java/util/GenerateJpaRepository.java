@@ -10,8 +10,8 @@ import java.util.Objects;
  */
 public class GenerateJpaRepository {
     public static void main(String[] args) {
-        String entityPath = "src/main/java/com/cookabuy/entity/tmp";
-        String repositoryPath = "src/main/java/com/cookabuy/repository/";
+        String entityPath = "src/main/java/com/cookabuy/entity/operation/po";
+        String repositoryPath = "src/main/java/com/cookabuy/repository/operation/";
         String templateLocation = "src/main/resources/TemplateRepository.txt";
         String templateName = "Template";
         File entities = new File(entityPath);

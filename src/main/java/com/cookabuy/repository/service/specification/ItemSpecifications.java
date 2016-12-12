@@ -1,6 +1,6 @@
-package com.cookabuy.repository.specification;
+package com.cookabuy.repository.service.specification;
 
-import com.cookabuy.entity.po.Item;
+import com.cookabuy.entity.service.po.Item;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 

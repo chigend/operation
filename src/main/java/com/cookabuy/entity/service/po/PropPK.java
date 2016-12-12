@@ -1,4 +1,4 @@
-package com.cookabuy.entity.po;
+package com.cookabuy.entity.service.po;
 
 import javax.persistence.Column;
 import javax.persistence.Id;

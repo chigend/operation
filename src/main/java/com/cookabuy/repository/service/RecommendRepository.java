@@ -1,6 +1,6 @@
-package com.cookabuy.repository;
+package com.cookabuy.repository.service;
 
-import com.cookabuy.entity.po.Recommend;
+import com.cookabuy.entity.service.po.Recommend;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -9,7 +9,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.Repository;
 
 import java.util.List;
 

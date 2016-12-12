@@ -1,11 +1,11 @@
 package test;
 
-import com.cookabuy.repository.ItemRepository;
+import com.cookabuy.repository.service.ItemRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import static org.springframework.data.jpa.domain.Specifications.*;
-import static com.cookabuy.repository.specification.ItemSpecifications.*;
+import static com.cookabuy.repository.service.specification.ItemSpecifications.*;
 
 /**
  * 2016/12/7

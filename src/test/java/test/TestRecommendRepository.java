@@ -1,14 +1,14 @@
 package test;
 
-//import com.cookabuy.repository.RecommendRepository;
+//import com.cookabuy.repository.service.RecommendRepository;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
-import com.cookabuy.entity.po.Recommend;
-import com.cookabuy.repository.RecommendRepository;
+import com.cookabuy.entity.service.po.Recommend;
+import com.cookabuy.repository.service.RecommendRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import static com.cookabuy.repository.specification.RecommendSpecifications.*;
+import static com.cookabuy.repository.service.specification.RecommendSpecifications.*;
 
 /**
  * 2016/12/5

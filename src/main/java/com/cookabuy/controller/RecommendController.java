@@ -1,8 +1,8 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.validator.ReplaceRecommendFormValidator;
-import com.cookabuy.entity.dto.input.ReplaceRecommendForm;
-import com.cookabuy.repository.RecommendRepository;
+import com.cookabuy.entity.service.dto.input.ReplaceRecommendForm;
+import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.service.RecommendService;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -42,7 +42,6 @@ public class RecommendController {
             String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("修改失败");
             result.setError(error);
             return result;
-
         }
         recommendService.replaceRecommend(form);
         return result;

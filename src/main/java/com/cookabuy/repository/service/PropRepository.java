@@ -1,5 +1,5 @@
-package com.cookabuy.repository;
-import com.cookabuy.entity.po.Prop;
+package com.cookabuy.repository.service;
+import com.cookabuy.entity.service.po.Prop;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PropRepository extends JpaRepository<Prop,Long> {

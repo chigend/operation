@@ -1,9 +1,8 @@
-package com.cookabuy.repository.specification;
+package com.cookabuy.repository.service.specification;
 
-import com.cookabuy.entity.po.Recommend;
+import com.cookabuy.entity.service.po.Recommend;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
-import org.springframework.util.StringUtils;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;

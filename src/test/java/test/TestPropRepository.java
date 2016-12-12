@@ -1,7 +1,7 @@
 package test;
 
-import com.cookabuy.entity.po.Prop;
-import com.cookabuy.repository.PropRepository;
+import com.cookabuy.entity.service.po.Prop;
+import com.cookabuy.repository.service.PropRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

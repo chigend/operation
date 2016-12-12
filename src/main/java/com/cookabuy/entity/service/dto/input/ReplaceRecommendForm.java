@@ -1,4 +1,4 @@
-package com.cookabuy.entity.dto.input;
+package com.cookabuy.entity.service.dto.input;
 
 import lombok.Getter;
 import lombok.Setter;

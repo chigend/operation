@@ -1,7 +1,7 @@
 package com.cookabuy.service;
 
-import com.cookabuy.entity.po.Item;
-import com.cookabuy.repository.ItemRepository;
+import com.cookabuy.entity.service.po.Item;
+import com.cookabuy.repository.service.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
