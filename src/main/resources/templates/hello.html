@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8"/>
+    <title>hello wolrd</title>
+</head>
+<body>
+<tr th:each="menu:${session.menus}">
+    <td th:text="${menu.name}"></td>
+</tr>
+</body>
+</html>

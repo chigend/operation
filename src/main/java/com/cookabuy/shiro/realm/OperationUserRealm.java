@@ -1,8 +1,10 @@
 package com.cookabuy.shiro.realm;
 
 import com.cookabuy.entity.operation.po.OperationUser;
+import com.cookabuy.entity.operation.po.Permission;
 import com.cookabuy.repository.operation.OperationUserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
@@ -16,6 +18,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 public class OperationUserRealm extends AuthorizingRealm {
@@ -39,6 +43,7 @@ public class OperationUserRealm extends AuthorizingRealm {
             log.info("no user match with {}",username);
             return null;
         }
+        SecurityUtils.getSubject().getSession().setAttribute("menus",u.getMenus());
         return new SimpleAuthenticationInfo(u,u.getPassword(),this.getName());
     }
     //授权方法      在检查是否具有shiro权限的时候调用 如果没有配置缓存器的话，每次检查都会调用
@@ -47,8 +52,11 @@ public class OperationUserRealm extends AuthorizingRealm {
         if(principals == null){
             return null;
         }
+        OperationUser user = (OperationUser) principals.getPrimaryPrincipal();
+        List<String> stringPermissions = user.getPermissions().stream().map(Permission::getPermission).collect(Collectors.toList());
+        log.info("authorize user {},{}",user,stringPermissions);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-        info.addStringPermission("user:add");
+        info.addStringPermissions(stringPermissions);
         return info;
     }
 

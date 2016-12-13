@@ -2,17 +2,14 @@ package com.cookabuy.entity.operation.dto;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
 /**
  * 2016/12/12
  */
 @Setter
 @Getter
-@ToString
-public class LoginForm {
-    private String username;
+public class DisplayMenu {
+    private String name;
 
-    private String password;
-
+    private Integer id;
 }

@@ -3,18 +3,23 @@ package com.cookabuy.controller;
 import com.cookabuy.entity.operation.dto.LoginForm;
 import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.util.Result;
+import com.cookabuy.validator.LoginFormValidator;
+import com.cookabuy.validator.ReplaceRecommendFormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -29,10 +34,12 @@ import javax.validation.Valid;
 @Controller
 @Slf4j
 public class LoginController {
-    @RequestMapping("/login")
 
-    public String dologin(@Valid LoginForm user, BindingResult error, Model model,
+
+    @RequestMapping("/login")
+    public String dologin( LoginForm user, Model model,
                           HttpSession session,HttpServletRequest request) {
+        log.info("the login form :{}",user);
         Subject subject = SecurityUtils.getSubject();
         if (request.getMethod().equals(HttpMethod.GET.name())) {
             return "login";
@@ -63,13 +70,14 @@ public class LoginController {
         } catch (AuthenticationException e) {
             model.addAttribute("error","登录失败，稍后重试");
         }
-        session.setAttribute("realName",((OperationUser)subject.getPrincipal()).getUsername());
+        log.info("登录成功");
+        model.addAttribute("hello","hello world");
         return "hello";
     }
 
 
     @RequestMapping("/hello")
-    @ResponseBody
+    @RequiresPermissions("add")
     public String hello(){
         return "hello";
     }

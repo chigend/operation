@@ -21,7 +21,7 @@ import javax.validation.Valid;
  * 2016/12/5
  */
 @RestController
-@RequestMapping("operation")
+@RequestMapping("operate")
 @Slf4j
 public class RecommendController {
     @Autowired

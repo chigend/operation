@@ -55,10 +55,5 @@ public class ServiceJpaConfiguration {
         return manager;
     }
 
-    @Bean
-    @Primary
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource serviceDataSource() {
-        return DataSourceBuilder.create().build();
-    }
+
 }
