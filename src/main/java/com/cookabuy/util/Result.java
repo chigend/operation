@@ -20,6 +20,13 @@ public class Result {
         result = ResponseType.SUCCESS.name();
     }
 
+    public Result(String error) {
+        this();
+        this.error = error;
+
+        result = ResponseType.FAIL.name();
+    }
+
     public Map<String, Object> getData() {
         return data;
     }

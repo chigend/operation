@@ -16,6 +16,9 @@ public interface OperationUserRepository extends JpaRepository<OperationUser,Int
     boolean exists(Integer id);
 
     @Override
+    <S extends OperationUser> S saveAndFlush(S entity);
+
+    @Override
     long count();
 
     @Override

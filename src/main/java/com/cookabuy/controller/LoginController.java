@@ -72,7 +72,7 @@ public class LoginController {
         }
         log.info("登录成功");
         model.addAttribute("hello","hello world");
-        return "hello";
+        return "redirect:hello";
     }
 
 

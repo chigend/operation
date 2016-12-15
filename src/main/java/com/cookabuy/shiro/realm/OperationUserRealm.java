@@ -54,7 +54,7 @@ public class OperationUserRealm extends AuthorizingRealm {
         }
         OperationUser user = (OperationUser) principals.getPrimaryPrincipal();
         List<String> stringPermissions = user.getPermissions().stream().map(Permission::getPermission).collect(Collectors.toList());
-        log.info("authorize user {},{}",user,stringPermissions);
+        log.info("authorize user {},{}",user.getUsername(),stringPermissions);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(stringPermissions);
         return info;

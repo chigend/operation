@@ -27,4 +27,13 @@ public class TestOperationUserRepository extends AbstractJpaTest {
 
         permissions.stream().map(Permission::getPermission).forEach(System.out::println);
     }
+
+    @Test
+    public void testAddUser(){
+        OperationUser user = new OperationUser();
+        user.setPassword("hello");
+        user.setUsername("wangwu");
+        user = userRepository.save(user);
+        System.out.println(user.getId());
+    }
 }

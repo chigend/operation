@@ -46,7 +46,7 @@ public class OperationJpaConfiguration {
     }
 
     @Bean(name = "operationTransactionManager")
-    public JpaTransactionManager getTransactionManager(EntityManagerFactory emf) {
+    public JpaTransactionManager getTransactionManager(@Qualifier("operationEntityManagerFactory") EntityManagerFactory emf) {
         JpaTransactionManager manager = new JpaTransactionManager();
         manager.setEntityManagerFactory(emf);
         return manager;

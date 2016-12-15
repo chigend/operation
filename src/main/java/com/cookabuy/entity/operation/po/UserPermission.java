@@ -1,10 +1,10 @@
-package com.cookabuy.entity.tmp;
+package com.cookabuy.entity.operation.po;
 
 import javax.persistence.*;
 
 /**
  * @author yejinbiao
- * @create 2016-12-13-下午2:47
+ * @create 2016-12-13-下午2:56
  */
 
 @Entity
@@ -13,6 +13,15 @@ import javax.persistence.*;
 public class UserPermission {
     private Integer userId;
     private Integer permissionId;
+
+
+    public UserPermission() {
+    }
+
+    public UserPermission(Integer userId, Integer permissionId) {
+        this.userId = userId;
+        this.permissionId = permissionId;
+    }
 
     @Id
     @Column(name = "user_id")

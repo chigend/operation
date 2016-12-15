@@ -84,7 +84,7 @@ public class ShiroConfiguration {
 //	        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
         // 登录成功后要跳转的连接
 //	        shiroFilterFactoryBean.setSuccessUrl("/user");
-//	        shiroFilterFactoryBean.setUnauthorizedUrl("/403");
+//	        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
         Map<String,Filter> filters = new HashMap<String,Filter>();
         filters.put("authc",getFormFilter());
         Map<String,String> definition = new HashMap<String,String>();

@@ -1,4 +1,4 @@
-package com.cookabuy.entity.tmp;
+package com.cookabuy.entity.operation.po;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -6,12 +6,12 @@ import java.io.Serializable;
 
 /**
  * @author yejinbiao
- * @create 2016-12-13-下午2:47
+ * @create 2016-12-13-下午2:51
  */
 
-public class UserPermissionPK implements Serializable {
+public class UserMenuPK implements Serializable{
     private Integer userId;
-    private Integer permissionId;
+    private Integer menuId;
 
     @Column(name = "user_id")
     @Id
@@ -23,14 +23,14 @@ public class UserPermissionPK implements Serializable {
         this.userId = userId;
     }
 
-    @Column(name = "permission_id")
+    @Column(name = "menu_id")
     @Id
-    public Integer getPermissionId() {
-        return permissionId;
+    public Integer getMenuId() {
+        return menuId;
     }
 
-    public void setPermissionId(Integer permissionId) {
-        this.permissionId = permissionId;
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
     }
 
     @Override
@@ -38,18 +38,17 @@ public class UserPermissionPK implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserPermissionPK that = (UserPermissionPK) o;
+        UserMenuPK that = (UserMenuPK) o;
 
         if (userId != null ? !userId.equals(that.userId) : that.userId != null) return false;
-        if (permissionId != null ? !permissionId.equals(that.permissionId) : that.permissionId != null) return false;
+        return menuId != null ? menuId.equals(that.menuId) : that.menuId == null;
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = userId != null ? userId.hashCode() : 0;
-        result = 31 * result + (permissionId != null ? permissionId.hashCode() : 0);
+        result = 31 * result + (menuId != null ? menuId.hashCode() : 0);
         return result;
     }
 }

@@ -1,11 +1,15 @@
 package util;
 
+import lombok.extern.slf4j.Slf4j;
+
 import java.io.File;
 
 /**
  *该类用来解决pom文件报红出错问题，原因是使用maven下载jar包时，下载到一半而发生中断的话 会产生以lastUpdated为后缀的文件
  * 将此类文件删除即可
  */
+
+@Slf4j
 public class ClearMavenRepository {
     public static void main(String [] args){
         String path = "/users/yejinbiao/.m2/repository";
@@ -15,7 +19,7 @@ public class ClearMavenRepository {
     public static void deleteFile(File file){
         if(file.isFile()){
             if(file.getName().endsWith("lastUpdated")){
-                System.out.println("delete:" + file.getName());
+                log.info("delete {} successfully",file.getName());
                 file.delete();
             }
             return;

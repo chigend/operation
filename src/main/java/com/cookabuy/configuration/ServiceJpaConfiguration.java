@@ -49,7 +49,7 @@ public class ServiceJpaConfiguration {
 
     @Bean(name = "serviceTransactionManager")
     @Primary
-    public JpaTransactionManager getTransactionManager(EntityManagerFactory emf) {
+    public JpaTransactionManager getTransactionManager(@Qualifier("serviceEntityManagerFactory") EntityManagerFactory emf) {
         JpaTransactionManager manager = new JpaTransactionManager();
         manager.setEntityManagerFactory(emf);
         return manager;
