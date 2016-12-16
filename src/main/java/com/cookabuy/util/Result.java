@@ -16,14 +16,11 @@ public class Result {
     private String result;
 
     public Result(){
-        this.data = new HashMap<>();
         result = ResponseType.SUCCESS.name();
     }
 
     public Result(String error) {
-        this();
         this.error = error;
-
         result = ResponseType.FAIL.name();
     }
 
