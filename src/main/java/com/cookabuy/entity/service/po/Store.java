@@ -33,17 +33,17 @@ public class Store {
     private Date updatedAt;
     private Integer sellerId;
     
-    private List<Item> items;
+//    private List<Item> items;
 
 
-    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "store")
-    public List<Item> getItems() {
-        return items;
-    }
+//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "store")
+//    public List<Item> getItems() {
+//        return items;
+//    }
 
-    public void setItems(List<Item> items) {
-        this.items = items;
-    }
+//    public void setItems(List<Item> items) {
+//        this.items = items;
+//    }
 
     @Id
     @Column(name = "id")

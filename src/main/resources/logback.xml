@@ -48,7 +48,7 @@
 
 
     <!-- 日志输出级别 debug,info ,warn,error-->
-    <root level="warn">
+    <root level="info">
         <appender-ref ref="STDOUT" />
     </root>
     <logger name="com.cookabuy" level="INFO" additivity="true"/>

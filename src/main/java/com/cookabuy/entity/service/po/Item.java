@@ -1,12 +1,14 @@
 package com.cookabuy.entity.service.po;
-
 import javax.persistence.*;
-import java.math.BigInteger;
+import java.math.BigDecimal;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 
 /**
- * 2016/12/6
+ * @author yejinbiao
+ * @create 2016-12-16-下午4:52
  */
+
 @Entity
 @Table(name = "tb_item", schema = "public", catalog = "cookabuy_pc_dev")
 public class Item {
@@ -23,7 +25,7 @@ public class Item {
     private String props;
     private String propsName;
     private String promotedService;
-    private BigInteger auctionPoint;
+    private BigDecimal auctionPoint;
     private String propertyAlias;
     private String isXinpin;
     private Integer subStock;
@@ -34,10 +36,10 @@ public class Item {
     private Integer num;
     private Integer validThru;
     private Timestamp delistTime;
-    private BigInteger price;
-    private BigInteger postFee;
-    private BigInteger expressFee;
-    private BigInteger emsFee;
+    private BigDecimal price;
+    private BigDecimal postFee;
+    private BigDecimal expressFee;
+    private BigDecimal emsFee;
     private String freightPayer;
     private String hasInvoice;
     private String increment;
@@ -47,8 +49,6 @@ public class Item {
     private String isTiming;
     private String secondKill;
     private String violation;
-    private String wapDesc;
-    private String wapDetailUrl;
     private String sellPromise;
     private String shopName;
     private Boolean deleted;
@@ -58,7 +58,8 @@ public class Item {
     private Boolean valid;
     private Boolean hasDiscount;
     private Long listTime;
-
+    private String wapDesc;
+    private String wapDetailUrl;
 
     private Store store;
 
@@ -91,7 +92,6 @@ public class Item {
     public void setSid(Long sid) {
         this.sid = sid;
     }
-
 
     @Basic
     @Column(name = "detail_url")
@@ -205,11 +205,11 @@ public class Item {
 
     @Basic
     @Column(name = "auction_point")
-    public BigInteger getAuctionPoint() {
+    public BigDecimal getAuctionPoint() {
         return auctionPoint;
     }
 
-    public void setAuctionPoint(BigInteger auctionPoint) {
+    public void setAuctionPoint(BigDecimal auctionPoint) {
         this.auctionPoint = auctionPoint;
     }
 
@@ -315,41 +315,41 @@ public class Item {
 
     @Basic
     @Column(name = "price")
-    public BigInteger getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(BigInteger price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 
     @Basic
     @Column(name = "post_fee")
-    public BigInteger getPostFee() {
+    public BigDecimal getPostFee() {
         return postFee;
     }
 
-    public void setPostFee(BigInteger postFee) {
+    public void setPostFee(BigDecimal postFee) {
         this.postFee = postFee;
     }
 
     @Basic
     @Column(name = "express_fee")
-    public BigInteger getExpressFee() {
+    public BigDecimal getExpressFee() {
         return expressFee;
     }
 
-    public void setExpressFee(BigInteger expressFee) {
+    public void setExpressFee(BigDecimal expressFee) {
         this.expressFee = expressFee;
     }
 
     @Basic
     @Column(name = "ems_fee")
-    public BigInteger getEmsFee() {
+    public BigDecimal getEmsFee() {
         return emsFee;
     }
 
-    public void setEmsFee(BigInteger emsFee) {
+    public void setEmsFee(BigDecimal emsFee) {
         this.emsFee = emsFee;
     }
 
@@ -444,26 +444,6 @@ public class Item {
     }
 
     @Basic
-    @Column(name = "wap_desc")
-    public String getWapDesc() {
-        return wapDesc;
-    }
-
-    public void setWapDesc(String wapDesc) {
-        this.wapDesc = wapDesc;
-    }
-
-    @Basic
-    @Column(name = "wap_detail_url")
-    public String getWapDetailUrl() {
-        return wapDetailUrl;
-    }
-
-    public void setWapDetailUrl(String wapDetailUrl) {
-        this.wapDetailUrl = wapDetailUrl;
-    }
-
-    @Basic
     @Column(name = "sell_promise")
     public String getSellPromise() {
         return sellPromise;
@@ -552,6 +532,28 @@ public class Item {
     public void setListTime(Long listTime) {
         this.listTime = listTime;
     }
+
+    @Basic
+    @Column(name = "wap_desc")
+    public String getWapDesc() {
+        return wapDesc;
+    }
+
+    public void setWapDesc(String wapDesc) {
+        this.wapDesc = wapDesc;
+    }
+
+    @Basic
+    @Column(name = "wap_detail_url")
+    public String getWapDetailUrl() {
+        return wapDetailUrl;
+    }
+
+    public void setWapDetailUrl(String wapDetailUrl) {
+        this.wapDetailUrl = wapDetailUrl;
+    }
+
+
 
 
 }

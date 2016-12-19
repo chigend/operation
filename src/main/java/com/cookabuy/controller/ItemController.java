@@ -1,8 +1,12 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.constant.SearchType;
+import com.cookabuy.elasticsearch.ItemQuery;
 import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.repository.service.ItemRepository;
+import com.cookabuy.service.SearchService;
 import lombok.extern.slf4j.Slf4j;
+import org.elasticsearch.action.search.SearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,13 +21,15 @@ import java.util.List;
 @RequestMapping("/api")
 public class ItemController {
     @Autowired
-    private ItemRepository itemRepository;
-//    @RequestMapping("/search")
-//    public List<Item> searchItem(String keyword, String type){
-//        switch (type){
-//            case SearchType.ITEM:
-//                return itemRepository.find
-//        }
-//    }
+    private SearchService searchService;
+    @RequestMapping("/search")
+    public SearchResponse searchItem(ItemQuery itemQuery, String type){
+        switch (type){
+            case SearchType.ITEM:
+                return searchService.searchItems(itemQuery);
+            default:
+                return searchService.searchItems(itemQuery);
+        }
+    }
 
 }

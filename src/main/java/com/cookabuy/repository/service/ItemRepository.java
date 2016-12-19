@@ -5,7 +5,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
+import org.springframework.data.jpa.repository.Query;
 
+import java.lang.annotation.Native;
 import java.util.List;
 
 public interface ItemRepository extends JpaRepository<Item,Long>,JpaSpecificationExecutor<Item> {
@@ -38,4 +40,10 @@ public interface ItemRepository extends JpaRepository<Item,Long>,JpaSpecificatio
 
     @Override
     List<Item> findAll(Specification<Item> spec);
+
+    @Query(value="select * from tb_item  limit 1000",nativeQuery = true)
+    public List<Item> findTop1000();
+
+    @Query(value = "select * from tb_item limit ?1 offset ?2",nativeQuery = true)
+    public List<Item> findTopAndOffset(Integer limit,Integer offset);
 }
