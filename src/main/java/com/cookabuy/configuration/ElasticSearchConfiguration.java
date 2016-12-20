@@ -23,20 +23,20 @@ import java.net.UnknownHostException;
 @EnableConfigurationProperties(ESProperties.class)
 public class ElasticSearchConfiguration {
 
-    @Bean
-    public TransportClient transportClient(ESProperties properties){
-        log.info("es properties {}",properties);
-        TransportClient client = null;
-        try {
-             client = new PreBuiltTransportClient(Settings.EMPTY)
-                     .addTransportAddress(
-                             new InetSocketTransportAddress(
-                                     InetAddress.getByName(properties.getHost()), properties.getPort()
-                             )
-                     );
-        } catch (UnknownHostException e) {
-            log.info("the elasticsearch host is unknown,please check the property {elasticsearch.host} in application.properties");
-        }
-        return client;
-    }
+//    @Bean
+//    public TransportClient transportClient(ESProperties properties){
+//        log.info("es properties {}",properties);
+//        TransportClient client = null;
+//        try {
+//             client = new PreBuiltTransportClient(Settings.EMPTY)
+//                     .addTransportAddress(
+//                             new InetSocketTransportAddress(
+//                                     InetAddress.getByName(properties.getHost()), properties.getPort()
+//                             )
+//                     );
+//        } catch (UnknownHostException e) {
+//            log.info("the elasticsearch host is unknown,please check the property {elasticsearch.host} in application.properties");
+//        }
+//        return client;
+//    }
 }

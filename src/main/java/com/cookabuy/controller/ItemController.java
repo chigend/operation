@@ -21,16 +21,16 @@ import java.util.List;
 @Slf4j
 @RequestMapping("/api")
 public class ItemController {
-    @Autowired
-    private SearchService searchService;
-    @RequestMapping("/search")
-    public SearchResponse searchItem(ItemQuery itemQuery, @RequestParam(defaultValue = "item") String type){
-        switch (type){
-            case SearchType.ITEM:
-                return searchService.searchItems(itemQuery);
-            default:
-                return searchService.searchItems(itemQuery);
-        }
-    }
+//    @Autowired
+//    private SearchService searchService;
+//    @RequestMapping("/search")
+//    public SearchResponse searchItem(ItemQuery itemQuery, @RequestParam(defaultValue = "item") String type){
+//        switch (type){
+//            case SearchType.ITEM:
+//                return searchService.searchItems(itemQuery);
+//            default:
+//                return searchService.searchItems(itemQuery);
+//        }
+//    }
 
 }

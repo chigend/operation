@@ -2,6 +2,9 @@ package com.cookabuy.controller;
 
 import com.cookabuy.constant.View;
 import com.cookabuy.entity.operation.dto.LoginForm;
+import com.cookabuy.entity.operation.dto.ResetPasswordForm;
+import com.cookabuy.entity.operation.po.OperationUser;
+import com.cookabuy.repository.operation.OperationUserRepository;
 import com.cookabuy.util.Result;
 import com.cookabuy.validator.LoginFormValidator;
 import com.cookabuy.validator.UserAddFormValidator;
@@ -11,10 +14,14 @@ import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpMethod;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,7 +38,8 @@ import javax.validation.Valid;
 @Slf4j
 public class LoginController {
 
-
+    @Autowired
+    private OperationUserRepository operationUserRepository;
     @InitBinder("loginForm")
     public void initBinder(WebDataBinder binder){
         binder.setValidator(new LoginFormValidator());
@@ -60,9 +68,32 @@ public class LoginController {
         return new Result();
     }
 
+    @RequestMapping("/reset_password")
+    public Result resetPassword(@Valid ResetPasswordForm form,BindingResult bindingResult,Result result){
+            if (bindingResult.hasErrors()) {
+                String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("填写有误");
+                result.setError(error);
+                return result;
+            }
 
-    @RequestMapping("/hello")
-    public String hello() {
-        return "hello";
+            OperationUser user = operationUserRepository.findByUsername(form.getUsername());
+
+            if (user == null) {
+                result.setError("该用户不存在");
+                return result;
+            }
+            String original = form.getOriginal();
+            log.info("the original password is {}",original);
+            if (!user.getPassword().equals(new Md5Hash(original).toString())) {
+                log.info("original password is not match");
+                result.setError("原密码不正确");
+                return result;
+            }
+            String hashedPassword = new Md5Hash(form.getConfirmPassword()).toString();
+            user.setPassword(hashedPassword);
+            operationUserRepository.save(user);
+            return result;
+        }
+
     }
 }
