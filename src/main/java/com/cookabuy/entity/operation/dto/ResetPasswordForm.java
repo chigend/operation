@@ -13,7 +13,6 @@ import lombok.Setter;
 @Getter
 public class ResetPasswordForm {
 
-    private String username;
 
     private String original;
 

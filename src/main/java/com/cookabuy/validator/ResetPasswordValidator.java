@@ -25,11 +25,7 @@ public class ResetPasswordValidator implements Validator {
     public void validate(Object target, Errors errors) {
         log.info("validate ResetPasswordForm with validator:{}",this.getClass().getName());
         ResetPasswordForm form = (ResetPasswordForm) target;
-        if (StringUtils.isEmpty(form.getUsername())){
-            log.info("validate field username for form ResetPasswordForm failed ");
-            errors.reject("账户名不能为空");
-
-        }else if(StringUtils.isEmpty(form.getOriginal())){
+        if(StringUtils.isEmpty(form.getOriginal())){
             log.info("validate field original for form ResetPasswordForm failed");
             errors.reject("原密码不能为空");
         }else if(StringUtils.isEmpty(form.getPassword())){
