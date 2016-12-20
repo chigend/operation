@@ -23,6 +23,7 @@ public class UserAddFormValidator implements Validator{
 
     @Override
     public void validate(Object target, Errors errors) {
+        log.info("validate AddUserForm with validator:{}",this.getClass().getName());
         AddUserForm form = (AddUserForm)target;
         if(StringUtils.isEmpty(form.getUsername())){
             log.info("validate username fail");

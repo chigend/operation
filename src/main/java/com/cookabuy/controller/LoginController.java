@@ -82,7 +82,7 @@ public class LoginController {
     }
 
     @RequestMapping("/reset_password")
-    public Result resetPassword(@Validated ResetPasswordForm form, BindingResult bindingResult, Result result){
+    public Result resetPassword( @ Valid ResetPasswordForm form, BindingResult bindingResult, Result result){
             if (bindingResult.hasErrors()) {
                 String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("填写有误");
                 result.setError(error);

@@ -20,6 +20,7 @@ public class ReplaceRecommendFormValidator implements Validator {
 
     @Override
     public void validate(Object target, Errors errors) {
+        log.info("validate ReplaceRecommendForm with validator:{}",this.getClass().getName());
         ReplaceRecommendForm form = (ReplaceRecommendForm)target;
         if(StringUtils.isEmpty(form.getPageName())){
             log.info("pagename invalid");
