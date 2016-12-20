@@ -1,6 +1,7 @@
 package com.cookabuy.validator;
 
 import com.cookabuy.entity.operation.dto.LoginForm;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -8,6 +9,8 @@ import org.springframework.validation.Validator;
 /**
  * 2016/12/12
  */
+
+@Component
 public class LoginFormValidator implements Validator{
     @Override
     public boolean supports(Class<?> clazz) {

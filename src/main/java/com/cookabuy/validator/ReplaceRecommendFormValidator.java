@@ -2,6 +2,7 @@ package com.cookabuy.validator;
 
 import com.cookabuy.entity.service.dto.input.ReplaceRecommendForm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -10,6 +11,7 @@ import org.springframework.validation.Validator;
  * 2016/12/8
  */
 @Slf4j
+@Component
 public class ReplaceRecommendFormValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {

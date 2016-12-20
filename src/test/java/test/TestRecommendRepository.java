@@ -60,6 +60,7 @@ public class TestRecommendRepository extends AbstractJpaTest {
             recommend.setLocation("right");
             recommend.setPageName("index");
             recommend.setInsertedAt(new Date());
+            recommend.setUpdatedAt(new Date());
             recommendRepository.save(recommend);
         });
     }

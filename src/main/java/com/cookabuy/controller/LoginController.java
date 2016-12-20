@@ -6,6 +6,7 @@ import com.cookabuy.entity.operation.dto.ResetPasswordForm;
 import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.repository.operation.OperationUserRepository;
 import com.cookabuy.util.Result;
+import com.cookabuy.validator.CompoundValidator;
 import com.cookabuy.validator.LoginFormValidator;
 import com.cookabuy.validator.UserAddFormValidator;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +23,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.naming.Binding;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -37,18 +40,28 @@ import javax.validation.Valid;
 @RestController
 @Slf4j
 public class LoginController {
+    @Autowired
+    private CompoundValidator validator;
 
     @Autowired
     private OperationUserRepository operationUserRepository;
-    @InitBinder("loginForm")
+
+    @InitBinder
     public void initBinder(WebDataBinder binder){
-        binder.setValidator(new LoginFormValidator());
+        binder.setValidator(this.validator);
     }
+
     @RequestMapping("/login")
-    public Result dologin(@Valid LoginForm user,
-                          HttpSession session, HttpServletRequest request) {
+    public Result dologin(@Validated LoginForm user,BindingResult bindingResult
+                         ,Result result) {
         log.info("the login form :{}", user);
         Subject subject = SecurityUtils.getSubject();
+        if (bindingResult.hasErrors()) {
+            String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("填写有误");
+            result.setError(error);
+            return result;
+        }
+
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
         if (subject.isAuthenticated()) {
             log.info("使用另一个账号进行登录,登出第一个用户");
@@ -69,7 +82,7 @@ public class LoginController {
     }
 
     @RequestMapping("/reset_password")
-    public Result resetPassword(@Valid ResetPasswordForm form,BindingResult bindingResult,Result result){
+    public Result resetPassword(@Validated ResetPasswordForm form, BindingResult bindingResult, Result result){
             if (bindingResult.hasErrors()) {
                 String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("填写有误");
                 result.setError(error);
@@ -96,4 +109,3 @@ public class LoginController {
         }
 
     }
-}

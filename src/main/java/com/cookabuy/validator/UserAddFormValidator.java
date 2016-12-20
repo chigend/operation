@@ -2,6 +2,7 @@ package com.cookabuy.validator;
 
 import com.cookabuy.entity.operation.dto.AddUserForm;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -13,6 +14,7 @@ import org.springframework.validation.Validator;
  * @create 2016-12-14-下午5:58
  */
 @Slf4j
+@Component
 public class UserAddFormValidator implements Validator{
     @Override
     public boolean supports(Class<?> clazz) {
