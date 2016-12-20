@@ -9,6 +9,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
@@ -23,7 +24,7 @@ public class ItemController {
     @Autowired
     private SearchService searchService;
     @RequestMapping("/search")
-    public SearchResponse searchItem(ItemQuery itemQuery, String type){
+    public SearchResponse searchItem(ItemQuery itemQuery, @RequestParam(defaultValue = "item") String type){
         switch (type){
             case SearchType.ITEM:
                 return searchService.searchItems(itemQuery);
