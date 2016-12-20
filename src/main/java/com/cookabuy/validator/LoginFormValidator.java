@@ -25,7 +25,8 @@ public class LoginFormValidator implements Validator{
         LoginForm form = (LoginForm)target;
         if(StringUtils.isEmpty(form.getUsername())){
             errors.reject("用户名不能为空");
-        }else if(StringUtils.isEmpty(form.getPassword())){
+        }
+        if(StringUtils.isEmpty(form.getPassword())){
             errors.reject("密码不能为空");
         }
     }
