@@ -83,18 +83,15 @@ public class LoginController {
 
     @RequestMapping("/reset_password")
     public Result resetPassword( @ Valid ResetPasswordForm form, BindingResult bindingResult, Result result){
+            OperationUser loginUser = (OperationUser) SecurityUtils.getSubject().getPrincipal();
             if (bindingResult.hasErrors()) {
                 String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("填写有误");
                 result.setError(error);
                 return result;
             }
 
-            OperationUser user = operationUserRepository.findByUsername(form.getUsername());
+            OperationUser user = operationUserRepository.findByUsername(loginUser.getUsername());
 
-            if (user == null) {
-                result.setError("该用户不存在");
-                return result;
-            }
             String original = form.getOriginal();
             log.info("the original password is {}",original);
             if (!user.getPassword().equals(new Md5Hash(original).toString())) {

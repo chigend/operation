@@ -36,4 +36,7 @@ public class TestOperationUserRepository extends AbstractJpaTest {
         user = userRepository.save(user);
         System.out.println(user.getId());
     }
+    @Test
+    public void testgetCard(){
+    }
 }

@@ -20,6 +20,8 @@ public class OperationUser {
 
     private List<Permission> permissions;
 
+
+
     @Basic
     @Column(name = "username")
     public String getUsername() {
