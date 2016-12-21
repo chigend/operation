@@ -117,6 +117,12 @@ public class ShiroConfiguration {
         return realm;
     }
 
+    /**原先shiro会对未认证的url进行重定向至login(get)进行认证，但在后台只提供接口功能时，
+     * 前端页面无法进行重定向，所以对login请求进行过滤，并返回相应的过滤结果
+     * {@link LoginFilter }
+     *
+     */
+
     @Bean
     public FilterRegistrationBean registLoginFilter(){
         FilterRegistrationBean registration = new FilterRegistrationBean();

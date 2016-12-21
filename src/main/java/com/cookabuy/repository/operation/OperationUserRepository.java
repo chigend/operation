@@ -2,7 +2,10 @@ package com.cookabuy.repository.operation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.cookabuy.entity.operation.po.*;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 @Transactional(transactionManager = "operationTransactionManager")
 public interface OperationUserRepository extends JpaRepository<OperationUser,Integer> {
@@ -34,5 +37,9 @@ public interface OperationUserRepository extends JpaRepository<OperationUser,Int
     void deleteAll();
 
     OperationUser findByUsername(String username);
+
+
+    @Query(value = "select * from operation_user where is_administrator is false",nativeQuery = true)
+    List<OperationUser> findAllNotAdminOperationUser();
 
 }

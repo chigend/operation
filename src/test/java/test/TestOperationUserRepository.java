@@ -37,6 +37,8 @@ public class TestOperationUserRepository extends AbstractJpaTest {
         System.out.println(user.getId());
     }
     @Test
-    public void testgetCard(){
+    public void testUserList(){
+        userRepository.findAllNotAdminOperationUser().stream().map(OperationUser::getUsername).forEach(System.out::println);
     }
+
 }

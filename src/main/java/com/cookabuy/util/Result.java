@@ -24,6 +24,8 @@ public class Result {
         result = ResponseType.FAIL.name();
     }
 
+
+
     public Map<String, Object> getData() {
         return data;
     }

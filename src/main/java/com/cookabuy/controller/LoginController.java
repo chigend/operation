@@ -5,6 +5,7 @@ import com.cookabuy.entity.operation.dto.LoginForm;
 import com.cookabuy.entity.operation.dto.ResetPasswordForm;
 import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.repository.operation.OperationUserRepository;
+import com.cookabuy.util.DozerHelper;
 import com.cookabuy.util.Result;
 import com.cookabuy.validator.CompoundValidator;
 import com.cookabuy.validator.LoginFormValidator;
@@ -45,6 +46,9 @@ public class LoginController {
 
     @Autowired
     private OperationUserRepository operationUserRepository;
+
+    @Autowired
+    private DozerHelper dozerHelper;
 
     @InitBinder
     public void initBinder(WebDataBinder binder) {

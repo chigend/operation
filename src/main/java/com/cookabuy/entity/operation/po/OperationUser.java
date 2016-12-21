@@ -1,6 +1,7 @@
 package com.cookabuy.entity.operation.po;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ public class OperationUser {
     private String password;
     private Integer id;
     private String realName;
+    private Date createTime;
+    private boolean administrator;
 
     private List<Menu> menus;
 
@@ -33,6 +36,16 @@ public class OperationUser {
     }
 
     @Basic
+    @Column(name = "isAdministrator")
+    public boolean isAdministrator() {
+        return administrator;
+    }
+
+    public void setAdministrator(boolean administrator) {
+        this.administrator = administrator;
+    }
+
+    @Basic
     @Column(name = "password")
     public String getPassword() {
         return password;
@@ -40,6 +53,16 @@ public class OperationUser {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    @Basic
+    @Column(name = "create_time")
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Id

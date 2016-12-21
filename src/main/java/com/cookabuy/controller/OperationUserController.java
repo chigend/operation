@@ -1,12 +1,15 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.entity.operation.dto.AddUserForm;
+import com.cookabuy.entity.operation.dto.DisplayUser;
 import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.entity.operation.po.UserMenu;
 import com.cookabuy.entity.operation.po.UserPermission;
 import com.cookabuy.repository.operation.OperationUserRepository;
 import com.cookabuy.repository.operation.UserMenuRepository;
 import com.cookabuy.repository.operation.UserPermissionRepository;
+import com.cookabuy.repository.service.ItemRepository;
+import com.cookabuy.util.DozerHelper;
 import com.cookabuy.util.EncryptUtils;
 import com.cookabuy.util.Result;
 import com.cookabuy.validator.UserAddFormValidator;
@@ -22,6 +25,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import javax.validation.constraints.AssertFalse;
+import java.util.List;
 
 /**
  * 2016/12/13
@@ -36,6 +41,9 @@ public class OperationUserController {
 
     @Autowired
     private UserMenuRepository userMenuRepository;
+
+    @Autowired
+    private DozerHelper dozerHelper;
 
     @Autowired
     private UserPermissionRepository userPermissionRepository;
@@ -79,6 +87,14 @@ public class OperationUserController {
         return result;
     }
 
+    @RequestMapping("user_list")
+    public Result getUserList(Result result){
+        List<OperationUser> opUsers = operationUserRepository.findAllNotAdminOperationUser();
+        List<DisplayUser> userList = dozerHelper.mapList(opUsers,DisplayUser.class);
+        result.addData("userlist",userList);
+        return result;
+
+    }
     private boolean checkAccoutAvaiable(String username){
         return username == null ? false : operationUserRepository.findByUsername(username) == null;
     }

@@ -85,4 +85,6 @@ public class TestRecommendRepository extends AbstractJpaTest {
             recommendRepository.save(recommend);
         });
     }
+
+
 }
