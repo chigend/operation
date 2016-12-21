@@ -1,6 +1,7 @@
 package com.cookabuy.configuration;
 
 import com.cookabuy.properties.CredentialsMatcherProperties;
+import com.cookabuy.shiro.filter.LoginFilter;
 import com.cookabuy.shiro.realm.OperationUserRealm;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.cache.ehcache.EhCacheManager;
@@ -8,6 +9,7 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
+import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -88,8 +90,9 @@ public class ShiroConfiguration {
         Map<String,Filter> filters = new HashMap<String,Filter>();
         filters.put("authc",getFormFilter());
         Map<String,String> definition = new HashMap<String,String>();
-        definition.put("/hello", "authc");
         definition.put("/login", "anon");
+        definition.put("/*", "authc");
+
         shiroFilterFactoryBean.setFilterChainDefinitionMap(definition);
         shiroFilterFactoryBean.setFilters(filters);
         return shiroFilterFactoryBean;
@@ -112,5 +115,14 @@ public class ShiroConfiguration {
         matcher.setHashIterations(matcherProperties.getHashIterations());
         realm.setCredentialsMatcher(matcher);
         return realm;
+    }
+
+    @Bean
+    public FilterRegistrationBean registLoginFilter(){
+        FilterRegistrationBean registration = new FilterRegistrationBean();
+        registration.setFilter(new LoginFilter());
+        registration.addUrlPatterns("/login");
+        registration.setEnabled(true);
+        return registration;
     }
 }

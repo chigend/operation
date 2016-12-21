@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.Recommend;
+import com.cookabuy.entity.service.po.Store;
 import com.cookabuy.repository.service.ItemRepository;
 import com.cookabuy.repository.service.RecommendRepository;
 import org.junit.Test;
@@ -57,8 +58,28 @@ public class TestRecommendRepository extends AbstractJpaTest {
     public void testaddRecommend(){
         itemRepository.findTopAndOffset(20,500).stream().map(Item::getNumIid).forEach(numiid->{
             Recommend recommend = new Recommend();
+            recommend.setItemId(numiid);
             recommend.setLocation("right");
             recommend.setPageName("index");
+            recommend.setInsertedAt(new Date());
+            recommend.setUpdatedAt(new Date());
+            recommendRepository.save(recommend);
+        });
+    }
+    @Test
+    public void testasdsa(){
+        itemRepository.findTopAndOffset(1000,1).stream().distinct().limit(20).forEach(item -> {
+            System.out.println(item.getStore().getStoreName());
+        });
+    }
+
+    @Test
+    public void testTitle(){
+        itemRepository.findByTitleLike("%女装%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(6).map(Item::getNumIid).forEach(numiid -> {
+            Recommend recommend = new Recommend();
+            recommend.setItemId(numiid);
+            recommend.setLocation("girl");
+            recommend.setPageName("hot");
             recommend.setInsertedAt(new Date());
             recommend.setUpdatedAt(new Date());
             recommendRepository.save(recommend);

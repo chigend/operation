@@ -46,4 +46,6 @@ public interface ItemRepository extends JpaRepository<Item,Long>,JpaSpecificatio
 
     @Query(value = "select * from tb_item limit ?1 offset ?2",nativeQuery = true)
     public List<Item> findTopAndOffset(Integer limit,Integer offset);
+
+    public List<Item> findByTitleLike(String title);
 }

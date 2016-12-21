@@ -13,10 +13,11 @@ import java.util.List;
  * 2016/12/12
  */
 @Slf4j
-@Controller
+@RestController
 public class TestController {
-    @RequestMapping("load")
-    public String load(){
-        return "public/menu::menu";
-    }
+  @RequestMapping("test")
+    public void test(){
+      System.out.print("test");
+  }
+
 }

@@ -47,13 +47,13 @@ public class LoginController {
     private OperationUserRepository operationUserRepository;
 
     @InitBinder
-    public void initBinder(WebDataBinder binder){
+    public void initBinder(WebDataBinder binder) {
         binder.setValidator(this.validator);
     }
 
     @RequestMapping("/login")
-    public Result dologin(@Validated LoginForm user,BindingResult bindingResult
-                         ,Result result) {
+    public Result dologin(@Validated LoginForm user, BindingResult bindingResult
+            , Result result) {
         log.info("the login form :{}", user);
         Subject subject = SecurityUtils.getSubject();
         if (bindingResult.hasErrors()) {
@@ -82,27 +82,34 @@ public class LoginController {
     }
 
     @RequestMapping("/reset_password")
-    public Result resetPassword( @ Valid ResetPasswordForm form, BindingResult bindingResult, Result result){
-            OperationUser loginUser = (OperationUser) SecurityUtils.getSubject().getPrincipal();
-            if (bindingResult.hasErrors()) {
-                String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("填写有误");
-                result.setError(error);
-                return result;
-            }
-
-            OperationUser user = operationUserRepository.findByUsername(loginUser.getUsername());
-
-            String original = form.getOriginal();
-            log.info("the original password is {}",original);
-            if (!user.getPassword().equals(new Md5Hash(original).toString())) {
-                log.info("original password is not match");
-                result.setError("原密码不正确");
-                return result;
-            }
-            String hashedPassword = new Md5Hash(form.getConfirmPassword()).toString();
-            user.setPassword(hashedPassword);
-            operationUserRepository.save(user);
+    public Result resetPassword(@Valid ResetPasswordForm form, BindingResult bindingResult, Result result) {
+        OperationUser loginUser = (OperationUser) SecurityUtils.getSubject().getPrincipal();
+        if (bindingResult.hasErrors()) {
+            String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("填写有误");
+            result.setError(error);
             return result;
         }
 
+        OperationUser user = operationUserRepository.findByUsername(loginUser.getUsername());
+
+        String original = form.getOriginal();
+        log.info("the original password is {}", original);
+
+        //验证原密码是否正确
+        if (!user.getPassword().equals(new Md5Hash(original).toString())) {
+            log.info("original password is not match");
+            result.setError("原密码不正确");
+            return result;
+        }
+        String hashedPassword = new Md5Hash(form.getConfirmPassword()).toString();
+        //验证新密码是否与原密码相同
+        if(user.getPassword().equals(hashedPassword)){
+            log.info("new password is same with ");
+        }
+        user.setPassword(hashedPassword);
+
+        operationUserRepository.save(user);
+        return result;
     }
+
+}
