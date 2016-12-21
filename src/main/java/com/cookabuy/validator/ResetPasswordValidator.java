@@ -28,19 +28,13 @@ public class ResetPasswordValidator implements Validator {
         if(StringUtils.isEmpty(form.getOriginal())){
             log.info("validate field original for form ResetPasswordForm failed");
             errors.reject("原密码不能为空");
-            return;
-        }
-        if(StringUtils.isEmpty(form.getPassword())){
+        }else if(StringUtils.isEmpty(form.getPassword())){
             log.info("validate field password for form ResetPasswordForm failed");
             errors.reject("密码不能为空");
-            return;
-        }
-        if(StringUtils.isEmpty(form.getConfirmPassword())){
+        }else if(StringUtils.isEmpty(form.getConfirmPassword())){
             log.info("validate field confirmPassword for form ResetPasswordForm failed");
             errors.reject("确认密码不能为空");
-            return;
-        }
-        if (!form.getPassword().equals(form.getConfirmPassword())){
+        } else if (!form.getPassword().equals(form.getConfirmPassword())){
             log.info("validate field confirmPassword for form ResetPasswordForm failed");
             errors.reject("两次密码不一致");
         }
