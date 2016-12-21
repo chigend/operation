@@ -88,6 +88,7 @@ public class OperationUserController {
     }
 
     @RequestMapping("user_list")
+    @ResponseBody
     public Result getUserList(Result result){
         List<OperationUser> opUsers = operationUserRepository.findAllNotAdminOperationUser();
         List<DisplayUser> userList = dozerHelper.mapList(opUsers,DisplayUser.class);

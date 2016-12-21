@@ -17,15 +17,15 @@ public class TestOperationUserRepository extends AbstractJpaTest {
     private OperationUserRepository userRepository;
     @Test
     public void test(){
-        OperationUser user = userRepository.findByUsername("zhangsan");
-        System.out.println("-------------------------");
-        List<Menu> menuList = user.getMenus();
-        menuList.stream().map(Menu::getName).forEach(System.out::println);
-        System.out.println("-------------------------");
-
-        List<Permission> permissions = user.getPermissions();
-
-        permissions.stream().map(Permission::getPermission).forEach(System.out::println);
+//        OperationUser user = userRepository.findByUsername("zhangsan");
+//        System.out.println("-------------------------");
+//        List<Menu> menuList = user.getMenus();
+//        menuList.stream().map(Menu::getName).forEach(System.out::println);
+//        System.out.println("-------------------------");
+//
+//        List<Permission> permissions = user.getPermissions();
+//
+//        permissions.stream().map(Permission::getPermission).forEach(System.out::println);
     }
 
     @Test

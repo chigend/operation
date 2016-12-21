@@ -1,7 +1,9 @@
 package config;
 import com.alibaba.druid.pool.DruidDataSource;
+import com.cookabuy.util.DozerHelper;
 import com.cookabuy.util.PropertiesUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -41,5 +43,14 @@ public class TestDataSourceConfiguration {
         dataSource.setUsername(PropertiesUtil.getValue("operation.datasource.username"));
         dataSource.setPassword(PropertiesUtil.getValue("operation.datasource.password"));
         return dataSource;
+    }
+    @Bean
+    public DozerBeanMapper dozerBeanMapper(){
+        return new DozerBeanMapper();
+    }
+
+    @Bean
+    public DozerHelper dozerHelper(){
+        return new DozerHelper();
     }
 }

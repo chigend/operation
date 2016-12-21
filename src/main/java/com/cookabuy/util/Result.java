@@ -1,5 +1,9 @@
 package com.cookabuy.util;
 
+import org.apache.commons.collections.iterators.ObjectArrayIterator;
+import org.apache.commons.collections.map.HashedMap;
+import org.apache.commons.lang3.text.StrBuilder;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -16,6 +20,7 @@ public class Result {
     private String result;
 
     public Result(){
+        data = new HashMap<>();
         result = ResponseType.SUCCESS.name();
     }
 

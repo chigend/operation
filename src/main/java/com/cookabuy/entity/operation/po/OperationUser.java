@@ -19,7 +19,7 @@ public class OperationUser {
     private Date createTime;
     private boolean administrator;
 
-    private List<Menu> menus;
+//    private List<Menu> menus;
 
     private List<Permission> permissions;
 
@@ -99,16 +99,16 @@ public class OperationUser {
     }
 
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name="user_menu",joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "menu_id",referencedColumnName = "id")})
-    public List<Menu> getMenus() {
-        return menus;
-    }
-
-    public void setMenus(List<Menu> menus) {
-        this.menus = menus;
-    }
+//    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//    @JoinTable(name="user_menu",joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "menu_id",referencedColumnName = "id")})
+//    public List<Menu> getMenus() {
+//        return menus;
+//    }
+//
+//    public void setMenus(List<Menu> menus) {
+//        this.menus = menus;
+//    }
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

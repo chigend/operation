@@ -15,6 +15,8 @@ public class Menu {
     private String name;
     private Integer id;
     private Integer parentId;
+    //菜单的类目
+    private String category;
     private Integer permissionId;
 
     @Basic
@@ -35,6 +37,16 @@ public class Menu {
 
     public void setId(Integer id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "category")
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
     }
 
     @Basic

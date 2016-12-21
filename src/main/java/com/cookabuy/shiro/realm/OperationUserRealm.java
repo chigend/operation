@@ -43,7 +43,6 @@ public class OperationUserRealm extends AuthorizingRealm {
             log.info("no user match with {}",username);
             return null;
         }
-        SecurityUtils.getSubject().getSession().setAttribute("menus",u.getMenus());
         return new SimpleAuthenticationInfo(u,u.getPassword(),this.getName());
     }
     //授权方法      在检查是否具有shiro权限的时候调用 如果没有配置缓存器的话，每次检查都会调用
@@ -52,6 +51,7 @@ public class OperationUserRealm extends AuthorizingRealm {
         if(principals == null){
             return null;
         }
+
         OperationUser user = (OperationUser) principals.getPrimaryPrincipal();
         List<String> stringPermissions = user.getPermissions().stream().map(Permission::getPermission).collect(Collectors.toList());
         log.info("authorize user {},{}",user.getUsername(),stringPermissions);

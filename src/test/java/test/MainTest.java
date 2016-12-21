@@ -5,6 +5,7 @@ import org.elasticsearch.action.delete.DeleteResponse;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.common.collect.HppcMaps;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.QueryBuilder;
@@ -46,6 +47,13 @@ public class MainTest {
       Student s6 = new Student("zhangsan",20);
       Stream<Student> list = Stream.of(s1,s2,s3,s4,s5,s6);
       list.distinct().forEach(System.out::println);
+   }
+
+   @Test
+   public void testForceCastNull(){
+      Student s = null;
+      Object o = (Object)s;
+      System.out.print(o);
    }
 
 }
