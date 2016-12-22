@@ -18,7 +18,7 @@ public class DisplayUser {
 
     private String realName;
 
-    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
     private Date createTime;
 
     private String username;

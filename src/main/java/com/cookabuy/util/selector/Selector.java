@@ -17,7 +17,7 @@ public abstract class Selector<CONDITION, ENTITY> {
     // 存货柜
     private Map<CONDITION, Cell> cabinet = new HashMap<>();
 
-    public abstract CONDITION selectCondition(ENTITY entity);
+    protected abstract CONDITION selectCondition(ENTITY entity);
 
     /**
      * 分拣动作 可以一个一个手动分拣，也可以接受Collection来分拣

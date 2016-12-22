@@ -14,7 +14,11 @@ import org.elasticsearch.transport.TcpTransport;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.Test;
 
+import java.lang.reflect.Array;
 import java.net.InetAddress;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Stream;
 
 /**
@@ -45,8 +49,11 @@ public class MainTest {
       Student s4 = new Student("zhangsan",18);
       Student s5 = new Student("zhangsan",19);
       Student s6 = new Student("zhangsan",20);
-      Stream<Student> list = Stream.of(s1,s2,s3,s4,s5,s6);
-      list.distinct().forEach(System.out::println);
+      List<Student> studentList = Arrays.asList(s1,s2,s3,s4,s5,s6);
+      studentList.stream().filter(student -> student.getAge()==17).forEach(student -> {
+         student.setName("lisi");
+      });
+      System.out.println(studentList);
    }
 
    @Test

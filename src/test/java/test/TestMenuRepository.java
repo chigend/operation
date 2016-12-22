@@ -2,6 +2,7 @@ package test;
 
 import com.alibaba.fastjson.JSON;
 import com.cookabuy.entity.operation.dto.DisplayMenu;
+import com.cookabuy.entity.operation.po.Menu;
 import com.cookabuy.repository.operation.MenuRepository;
 import com.cookabuy.util.DozerHelper;
 import com.cookabuy.util.selector.MenuSelector;
@@ -28,5 +29,11 @@ public class TestMenuRepository extends AbstractJpaTest{
 
         String result = JSON.toJSONString(menuSelector.getSelectResult());
         System.out.println(result);
+    }
+
+    @Test
+    public void testone(){
+        Menu menu = menuRepository.findOne(1);
+        System.out.println(JSON.toJSON(menu));
     }
 }

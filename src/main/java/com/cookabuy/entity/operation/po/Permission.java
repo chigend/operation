@@ -1,9 +1,6 @@
 package com.cookabuy.entity.operation.po;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 /**
  * @author yejinbiao
@@ -11,6 +8,7 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "permission", schema = "public", catalog = "cooka_operation_dev")
 public class Permission {
     private Integer permissionId;
     private String permission;

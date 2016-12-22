@@ -39,4 +39,6 @@ public interface MenuRepository extends JpaRepository<Menu,Integer> {
     @Query(value = "select m.* from menu m join user_menu um on um.user_id=?1 and  um.menu_id = m.id",nativeQuery = true)
     List<Menu> findMenuByUserId(Integer userId);
 
+    @Override
+    List<Menu> findAll();
 }

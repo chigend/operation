@@ -22,7 +22,7 @@ public class MenuSelector extends Selector<String,DisplayMenu>{
     }
 
     @Override
-    public String selectCondition(DisplayMenu menu) {
+    protected String selectCondition(DisplayMenu menu) {
         return menu.getCategory();
     }
 }

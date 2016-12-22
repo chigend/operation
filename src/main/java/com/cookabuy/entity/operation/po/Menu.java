@@ -1,9 +1,7 @@
 package com.cookabuy.entity.operation.po;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author yejinbiao
@@ -11,13 +9,16 @@ import javax.persistence.Id;
  */
 
 @Entity
+@Table(name = "menu", schema = "public", catalog = "cooka_operation_dev")
 public class Menu {
     private String name;
     private Integer id;
-    private Integer parentId;
     //菜单的类目
     private String category;
     private Integer permissionId;
+
+    private List<Operation> operations;
+
 
     @Basic
     @Column(name = "name")
@@ -49,15 +50,6 @@ public class Menu {
         this.category = category;
     }
 
-    @Basic
-    @Column(name = "parent_id")
-    public Integer getParentId() {
-        return parentId;
-    }
-
-    public void setParentId(Integer parentId) {
-        this.parentId = parentId;
-    }
 
     @Basic
     @Column(name = "permission_id")
@@ -69,6 +61,16 @@ public class Menu {
         this.permissionId = permissionId;
     }
 
+    @OneToMany(fetch = FetchType.EAGER)
+    @JoinColumn(name="menu_id")
+    public List<Operation> getOperations() {
+        return operations;
+    }
+
+    public void setOperations(List<Operation> operations) {
+        this.operations = operations;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -78,18 +80,19 @@ public class Menu {
 
         if (name != null ? !name.equals(menu.name) : menu.name != null) return false;
         if (id != null ? !id.equals(menu.id) : menu.id != null) return false;
-        if (parentId != null ? !parentId.equals(menu.parentId) : menu.parentId != null) return false;
+        if (category != null ? !category.equals(menu.category) : menu.category != null) return false;
         if (permissionId != null ? !permissionId.equals(menu.permissionId) : menu.permissionId != null) return false;
+        return operations != null ? operations.equals(menu.operations) : menu.operations == null;
 
-        return true;
     }
 
     @Override
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (id != null ? id.hashCode() : 0);
-        result = 31 * result + (parentId != null ? parentId.hashCode() : 0);
+        result = 31 * result + (category != null ? category.hashCode() : 0);
         result = 31 * result + (permissionId != null ? permissionId.hashCode() : 0);
+        result = 31 * result + (operations != null ? operations.hashCode() : 0);
         return result;
     }
 }
