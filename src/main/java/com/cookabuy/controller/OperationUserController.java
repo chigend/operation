@@ -105,7 +105,8 @@ public class OperationUserController {
     @RequestMapping("prepare_update_user")
 
     public Result updateUser(String username, Result result) {
-        List<Integer> opIds = operationRepository.findOperationIdsByUserId(1);
+        Integer userId = operationUserRepository.findByUsername(username).getId();
+        List<Integer> opIds = operationRepository.findOperationIdsByUserId(userId);
         log.info("opids is {}", opIds);
         List<Menu> menus = menuRepository.findAll();
         menus.stream().forEach(menu -> {
