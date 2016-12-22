@@ -24,9 +24,9 @@ public class TestMenuRepository extends AbstractJpaTest{
     @Test
     public void test(){
         List<DisplayMenu> menus = dozerHelper.mapList(menuRepository.findMenuByUserId(1),DisplayMenu.class);
-        Selector selector = new MenuSelector(menus);
+        MenuSelector menuSelector = new MenuSelector(menus);
 
-        String result = JSON.toJSONString(selector.getSelecResult());
+        String result = JSON.toJSONString(menuSelector.getSelectResult());
         System.out.println(result);
     }
 }

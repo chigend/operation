@@ -35,14 +35,14 @@ public abstract class Selector<CONDITION, ENTITY> {
         }
     }
 
-    public void select(Collection<? extends ENTITY> unsortedItems){
+    public void select(Collection<ENTITY> unsortedItems){
         unsortedItems.stream().forEach(this::select);
     }
 
     /**
      * @return
      */
-    public Collection<Cell> getSelecResult() {
+    public Collection<Cell> getSelectResult() {
         return cabinet.values();
     }
 

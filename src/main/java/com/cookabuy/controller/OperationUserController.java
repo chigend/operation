@@ -99,4 +99,5 @@ public class OperationUserController {
     private boolean checkAccoutAvaiable(String username){
         return username == null ? false : operationUserRepository.findByUsername(username) == null;
     }
+
 }

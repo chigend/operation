@@ -9,12 +9,14 @@ import com.cookabuy.util.Result;
 import com.cookabuy.util.ShiroHelper;
 import com.cookabuy.util.selector.MenuSelector;
 import com.cookabuy.util.selector.Selector;
+import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -22,6 +24,7 @@ import java.util.List;
  */
 @Controller
 @RequestMapping("/operate")
+@Slf4j
 public class MenuController {
     @Autowired
     private MenuRepository menuRepository;
@@ -37,14 +40,18 @@ public class MenuController {
 
 
     @RequestMapping("/menus")
-    public Result getMenus(Result result){
+    @ResponseBody
+    public Result getMenus(Result result, HttpSession session){
         Integer userId = ShiroHelper.getCurrentUserId();
+        log.info("userId is {}",userId);
         List<Menu> menus = menuRepository.findMenuByUserId(userId);
         //过滤掉po中不需要展示给前端的属性
         List<DisplayMenu> displayMenus = dozerHelper.mapList(menus,DisplayMenu.class);
         Selector menuSelector = new MenuSelector(displayMenus);
 
-        result.addData("menus",menuSelector.getSelecResult());
+        result.addData("menus",menuSelector.getSelectResult());
+
+        session.setAttribute("menus",menus);
 
         return result;
 

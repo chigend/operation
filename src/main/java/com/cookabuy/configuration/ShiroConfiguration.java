@@ -91,7 +91,7 @@ public class ShiroConfiguration {
         filters.put("authc",getFormFilter());
         Map<String,String> definition = new HashMap<String,String>();
         definition.put("/login", "anon");
-        definition.put("/*", "authc");
+        definition.put("/**", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(definition);
         shiroFilterFactoryBean.setFilters(filters);

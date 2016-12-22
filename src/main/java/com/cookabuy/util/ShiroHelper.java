@@ -21,4 +21,5 @@ public class ShiroHelper {
     public static String getCurrentUsername(){
         return getCurrentUser() == null ? null : getCurrentUser().getUsername();
     }
+
 }
