@@ -12,6 +12,7 @@ import javax.persistence.*;
 public class Operation {
     private String name;
     private Integer id;
+    private Integer menuId;
     private Integer permissionId;
     private boolean selected;
 
@@ -22,6 +23,15 @@ public class Operation {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+    }
+    @Basic
+    @Column(name = "menu_id")
+    public Integer getMenuId() {
+        return menuId;
+    }
+
+    public void setMenuId(Integer menuId) {
+        this.menuId = menuId;
     }
 
     @Basic

@@ -15,7 +15,6 @@ public class Menu {
     private Integer id;
     //菜单的类目
     private String category;
-    private Integer permissionId;
 
     private List<Operation> operations;
 
@@ -51,16 +50,6 @@ public class Menu {
     }
 
 
-    @Basic
-    @Column(name = "permission_id")
-    public Integer getPermissionId() {
-        return permissionId;
-    }
-
-    public void setPermissionId(Integer permissionId) {
-        this.permissionId = permissionId;
-    }
-
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="menu_id")
     public List<Operation> getOperations() {
@@ -81,7 +70,6 @@ public class Menu {
         if (name != null ? !name.equals(menu.name) : menu.name != null) return false;
         if (id != null ? !id.equals(menu.id) : menu.id != null) return false;
         if (category != null ? !category.equals(menu.category) : menu.category != null) return false;
-        if (permissionId != null ? !permissionId.equals(menu.permissionId) : menu.permissionId != null) return false;
         return operations != null ? operations.equals(menu.operations) : menu.operations == null;
 
     }
@@ -91,7 +79,6 @@ public class Menu {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (permissionId != null ? permissionId.hashCode() : 0);
         result = 31 * result + (operations != null ? operations.hashCode() : 0);
         return result;
     }

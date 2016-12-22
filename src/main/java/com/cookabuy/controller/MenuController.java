@@ -1,7 +1,6 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.entity.operation.dto.DisplayMenu;
-import com.cookabuy.entity.operation.dto.MenuForUpdate;
 import com.cookabuy.entity.operation.po.Menu;
 import com.cookabuy.repository.operation.MenuRepository;
 import com.cookabuy.util.DozerHelper;
@@ -29,14 +28,6 @@ public class MenuController {
     private MenuRepository menuRepository;
     @Autowired
     private DozerHelper dozerHelper;
-    @RequestMapping("/menu_list2")
-    @ResponseBody
-    public  List<MenuForUpdate> menuList(){
-        List<Menu> menus = menuRepository.findAll();
-        List<MenuForUpdate> menuList = dozerHelper.mapList(menus,MenuForUpdate.class);
-        return menuList;
-    }
-
 
     @RequestMapping("/menus")
     @ResponseBody

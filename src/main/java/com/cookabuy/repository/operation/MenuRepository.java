@@ -2,10 +2,12 @@ package com.cookabuy.repository.operation;
 
 import com.cookabuy.entity.operation.po.Menu;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
+@Transactional
 public interface MenuRepository extends JpaRepository<Menu,Integer> {
     @Override
     <S extends Menu> S save(S entity);
@@ -41,4 +43,8 @@ public interface MenuRepository extends JpaRepository<Menu,Integer> {
 
     @Override
     List<Menu> findAll();
+
+    @Modifying
+    @Query(value = "delete from user_menu where user_id=?1",nativeQuery = true)
+    void deleteByUserId(Integer userId);
 }

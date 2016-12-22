@@ -1,29 +1,21 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.entity.operation.dto.AddUserForm;
-import com.cookabuy.entity.operation.dto.DisplayMenu;
 import com.cookabuy.entity.operation.dto.DisplayUser;
-import com.cookabuy.entity.operation.po.*;
+import com.cookabuy.entity.operation.dto.UpdateUserForm;
+import com.cookabuy.entity.operation.po.Menu;
+import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.repository.operation.*;
-import com.cookabuy.repository.service.ItemRepository;
+import com.cookabuy.service.UserService;
 import com.cookabuy.util.DozerHelper;
-import com.cookabuy.util.EncryptUtils;
 import com.cookabuy.util.Result;
 import com.cookabuy.util.selector.Menu2Selector;
-import com.cookabuy.util.selector.MenuSelector;
-import com.cookabuy.validator.UserAddFormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.MessageCodeFormatter;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
-import javax.validation.constraints.AssertFalse;
 import java.util.List;
 
 /**
@@ -45,6 +37,9 @@ public class OperationUserController {
     private OperationRepository operationRepository;
 
     @Autowired
+    private UserService userService;
+
+    @Autowired
     private DozerHelper dozerHelper;
 
     @Autowired
@@ -53,13 +48,9 @@ public class OperationUserController {
     private UserPermissionRepository userPermissionRepository;
 
 
-    @InitBinder("addUserForm")
-    public void initBinder(WebDataBinder binder) {
-        binder.setValidator(new UserAddFormValidator());
-    }
 
-    @RequestMapping("/add_user")
-    public Result addUser(@RequestBody @Valid AddUserForm user, BindingResult bindingResult, Result result) {
+//    @RequestMapping("/add_user")
+//    public Result addUser(@RequestBody @Valid AddUserForm user, BindingResult bindingResult, Result result) {
 //        if(bindingResult.hasErrors()){
 //            String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("添加失败");
 //            result.setError(error);
@@ -90,8 +81,8 @@ public class OperationUserController {
 //        }
 //        result.setError("用户名已存在");
 //        return result;
-        return null;
-    }
+//        return null;
+//    }
 
     @RequestMapping("user_list")
     public Result getUserList(Result result) {
@@ -104,10 +95,9 @@ public class OperationUserController {
 
     @RequestMapping("prepare_update_user")
 
-    public Result updateUser(String username, Result result) {
+    public Result prepareForUpdate(String username, Result result) {
         Integer userId = operationUserRepository.findByUsername(username).getId();
         List<Integer> opIds = operationRepository.findOperationIdsByUserId(userId);
-        log.info("opids is {}", opIds);
         List<Menu> menus = menuRepository.findAll();
         menus.stream().forEach(menu -> {
             menu.getOperations().stream()
@@ -122,6 +112,20 @@ public class OperationUserController {
         result.addData("menus", selector.getSelectResult());
         return result;
     }
+
+    @RequestMapping("update_user")
+
+    public Result updateUser (@RequestBody UpdateUserForm userForm) {
+        return userService.updateUserMenuList(userForm.getUsername(),userForm.getMenuIds());
+    }
+
+
+
+
+
+
+
+
 
     private boolean checkAccoutAvaiable(String username) {
         return username == null ? false : operationUserRepository.findByUsername(username) == null;
