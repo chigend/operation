@@ -55,36 +55,37 @@ public class OperationUserController {
     }
     @RequestMapping("/add_user")
     public @ResponseBody Result addUser(@RequestBody@Valid AddUserForm user, BindingResult bindingResult, Result result){
-        if(bindingResult.hasErrors()){
-            String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("添加失败");
-            result.setError(error);
-            return result;
-        }
-        boolean avaiable = checkAccoutAvaiable(user.getUsername());
-
-        if(avaiable){
-            //添加用户
-             OperationUser insertUser = mapper.map(user,OperationUser.class);
-            //密码加密
-            insertUser.setPassword(EncryptUtils.md5crypt(insertUser.getPassword()));
-             OperationUser addUser = operationUserRepository.save(insertUser);
-//            插入该用户能操作的菜单
-            user.getMenuIds().stream().forEach(menuId->{
-                UserMenu userMenu = new UserMenu(addUser.getId(),menuId);
-                userMenuRepository.save(userMenu);
-            });
-            //插入该用户所具备的权限
-
-            user.getPermissionIds().stream().forEach(permissionId->{
-                UserPermission permission = new UserPermission(addUser.getId(),permissionId);
-                userPermissionRepository.save(permission);
-            });
-
-            return result;
-
-        }
-        result.setError("用户名已存在");
-        return result;
+//        if(bindingResult.hasErrors()){
+//            String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("添加失败");
+//            result.setError(error);
+//            return result;
+//        }
+//        boolean avaiable = checkAccoutAvaiable(user.getUsername());
+//
+//        if(avaiable){
+//            //添加用户
+//             OperationUser insertUser = mapper.map(user,OperationUser.class);
+//            //密码加密
+//            insertUser.setPassword(EncryptUtils.md5crypt(insertUser.getPassword()));
+//             OperationUser addUser = operationUserRepository.save(insertUser);
+////            插入该用户能操作的菜单
+//            user.getMenuIds().stream().forEach(menuId->{
+//                UserMenu userMenu = new UserMenu(addUser.getId(),menuId);
+//                userMenuRepository.save(userMenu);
+//            });
+//            //插入该用户所具备的权限
+//
+//            user.getPermissionIds().stream().forEach(permissionId->{
+//                UserPermission permission = new UserPermission(addUser.getId(),permissionId);
+//                userPermissionRepository.save(permission);
+//            });
+//
+//            return result;
+//
+//        }
+//        result.setError("用户名已存在");
+//        return result;
+        return null;
     }
 
     @RequestMapping("user_list")

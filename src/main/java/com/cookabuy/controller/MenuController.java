@@ -1,7 +1,7 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.entity.operation.dto.DisplayMenu;
-import com.cookabuy.entity.operation.dto.MenuForAddUser;
+import com.cookabuy.entity.operation.dto.MenuForUpdate;
 import com.cookabuy.entity.operation.po.Menu;
 import com.cookabuy.repository.operation.MenuRepository;
 import com.cookabuy.util.DozerHelper;
@@ -10,7 +10,6 @@ import com.cookabuy.util.ShiroHelper;
 import com.cookabuy.util.selector.MenuSelector;
 import com.cookabuy.util.selector.Selector;
 import lombok.extern.slf4j.Slf4j;
-import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,9 +31,9 @@ public class MenuController {
     private DozerHelper dozerHelper;
     @RequestMapping("/menu_list2")
     @ResponseBody
-    public  List<MenuForAddUser> menuList(){
+    public  List<MenuForUpdate> menuList(){
         List<Menu> menus = menuRepository.findAll();
-        List<MenuForAddUser> menuList = dozerHelper.mapList(menus,MenuForAddUser.class);
+        List<MenuForUpdate> menuList = dozerHelper.mapList(menus,MenuForUpdate.class);
         return menuList;
     }
 

@@ -1,8 +1,10 @@
 package com.cookabuy.entity.operation.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -16,6 +18,7 @@ public class DisplayUser {
 
     private String realName;
 
+    @JsonFormat(pattern="yyyy-MM-dd hh:mm:ss")
     private Date createTime;
 
     private String username;
