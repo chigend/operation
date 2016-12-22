@@ -102,7 +102,7 @@ public class OperationUserController {
 
     }
 
-    @RequestMapping("update_user")
+    @RequestMapping("prepare_update_user")
 
     public Result updateUser(String username, Result result) {
         List<Integer> opIds = operationRepository.findOperationIdsByUserId(1);
