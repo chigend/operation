@@ -1,7 +1,7 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.validator.ReplaceRecommendFormValidator;
-import com.cookabuy.entity.service.dto.input.ReplaceRecommendForm;
+import com.cookabuy.entity.service.dto.ReplaceRecommendForm;
 import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.service.RecommendService;
 import com.cookabuy.util.Result;

@@ -36,4 +36,10 @@ public class TestMenuRepository extends AbstractJpaTest{
         Menu menu = menuRepository.findOne(1);
         System.out.println(JSON.toJSON(menu));
     }
+
+    @Test
+    public void testtwo(){
+      List<Menu> menus =  menuRepository.findAll();
+        System.out.println(JSON.toJSONString(menus));
+    }
 }

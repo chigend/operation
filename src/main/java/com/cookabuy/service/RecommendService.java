@@ -1,7 +1,7 @@
 package com.cookabuy.service;
 
 //import com.cookabuy.repository.service.RecommendRepository;
-import com.cookabuy.entity.service.dto.input.ReplaceRecommendForm;
+import com.cookabuy.entity.service.dto.ReplaceRecommendForm;
 import com.cookabuy.entity.service.po.Recommend;
 import com.cookabuy.repository.service.RecommendRepository;
 import lombok.extern.slf4j.Slf4j;

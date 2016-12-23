@@ -1,6 +1,6 @@
 package com.cookabuy.validator;
 
-import com.cookabuy.entity.service.dto.input.ReplaceRecommendForm;
+import com.cookabuy.entity.service.dto.ReplaceRecommendForm;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
