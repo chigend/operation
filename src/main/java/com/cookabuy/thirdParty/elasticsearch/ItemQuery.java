@@ -1,4 +1,4 @@
-package com.cookabuy.elasticsearch;
+package com.cookabuy.thirdParty.elasticsearch;
 
 import lombok.Getter;
 import lombok.Setter;

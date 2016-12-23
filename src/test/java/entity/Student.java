@@ -36,5 +36,8 @@ public class Student {
 
     }
 
-
+    @Override
+    public int hashCode() {
+        return 1;
+    }
 }

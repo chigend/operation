@@ -157,6 +157,12 @@
             <artifactId>postgresql</artifactId>
             <version>9.4.1211</version>
         </dependency>
+        <!--腾讯云对象存储 ，上传文件-->
+        <dependency>
+            <groupId>com.qcloud</groupId>
+            <artifactId>cos_api</artifactId>
+            <version>4.2</version>
+        </dependency>
         <!--elasticsearch 2.4.3客户端-->
         <!--<dependency>-->
             <!--<groupId>org.elasticsearch</groupId>-->

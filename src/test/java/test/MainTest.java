@@ -1,25 +1,28 @@
 package test;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
+import com.qcloud.cos.COSClient;
+import com.qcloud.cos.exception.AbstractCosException;
+import com.qcloud.cos.request.UploadFileRequest;
+import com.qcloud.cos.sign.Credentials;
+import com.qcloud.cos.sign.Sign;
 import entity.Student;
-import org.elasticsearch.action.delete.DeleteResponse;
-import org.elasticsearch.action.get.GetResponse;
+import org.apache.commons.io.IOUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.collect.HppcMaps;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.index.query.QueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.transport.TcpTransport;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.Test;
 
-import java.lang.reflect.Array;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.stream.Stream;
 
 /**
  * 2016/12/8
@@ -50,10 +53,7 @@ public class MainTest {
       Student s5 = new Student("zhangsan",19);
       Student s6 = new Student("zhangsan",20);
       List<Student> studentList = Arrays.asList(s1,s2,s3,s4,s5,s6);
-      studentList.stream().filter(student -> student.getAge()==17).forEach(student -> {
-         student.setName("lisi");
-      });
-      System.out.println(studentList);
+      studentList.stream().distinct().forEach(System.out::println);
    }
 
    @Test
@@ -61,6 +61,26 @@ public class MainTest {
       Student s = null;
       Object o = (Object)s;
       System.out.print(o);
+   }
+
+   @Test
+   public void uploadImg() throws IOException, AbstractCosException {
+      String localPath = "C:\\Users\\Administrator\\Desktop\\1.jpg";
+      String bucketName = "test";
+      long appId = 1252811756;
+      String secretId = "AKIDa3RH1d7PWTDlZIbLeljVDj2MdjdKZ6C6";
+      String secretKey = "vfDYhglhT3c2KUSEsKZcUAewYEyXyFMI";
+      // 设置要操作的bucket
+      // 初始化秘钥信息
+      Credentials cred = new Credentials(appId, secretId, secretKey);
+      COSClient cosClient = new COSClient( cred);
+      UploadFileRequest uploadFileRequest = new UploadFileRequest(bucketName,"/ad/3.jpg", localPath);
+      String uploadFileRet = cosClient.uploadFile(uploadFileRequest);
+      System.out.println(uploadFileRet);
+      JSONObject object = JSON.parseObject(uploadFileRet);
+      JSONObject object1 = JSON.parseObject(object.get("data").toString());
+      System.out.println(object1.get("source_url"));
+
    }
 
 }
