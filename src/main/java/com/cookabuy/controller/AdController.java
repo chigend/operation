@@ -13,7 +13,9 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
 import java.util.List;
@@ -41,12 +43,12 @@ public class AdController {
     }
 
     @RequestMapping("add_ad")
-    public Result addAd(AddAdForm form,Result result){
+    public Result addAd(@RequestParam(value = "image") MultipartFile image , Result result){
 //        Ad ad = dozerBeanMapper.map(form,Ad.class);
 //        ad.setCreateTime(new Date());
 //        ad.setPageName(AdPageName.INDEX);
 //        adRepository.save(ad);
-        System.out.println(form.getImage());
+        System.out.println(image);
         return result;
     }
 
