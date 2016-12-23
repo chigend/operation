@@ -7,6 +7,8 @@ import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
 import com.cookabuy.util.DozerHelper;
 import com.cookabuy.util.Result;
+import org.apache.lucene.util.CollectionUtil;
+import org.apache.shiro.util.CollectionUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -40,11 +42,24 @@ public class AdController {
 
     @RequestMapping("add_ad")
     public Result addAd(AddAdForm form,Result result){
-        Ad ad = dozerBeanMapper.map(form,Ad.class);
-        ad.setCreateTime(new Date());
-        ad.setPageName(AdPageName.INDEX);
-        adRepository.save(ad);
+//        Ad ad = dozerBeanMapper.map(form,Ad.class);
+//        ad.setCreateTime(new Date());
+//        ad.setPageName(AdPageName.INDEX);
+//        adRepository.save(ad);
+        System.out.println(form.getImage());
         return result;
+    }
+
+    @RequestMapping("delete_ad")
+    public Result deleteAds(List<Integer> ids,Result result){
+        if(CollectionUtils.isEmpty(ids)){
+            result.setError("未指定要删除的轮播广告");
+            return  result;
+        }
+        ids.stream().forEach(adRepository::delete);
+
+        return result;
+
     }
 
 }

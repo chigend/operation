@@ -1,5 +1,6 @@
 package com.cookabuy.thirdParty.cos;
 
+import com.alibaba.druid.util.StringUtils;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cookabuy.properties.CosProperties;
@@ -27,8 +28,9 @@ public class FileHelper {
         this.cosClient = new COSClient( cred);
     }
 
-    public String uploadFile(String bucketName,String cosPath,byte [] data){
-        UploadFileRequest uploadFileRequest = new UploadFileRequest(bucketName,cosPath, data);
+    public String uploadFile(String bucketName,String descPath,byte [] data){
+
+        UploadFileRequest uploadFileRequest = new UploadFileRequest(bucketName,descPath, data);
         String response = cosClient.uploadFile(uploadFileRequest);
         JSONObject object = JSON.parseObject(response);
         JSONObject object1 = JSON.parseObject(object.get("data").toString());

@@ -9,6 +9,7 @@ import com.qcloud.cos.sign.Credentials;
 import com.qcloud.cos.sign.Sign;
 import entity.Student;
 import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -23,6 +24,7 @@ import java.io.InputStream;
 import java.net.InetAddress;
 import java.util.Arrays;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 2016/12/8
@@ -81,6 +83,10 @@ public class MainTest {
       JSONObject object1 = JSON.parseObject(object.get("data").toString());
       System.out.println(object1.get("source_url"));
 
+   }
+   @Test
+   public void testuuid(){
+//      DateUtils.
    }
 
 }

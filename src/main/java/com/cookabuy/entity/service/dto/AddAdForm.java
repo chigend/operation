@@ -1,15 +1,20 @@
 package com.cookabuy.entity.service.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
+
 import java.util.Date;
 
 /**
  * @author yejinbiao
  * @create 2016-12-23-13:30
  */
-
+@Setter
+@Getter
 public class AddAdForm {
 
-    private String picUrl;
+    private MultipartFile image;
 
     private String activityUrl;
 
