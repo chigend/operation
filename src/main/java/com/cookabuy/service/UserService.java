@@ -1,10 +1,7 @@
 package com.cookabuy.service;
 
 import com.cookabuy.entity.operation.dto.UpdateUserForm;
-import com.cookabuy.entity.operation.po.Operation;
-import com.cookabuy.entity.operation.po.OperationUser;
-import com.cookabuy.entity.operation.po.UserMenu;
-import com.cookabuy.entity.operation.po.UserOp;
+import com.cookabuy.entity.operation.po.*;
 import com.cookabuy.repository.operation.*;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -33,6 +30,10 @@ public class UserService {
 
     @Autowired
     private UserOpRepository userOpRepository;
+
+    @Autowired
+    private UserPermissionRepository userPermissionRepository;
+
 
 
 
@@ -80,10 +81,17 @@ public class UserService {
         });
         //删除该用户下所有的操作Operation项
         userOpRepository.deleteByUserId(userId);
-        //为该用户生成新的Operation项，同时给该用户分配对应operation的权限
+        //为该用户生成新的Operation项，
         form.getOperationIds().stream().distinct().forEach(opId->{
             UserOp userOp = new UserOp(userId,opId);
             userOpRepository.save(userOp);
+        });
+        //删除该用户下所有的权限
+        userPermissionRepository.deleteByUserId(userId);
+        //也为该用户分配所对应operation的权限
+        form.getPermissionIds().stream().distinct().forEach(permissionId->{
+            UserPermission userPermission = new UserPermission(userId,permissionId);
+            userPermissionRepository.save(userPermission);
         });
         return new Result();
     }

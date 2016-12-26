@@ -1,5 +1,6 @@
 package com.cookabuy.entity.operation.dto;
 
+import com.cookabuy.entity.operation.po.Permission;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -21,6 +22,8 @@ public class UpdateUserForm {
     private List<Integer> menuIds;
 
     private List<Integer> operationIds;
+
+    private List<Integer> permissionIds;
 
 
 }
