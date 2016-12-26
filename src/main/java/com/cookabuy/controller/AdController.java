@@ -12,9 +12,7 @@ import com.cookabuy.util.Result;
 import org.apache.shiro.util.CollectionUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Date;
@@ -63,16 +61,14 @@ public class AdController {
         return result;
     }
 
+
     @RequestMapping("delete_ad")
-    public Result deleteAds(List<Integer> ids,Result result){
+    public Result deleteAd(@RequestBody List<Integer> ids){
         if(CollectionUtils.isEmpty(ids)){
-            result.setError("未指定要删除的轮播广告");
-            return  result;
+            return new Result("未指定要删除的广告轮播图");
         }
         ids.stream().forEach(adRepository::delete);
-
-        return result;
-
+        return new Result();
     }
 
 }
