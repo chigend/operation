@@ -4,6 +4,7 @@ import com.cookabuy.constant.AdPageName;
 import com.cookabuy.constant.CosConstant;
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
+import com.cookabuy.entity.service.dto.SaveAdForm;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
 import com.cookabuy.thirdParty.cos.FileHelper;
@@ -70,5 +71,18 @@ public class AdController {
         ids.stream().forEach(adRepository::delete);
         return new Result();
     }
+
+    @RequestMapping("save_ad")
+    public Result save(@RequestBody List<SaveAdForm> list){
+        if(CollectionUtils.isEmpty(list)){
+            return new Result("未选中要保存的内容");
+        }
+        list.stream().filter(ad-> ad.getAdId()!=null && ad.getPosition()!=null).forEach(ad->{
+            adRepository.updatePositionById(ad.getAdId(),ad.getPosition());
+        });
+        return new Result();
+    }
+
+
 
 }
