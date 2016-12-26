@@ -11,7 +11,7 @@ import java.util.Date;
 @Table(name = "ad", schema = "public", catalog = "cookabuy_pc_dev")
 public class Ad {
 
-    private Integer id;
+    private Integer adId;
 
     private String picUrl;
 
@@ -23,16 +23,18 @@ public class Ad {
 
     private String pageName;
 
+    public Integer getAdId() {
+        return adId;
+    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ad_id")
-    public Integer getAd_id() {
-        return id;
+    public void setAdId(Integer adId) {
+        this.adId = adId;
     }
 
-    public void setAd_id(Integer id) {
-        this.id = id;
-    }
+
+
 
     @Basic
     @Column(name = "pic_url")

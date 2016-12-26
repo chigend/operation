@@ -45,7 +45,6 @@ public class FileHelper {
     public String uploadFile(String bucketName,String directoryPath,String originFileName,byte [] bytes){
 
         String suffix = FileUtils.getSuffix(originFileName);
-        log.info("file suffix is {}",suffix);
         String fileName = UUID.randomUUID().toString().concat(suffix);
         UploadFileRequest uploadFileRequest = new UploadFileRequest(bucketName,directoryPath.concat(fileName), bytes);
         String res = cosClient.uploadFile(uploadFileRequest);
