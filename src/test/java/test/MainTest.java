@@ -4,10 +4,12 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.exception.AbstractCosException;
+import com.qcloud.cos.request.DelFileRequest;
 import com.qcloud.cos.request.UploadFileRequest;
 import com.qcloud.cos.sign.Credentials;
 import com.qcloud.cos.sign.Sign;
 import entity.Student;
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.time.DateUtils;
 import org.elasticsearch.action.search.SearchResponse;
@@ -85,8 +87,27 @@ public class MainTest {
 
    }
    @Test
-   public void testuuid(){
-//      DateUtils.
+   public void testGetCosPath(){
+      String url = "http://test-1252811756.cosgz.myqcloud.com/ad/1.jpg";
+      String cosPath = com.cookabuy.util.FileUtils.getCosPath(url);
+      System.out.println(cosPath);
+   }
+
+   @Test
+   public void testCosDeleteFile(){
+      String bucketName = "test";
+      long appId = 1252811756;
+      String secretId = "AKIDa3RH1d7PWTDlZIbLeljVDj2MdjdKZ6C6";
+      String secretKey = "vfDYhglhT3c2KUSEsKZcUAewYEyXyFMI";
+      // 设置要操作的bucket
+      // 初始化秘钥信息
+      Credentials cred = new Credentials(appId, secretId, secretKey);
+      COSClient cosClient = new COSClient( cred);
+      DelFileRequest delFileRequest = new DelFileRequest(bucketName,"/ad/3.jpg");
+      String uploadFileRet = cosClient.delFile(delFileRequest);
+      System.out.println(uploadFileRet);
+      JSONObject object = JSON.parseObject(uploadFileRet);
+      System.out.println(object.getInteger("code"));
    }
 
 }
