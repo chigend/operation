@@ -6,7 +6,7 @@ import com.cookabuy.entity.operation.po.Menu;
 import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.repository.operation.*;
 import com.cookabuy.service.UserService;
-import com.cookabuy.util.DozerHelper;
+import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import com.cookabuy.util.selector.Menu2Selector;
 import lombok.extern.slf4j.Slf4j;

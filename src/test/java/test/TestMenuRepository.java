@@ -4,9 +4,8 @@ import com.alibaba.fastjson.JSON;
 import com.cookabuy.entity.operation.dto.DisplayMenu;
 import com.cookabuy.entity.operation.po.Menu;
 import com.cookabuy.repository.operation.MenuRepository;
-import com.cookabuy.util.DozerHelper;
+import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.selector.MenuSelector;
-import com.cookabuy.util.selector.Selector;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

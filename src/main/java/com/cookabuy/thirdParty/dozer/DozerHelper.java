@@ -1,4 +1,4 @@
-package com.cookabuy.util;
+package com.cookabuy.thirdParty.dozer;
 
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,14 +1,12 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.constant.View;
 import com.cookabuy.entity.operation.dto.LoginForm;
 import com.cookabuy.entity.operation.dto.ResetPasswordForm;
 import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.repository.operation.OperationUserRepository;
-import com.cookabuy.util.DozerHelper;
+import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import com.cookabuy.validator.CompoundValidator;
-import com.cookabuy.validator.LoginFormValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
@@ -18,9 +16,6 @@ import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.crypto.hash.Md5Hash;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpMethod;
-import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
@@ -29,9 +24,6 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.naming.Binding;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 /**

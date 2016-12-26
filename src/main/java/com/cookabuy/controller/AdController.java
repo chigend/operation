@@ -1,23 +1,22 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.constant.AdPageName;
+import com.cookabuy.constant.CosConstant;
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
-import com.cookabuy.util.DozerHelper;
+import com.cookabuy.thirdParty.cos.FileHelper;
+import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
-import org.apache.lucene.util.CollectionUtil;
 import org.apache.shiro.util.CollectionUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -29,10 +28,16 @@ import java.util.List;
 public class AdController {
     @Autowired
     private AdRepository adRepository;
+
     @Autowired
     private DozerHelper dozerHelper;
+
     @Autowired
     private DozerBeanMapper dozerBeanMapper;
+
+    @Autowired
+    private FileHelper fileHelper;
+
     @RequestMapping("ads")
     public Result findIndexAds(Result result){
         List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(AdPageName.INDEX);
@@ -43,12 +48,16 @@ public class AdController {
     }
 
     @RequestMapping("add_ad")
-    public Result addAd(@RequestParam(value = "image") MultipartFile image , Result result){
-//        Ad ad = dozerBeanMapper.map(form,Ad.class);
-//        ad.setCreateTime(new Date());
-//        ad.setPageName(AdPageName.INDEX);
-//        adRepository.save(ad);
-        System.out.println(image);
+    public Result addAd(AddAdForm form , Result result){
+        String picUrl = fileHelper.uploadFile(CosConstant.BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage());
+        if(picUrl == null){
+            result.setError("图片上传失败");
+            return result;
+        }
+        Ad ad = dozerBeanMapper.map(form,Ad.class);
+        ad.setPicUrl(picUrl);
+        ad.setPageName(AdPageName.INDEX);
+        adRepository.save(ad);
         return result;
     }
 

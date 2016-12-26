@@ -3,7 +3,7 @@ package com.cookabuy.controller;
 import com.cookabuy.entity.operation.dto.DisplayMenu;
 import com.cookabuy.entity.operation.po.Menu;
 import com.cookabuy.repository.operation.MenuRepository;
-import com.cookabuy.util.DozerHelper;
+import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import com.cookabuy.util.ShiroHelper;
 import com.cookabuy.util.selector.MenuSelector;
