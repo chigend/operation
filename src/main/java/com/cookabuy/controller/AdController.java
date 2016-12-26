@@ -117,6 +117,13 @@ public class AdController {
         return new Result();
     }
 
+    @RequestMapping("toggle_hidden")
+    public Result toggle(Integer adId,Result result){
+
+        adRepository.toggleHiddenByAdId(adId);
+        return result;
+    }
+
 
 
 }

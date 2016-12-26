@@ -39,4 +39,13 @@ public interface AdRepository extends JpaRepository<Ad,Integer> {
     @Query(value = "update ad set position = ?2 where ad_id=?1",nativeQuery = true)
     void updatePositionById(Integer adId,Integer position);
 
+    /**
+     * 根据id 对ad表中的is_hidden字段进行取反操作
+     * @param id
+     */
+    @Modifying
+    @Query(value = "update ad set is_hidden = not is_hidden where ad_id=?1",nativeQuery = true)
+
+    void toggleHiddenByAdId(Integer id);
+
 }
