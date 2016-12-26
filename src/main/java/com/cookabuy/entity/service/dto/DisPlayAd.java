@@ -23,4 +23,6 @@ public class DisPlayAd {
     private Date createTime;
 
     private String pageName;
+
+    private boolean isHidden;
 }

@@ -22,6 +22,8 @@ public class Ad {
     private Integer position;
 
     private String pageName;
+
+    private boolean isHidden;
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ad_id")
@@ -84,5 +86,15 @@ public class Ad {
 
     public void setPageName(String pageName) {
         this.pageName = pageName;
+    }
+
+    @Basic
+    @Column(name = "is_hidden")
+    public boolean isHidden() {
+        return isHidden;
+    }
+
+    public void setHidden(boolean hidden) {
+        isHidden = hidden;
     }
 }
