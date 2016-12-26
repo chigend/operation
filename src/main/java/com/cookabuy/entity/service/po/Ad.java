@@ -22,13 +22,13 @@ public class Ad {
     private Integer position;
 
     private String pageName;
-
-    public Integer getAdId() {
-        return adId;
-    }
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ad_id")
+    public Integer getAdId() {
+        return adId;
+    }
+
     public void setAdId(Integer adId) {
         this.adId = adId;
     }
