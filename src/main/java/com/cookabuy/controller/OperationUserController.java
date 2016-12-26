@@ -116,7 +116,7 @@ public class OperationUserController {
     @RequestMapping("update_user")
 
     public Result updateUser (@RequestBody UpdateUserForm userForm) {
-        return userService.updateUserMenuList(userForm.getUsername(),userForm.getMenuIds());
+        return userService.updateUser(userForm);
     }
 
 

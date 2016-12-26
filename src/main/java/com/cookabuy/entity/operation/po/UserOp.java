@@ -14,6 +14,15 @@ public class UserOp {
     private Integer userId;
     private Integer opId;
 
+
+    public UserOp(Integer userId, Integer opId) {
+        this.userId = userId;
+        this.opId = opId;
+    }
+
+    public UserOp() {
+    }
+
     @Id
     @Column(name = "user_id")
     public Integer getUserId() {
