@@ -10,7 +10,8 @@ import java.util.Date;
 @Entity
 @Table(name = "ad", schema = "public", catalog = "cookabuy_pc_dev")
 public class Ad {
-    private Integer adId;
+
+    private Integer id;
 
     private String picUrl;
 
@@ -25,12 +26,12 @@ public class Ad {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ad_id")
-    public Integer getAdId() {
-        return adId;
+    public Integer getAd_id() {
+        return id;
     }
 
-    public void setAdId(Integer adId) {
-        this.adId = adId;
+    public void setAd_id(Integer id) {
+        this.id = id;
     }
 
     @Basic
