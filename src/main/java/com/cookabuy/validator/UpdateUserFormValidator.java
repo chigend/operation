@@ -25,9 +25,6 @@ public class UpdateUserFormValidator implements Validator {
         UpdateUserForm form = (UpdateUserForm)target;
         if(StringUtils.isEmpty(form.getRealName())){
             errors.reject("真实名字不能为空");
-        }else if (!((StringUtils.hasLength(form.getPassword()) && StringUtils.hasLength(form.getConfirmPassword()))
-                && (form.getPassword().equals(form.getConfirmPassword())))){
-            errors.reject("两次密码不一致");
         }
 
 
