@@ -25,7 +25,6 @@ public class ElasticSearchConfiguration {
 
     @Bean
     public TransportClient transportClient(ESProperties properties){
-        log.info("es properties {}",properties);
         TransportClient client = null;
         try {
              client = new PreBuiltTransportClient(Settings.EMPTY)

@@ -3,6 +3,7 @@ package test;
 import com.cookabuy.repository.service.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.bulk.BulkRequestBuilder;
+import org.elasticsearch.action.bulk.BulkResponse;
 import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -70,9 +71,14 @@ public class TestItemRepository extends AbstractJpaTest {
                 map.put("price", item.getPrice());
                 map.put("store_name", item.getStore().getStoreName());
                 map.put("title", item.getTitle());
-                IndexResponse response = client.prepareIndex("operation","item",String.valueOf(item.getNumIid())).setSource(map).get();
-                responses.add(response);
+                bulkRequest.add(client.prepareIndex("operation","item",String.valueOf(item.getNumIid())).setSource(map));
             });
+            BulkResponse response = bulkRequest.get();
+            if (response.hasFailures()){
+                String error = response.buildFailureMessage();
+                System.out.println(i+":"+error);
+
+            }
             offset = (int)(numOfOneTurn*i);
         }
 

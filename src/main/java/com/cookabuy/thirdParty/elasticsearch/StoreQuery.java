@@ -5,20 +5,17 @@ import lombok.Setter;
 
 /**
  * @author yejinbiao
- * @create 2016-12-19-上午11:26
+ * @create 2016-12-27-16:04
  */
 @Setter
 @Getter
-public class ItemQuery {
-    private String title;
+public class StoreQuery {
+    private String storeName;
 
-    private String store;
-
-    private Integer priceLow = 0;
-
-    private Integer priceHight = Integer.MAX_VALUE;
+    private String location;
 
     private Integer from=0;
 
     private Integer size=10;
+
 }

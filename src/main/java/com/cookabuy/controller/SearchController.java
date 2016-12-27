@@ -3,6 +3,7 @@ package com.cookabuy.controller;
 import com.cookabuy.constant.SearchType;
 import com.cookabuy.service.SearchService;
 import com.cookabuy.thirdParty.elasticsearch.ItemQuery;
+import com.cookabuy.thirdParty.elasticsearch.StoreQuery;
 import org.elasticsearch.action.search.SearchResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,13 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController {
     @Autowired
     private SearchService searchService;
-    @RequestMapping("/search")
-    public SearchResponse searchItem(ItemQuery itemQuery, @RequestParam(defaultValue = "item") String type){
-        switch (type){
-            case SearchType.ITEM:
+    @RequestMapping("/search_item")
+    public SearchResponse searchItem(ItemQuery itemQuery){
                 return searchService.searchItems(itemQuery);
-            default:
-                return searchService.searchItems(itemQuery);
-        }
+    }
+    @RequestMapping("/search_store")
+    public SearchResponse searchItem(StoreQuery storeQuery){
+        return searchService.searchStores(storeQuery);
     }
 }
