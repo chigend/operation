@@ -1,5 +1,6 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.validator.CompoundValidator;
 import com.cookabuy.validator.ReplaceRecommendFormValidator;
 import com.cookabuy.entity.service.dto.ReplaceRecommendForm;
 import com.cookabuy.repository.service.RecommendRepository;
@@ -30,10 +31,12 @@ public class RecommendController {
     private RecommendRepository recommendRepository;
 
     @Autowired
+    private CompoundValidator validator;
+    @Autowired
     private RecommendService recommendService;
-    @InitBinder("replaceRecommendForm")
+    @InitBinder
     public void initBinder(WebDataBinder binder) {
-            binder.setValidator(new ReplaceRecommendFormValidator());
+            binder.setValidator(this.validator);
     }
 
     @RequestMapping("/replace_recommend")

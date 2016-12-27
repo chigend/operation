@@ -19,6 +19,9 @@ public class OperationUser {
     private Date createTime;
     private boolean administrator;
 
+    private String roleTag;
+
+
 //    private List<Menu> menus;
 
     private List<Permission> permissions;
@@ -98,8 +101,17 @@ public class OperationUser {
         this.permissions = permissions;
     }
 
+    @Basic
+    @Column(name = "role_tag")
+    public String getRoleTag() {
+        return roleTag;
+    }
 
-//    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    public void setRoleTag(String roleTag) {
+        this.roleTag = roleTag;
+    }
+
+    //    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
 //    @JoinTable(name="user_menu",joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
 //            inverseJoinColumns = {@JoinColumn(name = "menu_id",referencedColumnName = "id")})
 //    public List<Menu> getMenus() {

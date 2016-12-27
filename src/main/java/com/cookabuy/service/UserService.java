@@ -5,6 +5,7 @@ import com.cookabuy.entity.operation.po.*;
 import com.cookabuy.repository.operation.*;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,6 +70,11 @@ public class UserService {
         if(user == null){
             return new Result("用户名不存在");
         }
+        //更新用户的基本信息，包括密码，真实姓名，角色标签
+        user.setPassword(new Md5Hash(form.getPassword()).toString());
+        user.setRealName(form.getRealName());
+        user.setRoleTag(form.getRoleTag());
+        operationUserRepository.save(user);
         //删除该用户下所有的菜单项
         Integer userId = user.getId();
         menuRepository.deleteByUserId(userId);

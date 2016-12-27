@@ -9,13 +9,19 @@ import com.cookabuy.service.UserService;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import com.cookabuy.util.selector.Menu2Selector;
+import com.cookabuy.validator.CompoundValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -47,6 +53,13 @@ public class OperationUserController {
     @Autowired
     private UserPermissionRepository userPermissionRepository;
 
+    @Autowired
+    private CompoundValidator validator;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.setValidator(this.validator);
+    }
 
 
 //    @RequestMapping("/add_user")
@@ -115,7 +128,13 @@ public class OperationUserController {
 
     @RequestMapping("update_user")
 
-    public Result updateUser (@RequestBody UpdateUserForm userForm) {
+    public Result updateUser (@RequestBody@Valid UpdateUserForm userForm, BindingResult bindingResult) {
+
+        if(bindingResult.hasErrors()){
+            String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("修改失败");
+
+            return new Result(error);
+        }
         return userService.updateUser(userForm);
     }
 

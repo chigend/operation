@@ -17,7 +17,13 @@ import java.util.List;
 public class UpdateUserForm {
     private String username;
 
-    private UpdateInfoForm info;
+    private String realName;
+
+    private String roleTag;
+
+    private String password;
+
+    private String confirmPassword;
 
     private List<Integer> menuIds;
 
