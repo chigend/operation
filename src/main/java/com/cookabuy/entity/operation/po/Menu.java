@@ -1,5 +1,7 @@
 package com.cookabuy.entity.operation.po;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -10,6 +12,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "menu", schema = "public", catalog = "cooka_operation_dev")
+@ToString
 public class Menu {
     private String name;
     private Integer id;
@@ -79,7 +82,6 @@ public class Menu {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (id != null ? id.hashCode() : 0);
         result = 31 * result + (category != null ? category.hashCode() : 0);
-        result = 31 * result + (operations != null ? operations.hashCode() : 0);
         return result;
     }
 }

@@ -99,7 +99,6 @@ public class OperationUserController {
         Integer userId = operationUserRepository.findByUsername(username).getId();
         List<Integer> opIds = operationRepository.findOperationIdsByUserId(userId);
         List<Menu> menus = menuRepository.findAll();
-        log.info("menus :{}",menus);
         menus.stream().forEach(menu -> {
             menu.getOperations().stream()
                     .filter(operation -> opIds.contains(operation.getId()))
