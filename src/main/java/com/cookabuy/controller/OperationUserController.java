@@ -1,5 +1,6 @@
 package com.cookabuy.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.cookabuy.entity.operation.dto.DisplayUser;
 import com.cookabuy.entity.operation.dto.UpdateUserForm;
 import com.cookabuy.entity.operation.po.Menu;
@@ -22,7 +23,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 2016/12/13
@@ -108,8 +111,12 @@ public class OperationUserController {
 
     @RequestMapping("prepare_update_user")
 
-    public Result prepareForUpdate(String username, Result result) {
-        Integer userId = operationUserRepository.findByUsername(username).getId();
+    public Result prepareForUpdate(String username, Result result,Map<String,String> userInfo) {
+        OperationUser user = operationUserRepository.findByUsername(username);
+        userInfo.put("realName",user.getRealName());
+        userInfo.put("roleTag",user.getRoleTag());
+        result.addData("user",userInfo);
+        Integer userId = user.getId();
         List<Integer> opIds = operationRepository.findOperationIdsByUserId(userId);
         List<Menu> menus = menuRepository.findAll();
         menus.stream().forEach(menu -> {
@@ -123,6 +130,7 @@ public class OperationUserController {
         selector.select(menus);
 
         result.addData("menus", selector.getSelectResult());
+
         return result;
     }
 
