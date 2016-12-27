@@ -25,28 +25,5 @@ import javax.validation.Valid;
 @RequestMapping("operate")
 @Slf4j
 public class RecommendController {
-    @Autowired
-    private DozerBeanMapper dozerBeanMapper;
-    @Autowired
-    private RecommendRepository recommendRepository;
-
-    @Autowired
-    private CompoundValidator validator;
-    @Autowired
-    private RecommendService recommendService;
-    @InitBinder
-    public void initBinder(WebDataBinder binder) {
-            binder.setValidator(this.validator);
-    }
-
-    @RequestMapping("/replace_recommend")
-    public Result replaceRecommend(Result result, @Valid ReplaceRecommendForm form, BindingResult bindingResult){
-        if(bindingResult.hasErrors()){
-            String error = bindingResult.getAllErrors().stream().map(ObjectError::getCode).findFirst().orElse("修改失败");
-            result.setError(error);
-            return result;
-        }
-        recommendService.replaceRecommend(form);
-        return result;
-    }
+//    @RequestMapping()
 }

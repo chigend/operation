@@ -28,10 +28,10 @@ public class SearchService {
         SearchRequestBuilder requestBuilder = client.prepareSearch("operation").setTypes("item");
 
         if(StringUtils.hasLength(query.getTitle())){
-            requestBuilder.setQuery(QueryBuilders.termQuery("title",query.getTitle()));
+            requestBuilder.setQuery(QueryBuilders.matchQuery("title",query.getTitle()));
         }
         if(StringUtils.hasLength(query.getStore())){
-            requestBuilder.setQuery(QueryBuilders.termQuery("store_name",query.getStore()));
+            requestBuilder.setQuery(QueryBuilders.matchQuery("store_name",query.getStore()));
         }
         requestBuilder.setPostFilter(
                 QueryBuilders.rangeQuery("price")
@@ -47,10 +47,10 @@ public class SearchService {
         SearchRequestBuilder requestBuilder = client.prepareSearch(ElasticSearchConstant.INDEX_NAME_OPERATION).setTypes(ElasticSearchConstant.TYPE_NAME_STORE);
 
         if(StringUtils.hasLength(query.getStoreName())){
-            requestBuilder.setQuery(QueryBuilders.termQuery("store_name",query.getStoreName()));
+            requestBuilder.setQuery(QueryBuilders.matchQuery("store_name",query.getStoreName()));
         }
         if(StringUtils.hasLength(query.getLocation())){
-            requestBuilder.setQuery(QueryBuilders.termQuery("location",query.getLocation()));
+            requestBuilder.setQuery(QueryBuilders.matchQuery("location",query.getLocation()));
         }
 
         //设置默认的排序方式，价格优先升序排序，上架时间降序排序
