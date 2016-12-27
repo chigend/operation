@@ -2,6 +2,7 @@ package com.cookabuy.validator;
 
 
 import com.cookabuy.entity.operation.dto.UpdateUserForm;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
@@ -12,7 +13,7 @@ import org.springframework.validation.Validator;
  * @author yejinbiao
  * @create 2016-12-27-10:22
  */
-
+@Component
 public class UpdateUserFormValidator implements Validator {
     @Override
     public boolean supports(Class<?> clazz) {
