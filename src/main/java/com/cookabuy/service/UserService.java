@@ -9,6 +9,7 @@ import org.apache.shiro.crypto.hash.Md5Hash;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.List;
 import java.util.concurrent.ExecutionException;
@@ -71,7 +72,9 @@ public class UserService {
             return new Result("用户名不存在");
         }
         //更新用户的基本信息，包括密码，真实姓名，角色标签
-        user.setPassword(new Md5Hash(form.getPassword()).toString());
+        if (StringUtils.hasLength(form.getPassword())){
+            user.setPassword(new Md5Hash(form.getPassword()).toString());
+        }
         user.setRealName(form.getRealName());
         user.setRoleTag(form.getRoleTag());
         operationUserRepository.save(user);
