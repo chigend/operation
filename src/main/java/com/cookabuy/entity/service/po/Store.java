@@ -32,8 +32,19 @@ public class Store {
     private Date insertedAt;
     private Date updatedAt;
     private Integer sellerId;
-    
-//    private List<Item> items;
+
+    private String category;
+
+    @Basic
+    @Column(name = "cat")
+    public String getCategory() {
+        return category;
+    }
+
+    public void setCategory(String category) {
+        this.category = category;
+    }
+    //    private List<Item> items;
 
 
 //    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "store")

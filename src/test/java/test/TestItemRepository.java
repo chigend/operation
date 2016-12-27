@@ -55,8 +55,8 @@ public class TestItemRepository extends AbstractJpaTest {
 
 
 
-    @Test(timeout = 60000*30)
-    public void testFindTop() {
+    @Test(timeout = Long.MAX_VALUE)
+    public void indexItem() {
         int numOfOneTurn = 1000;
         long count = itemRepository.count();
         int offset = 0;
@@ -77,4 +77,6 @@ public class TestItemRepository extends AbstractJpaTest {
         }
 
     }
+
+
 }

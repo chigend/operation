@@ -1,0 +1,30 @@
+package com.cookabuy.controller;
+
+import com.cookabuy.constant.SearchType;
+import com.cookabuy.service.SearchService;
+import com.cookabuy.thirdParty.elasticsearch.ItemQuery;
+import org.elasticsearch.action.search.SearchResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * @author yejinbiao
+ * @create 2016-12-27-13:49
+ */
+@RestController
+@RequestMapping("operate")
+public class SearchController {
+    @Autowired
+    private SearchService searchService;
+    @RequestMapping("/search")
+    public SearchResponse searchItem(ItemQuery itemQuery, @RequestParam(defaultValue = "item") String type){
+        switch (type){
+            case SearchType.ITEM:
+                return searchService.searchItems(itemQuery);
+            default:
+                return searchService.searchItems(itemQuery);
+        }
+    }
+}
