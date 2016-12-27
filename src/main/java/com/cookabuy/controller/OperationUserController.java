@@ -111,8 +111,9 @@ public class OperationUserController {
 
     @RequestMapping("prepare_update_user")
 
-    public Result prepareForUpdate(String username, Result result,Map<String,String> userInfo) {
+    public Result prepareForUpdate(String username, Result result) {
         OperationUser user = operationUserRepository.findByUsername(username);
+        Map<String,String> userInfo = new HashMap<>();
         userInfo.put("realName",user.getRealName());
         userInfo.put("roleTag",user.getRoleTag());
         result.addData("user",userInfo);
