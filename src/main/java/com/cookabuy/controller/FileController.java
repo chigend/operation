@@ -58,11 +58,11 @@ public class FileController {
 
        if (result.getResult().equals(Result.ResponseType.SUCCESS.name())
                && store.isPresent()){
-           String picUrl = store.get().getPicUrl();
-           if (picUrl != null){
+
                //如果推荐店铺的picUrl已存在，则将cos上的该图片删除
+           store.map(RecommendStore::getPicUrl).ifPresent(picUrl->{
                fileHelper.deleteFile(CosConstant.DIRECOTRY_PREFIX_STORE_PATH,picUrl);
-           }
+           });
            recommendStoreRepository.updatePicUrlByStoreId(url,storeId);
        }
         return result;
