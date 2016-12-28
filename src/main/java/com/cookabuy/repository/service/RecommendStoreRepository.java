@@ -34,7 +34,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     RecommendStore findByStoreId(Long storeId);
 
     @Modifying
-    @Query(value = "update recommend_store set pic_url = ?1 where store_id=?2",nativeQuery = true)
+    @Query(value = "update recommend_stores set pic_url = ?1 where store_id=?2",nativeQuery = true)
     void updatePicUrlByStoreId(String picUrl,Long storeId);
 
 }
