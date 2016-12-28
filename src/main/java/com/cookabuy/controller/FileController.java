@@ -6,13 +6,11 @@ import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.service.UpdateService;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.util.Result;
-import org.apache.commons.io.IOExceptionWithCause;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.swing.text.html.Option;
 import java.io.IOException;
 import java.util.Optional;
 
