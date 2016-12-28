@@ -21,6 +21,8 @@ public class TestRecommendStoreRepository extends AbstractJpaTest {
         System.out.println(json);
     }
     @Test
-    public void testMaxposition() {
+    public void testExistStoreId() {
+        boolean flag = recommendStoreRepository.exists(8L);
+        System.out.println(flag);
     }
 }

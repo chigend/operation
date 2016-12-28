@@ -44,4 +44,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
 
     @Query(value = "select COALESCE(max(COALESCE(position,0)),0) from recommend_stores where page = ?1",nativeQuery = true)
     int findMaxPositionByPage(String page);
+
+    @Query(value = "select case when count(*) > 0 then true else false end from recommend_stores where store_id = ?1",nativeQuery = true)
+    boolean exists(Long storeId);
 }

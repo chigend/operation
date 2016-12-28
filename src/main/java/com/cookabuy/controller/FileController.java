@@ -3,9 +3,11 @@ package com.cookabuy.controller;
 import com.cookabuy.constant.CosConstant;
 import com.cookabuy.entity.service.po.RecommendStore;
 import com.cookabuy.repository.service.RecommendStoreRepository;
+import com.cookabuy.service.GetService;
 import com.cookabuy.service.UpdateService;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.util.Result;
+import org.hibernate.sql.Update;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -13,6 +15,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.Optional;
+
+import static com.cookabuy.constant.CosConstant.*;
+import static com.cookabuy.constant.ElasticSearchConstant.*;
 
 /**
  * @author yejinbiao
@@ -30,6 +35,8 @@ public class FileController {
     @Autowired
     private RecommendStoreRepository recommendStoreRepository;
 
+    @Autowired
+    private GetService getService;
     @RequestMapping("/upload_ad_image")
     public Result uploadAdImage(MultipartFile file, Result result){
         System.out.println(file.getName());
@@ -48,20 +55,13 @@ public class FileController {
        if (url == null){
            return new Result("图片上传失败");
        }
-
-       Result result =  updateService.updateStoreUrl(storeId,url);
-       Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findByStoreId(storeId));
-
-       //如果elasticsearch上给store添加（或者更新）了图片并索引成功，并且该店铺已在推荐列表，那么将该推荐店铺的pic_url也更新
-
-       if (result.getResult().equals(Result.ResponseType.SUCCESS.name())
-               && store.isPresent()){
-
-               //如果推荐店铺的picUrl已存在，则将cos上的该图片删除
-//           store.map(RecommendStore::getPicUrl).ifPresent(picUrl->{
-//               fileHelper.deleteFile(CosConstant.DIRECOTRY_PREFIX_STORE_PATH,picUrl);
-//           });
-           recommendStoreRepository.updatePicUrlByStoreId(url,storeId);
+        Optional<String> originCosUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
+       Result result =  updateService.updateStoreUrl(storeId, url);
+       //如果elasticsearch上给store添加（或者更新）了图片并索引成功，那么将该推荐店铺的pic_url也更新
+       if (result.getResult().equals(Result.ResponseType.SUCCESS.name())) {
+           originCosUrl.ifPresent(value -> {
+               fileHelper.deleteFile(BUCKET, value);
+           });
        }
         return result;
     }

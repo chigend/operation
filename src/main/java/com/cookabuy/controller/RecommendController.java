@@ -6,6 +6,8 @@ import com.cookabuy.entity.service.po.RecommendStore;
 import com.cookabuy.entity.service.po.Store;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.repository.service.StoreRepository;
+import com.cookabuy.service.GetService;
+import com.cookabuy.service.UpdateService;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
@@ -37,11 +39,19 @@ public class RecommendController {
     private DozerHelper dozerHelper;
     @Autowired
     private FileHelper fileHelper;
+    @Autowired
+    private UpdateService updateService;
+    @Autowired
+    private GetService getService;
     @RequestMapping("/recommend_store")
     public Result recommendStore(@RequestBody List<RecommendStoreDTO> stores) {
         List<RecommendStore> recommendStores = dozerHelper.mapList(stores, RecommendStore.class);
         int maxPosition = recommendStoreRepository.findMaxPositionByPage(INDEX);
         for (RecommendStore store : recommendStores){
+            //如果推荐店铺列表中已经有该店铺则跳过
+            if(recommendStoreRepository.exists(store.getStoreId())){
+                continue;
+            }
             store.setInsertedAt(new Date());
             store.setUpdatedAt(new Date());
             store.setPage(INDEX);
@@ -82,23 +92,35 @@ public class RecommendController {
     }
 
     @RequestMapping("update_store_img")
-    public Result updateStoreImg(Integer id, MultipartFile image, Result result) {
+    public Result updateStoreImg(Integer id, MultipartFile image) {
         Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findOne(id));
         if (!store.isPresent()){
-            result.setError("该店铺未在推荐列表");
-            return result;
+            return new Result("该店铺未在推荐列表");
         }
+
         String url = fileHelper.uploadFile(BUCKET, DIRECOTRY_PREFIX_STORE_PATH, image);
         if (url == null) {
-            result.setError("图片修改失败");
-            return result;
+            return new Result("图片修改失败");
         }
-        result.addData("picUrl",url);
+        Long storeId = store.get().getStoreId();
+        //获取elastic 索引上原来的url
+        Optional <String> cosOriginalUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
+        //更新elastic 索引上的url
+        Result result = updateService.updateStoreUrl(storeId,url);
+        //如果更新成功就把cos上原来的url删除
+        if (result.getResult().equals(Result.ResponseType.SUCCESS.name())){
+            cosOriginalUrl.ifPresent(value ->{
+                fileHelper.deleteFile(BUCKET,value);
+            });
+        }
+
         //修改推荐店铺的图片url为上述新上传的图片url
         store.ifPresent(value ->{
             value.setPicUrl(url);
             recommendStoreRepository.save(value);
         });
+
+        result.addData("picUrl",url);
         return result;
 
 
