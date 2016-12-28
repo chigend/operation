@@ -52,13 +52,19 @@ public class FileController {
        }
 
        Result result =  updateService.updateStoreUrl(storeId,url);
-//       Optional<RecommendStore> store = Optional.ofNullable()
-       //如果重新索引成功并且
+       Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findByStoreId(storeId));
 
-//       if (result.getResult().equals(Result.ResponseType.SUCCESS.name())
-//               && ){
-//
-//       }
+       //如果elasticsearch上给store添加（或者更新）了图片并索引成功，并且该店铺已在推荐列表，那么将该推荐店铺的pic_url也更新
+
+       if (result.getResult().equals(Result.ResponseType.SUCCESS.name())
+               && store.isPresent()){
+           String picUrl = store.get().getPicUrl();
+           if (picUrl != null){
+               //如果推荐店铺的picUrl已存在，则将cos上的该图片删除
+               fileHelper.deleteFile(CosConstant.DIRECOTRY_PREFIX_STORE_PATH,picUrl);
+           }
+           recommendStoreRepository.updatePicUrlByStoreId(url,storeId);
+       }
         return result;
     }
 }

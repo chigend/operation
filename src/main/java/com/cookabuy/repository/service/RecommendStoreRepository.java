@@ -1,6 +1,8 @@
 package com.cookabuy.repository.service;
 import com.cookabuy.entity.service.po.RecommendStore;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
 
 public interface RecommendStoreRepository extends JpaRepository<RecommendStore,Integer> {
     @Override
@@ -27,6 +29,10 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     @Override
     void deleteAll();
 
-//    RecommendStore
+    RecommendStore findByStoreId(Long storeId);
+
+    @Modifying
+    @Query("update recommend_store set pic_url = ?1 where store_id=?2")
+    void updatePicUrlByStoreId(String picUrl,Long storeId);
 
 }
