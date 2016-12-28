@@ -6,21 +6,21 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface StoreRepository extends JpaRepository<Store,Integer> {
+public interface StoreRepository extends JpaRepository<Store,Long> {
     @Override
     <S extends Store> S save(S entity);
 
     @Override
-    Store findOne(Integer id);
+    Store findOne(Long id);
 
     @Override
-    boolean exists(Integer id);
+    boolean exists(Long id);
 
     @Override
     long count();
 
     @Override
-    void delete(Integer id);
+    void delete(Long id);
 
     @Override
     void delete(Store entity);

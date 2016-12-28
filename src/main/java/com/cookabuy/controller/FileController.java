@@ -58,9 +58,9 @@ public class FileController {
                && store.isPresent()){
 
                //如果推荐店铺的picUrl已存在，则将cos上的该图片删除
-           store.map(RecommendStore::getPicUrl).ifPresent(picUrl->{
-               fileHelper.deleteFile(CosConstant.DIRECOTRY_PREFIX_STORE_PATH,picUrl);
-           });
+//           store.map(RecommendStore::getPicUrl).ifPresent(picUrl->{
+//               fileHelper.deleteFile(CosConstant.DIRECOTRY_PREFIX_STORE_PATH,picUrl);
+//           });
            recommendStoreRepository.updatePicUrlByStoreId(url,storeId);
        }
         return result;

@@ -13,7 +13,7 @@ import java.util.Date;
 public class RecommendStore {
     private Integer id;
     private Long storeId;
-    private Integer page;
+    private String page;
     private Integer location;
     private Integer position;
     private String status;
@@ -49,11 +49,11 @@ public class RecommendStore {
 
     @Basic
     @Column(name = "page")
-    public Integer getPage() {
+    public String getPage() {
         return page;
     }
 
-    public void setPage(Integer page) {
+    public void setPage(String page) {
         this.page = page;
     }
 
@@ -136,6 +136,7 @@ public class RecommendStore {
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
     }
+
 
     @Override
     public boolean equals(Object o) {

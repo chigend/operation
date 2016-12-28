@@ -5,6 +5,8 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Transactional
 public interface RecommendStoreRepository extends JpaRepository<RecommendStore,Integer> {
     @Override
@@ -37,4 +39,6 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     @Query(value = "update recommend_stores set pic_url = ?1 where store_id=?2",nativeQuery = true)
     void updatePicUrlByStoreId(String picUrl,Long storeId);
 
+
+    List<RecommendStore> findByPage(String pageName);
 }

@@ -10,7 +10,13 @@ import lombok.Setter;
 @Setter
 @Getter
 public class RecommendStoreDTO {
+    private Integer id;
+
     private Long storeId;
+
+    private String storeName;
+
+    private String location;
 
     private String picUrl;
 }

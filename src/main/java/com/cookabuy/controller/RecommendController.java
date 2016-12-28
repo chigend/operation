@@ -1,8 +1,11 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.constant.PageContant;
 import com.cookabuy.entity.service.dto.RecommendStoreDTO;
 import com.cookabuy.entity.service.po.RecommendStore;
+import com.cookabuy.entity.service.po.Store;
 import com.cookabuy.repository.service.RecommendStoreRepository;
+import com.cookabuy.repository.service.StoreRepository;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.validator.CompoundValidator;
 import com.cookabuy.validator.ReplaceRecommendFormValidator;
@@ -35,6 +38,8 @@ public class RecommendController {
     @Autowired
     private RecommendStoreRepository recommendStoreRepository;
     @Autowired
+    private StoreRepository storeRepository;
+    @Autowired
     private DozerHelper dozerHelper;
     @RequestMapping("/recommend_store")
     public Result recommendStore(@RequestBody List<RecommendStoreDTO> stores){
@@ -46,9 +51,23 @@ public class RecommendController {
         });
         return new Result();
     }
+
+    /**
+     *
+     * @param page 指定该推荐店铺的页面位置
+     * @param result
+     * @return
+     */
     @RequestMapping("list_stores")
-    public Result listStores(Result result){
-        result.addData("stores", recommendStoreRepository.findAll());
+    public Result listStores(String page, Result result){
+        List<RecommendStore> recommendStores = recommendStoreRepository.findByPage(page);
+        List<RecommendStoreDTO> dtos = dozerHelper.mapList(recommendStores,RecommendStoreDTO.class);
+        dtos.stream().forEach(dto -> {
+            Store store = storeRepository.findOne(dto.getStoreId());
+            dto.setLocation(store.getLocation());
+            dto.setStoreName(store.getStoreName());
+        });
+        result.addData("stores", dtos);
         return result;
     }
 

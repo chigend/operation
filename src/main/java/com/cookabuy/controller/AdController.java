@@ -1,6 +1,6 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.constant.AdPageName;
+import com.cookabuy.constant.PageContant;
 import com.cookabuy.constant.CosConstant;
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
@@ -45,7 +45,7 @@ public class AdController {
 
     @RequestMapping("ads")
     public Result findIndexAds(Result result){
-        List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(AdPageName.INDEX);
+        List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(PageContant.INDEX);
 
         List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads,DisPlayAd.class);
         result.addData("ads",disPlayAds);
@@ -62,7 +62,7 @@ public class AdController {
         log.info("upload file successfully,source_url is {}",picUrl);
         Ad ad = dozerBeanMapper.map(form,Ad.class);
         ad.setPicUrl(picUrl);
-        ad.setPageName(AdPageName.INDEX);
+        ad.setPageName(PageContant.INDEX);
         ad.setCreateTime(new Date());
         adRepository.save(ad);
         return result;
