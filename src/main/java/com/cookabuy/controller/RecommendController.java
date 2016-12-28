@@ -21,6 +21,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.cookabuy.constant.CosConstant.*;
+import static com.cookabuy.constant.PageContant.*;
 /**
  * 2016/12/5
  */
@@ -42,6 +43,7 @@ public class RecommendController {
         recommendStores.stream().forEach(store->{
             store.setInsertedAt(new Date());
             store.setUpdatedAt(new Date());
+            store.setPage(INDEX);
             recommendStoreRepository.save(store);
         });
         return new Result();
