@@ -13,7 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 /**
- * 做查询的service
+ * elasticsearch的查询的service
  *
  * @author yejinbiao
  * @create 2016-12-19-上午9:51

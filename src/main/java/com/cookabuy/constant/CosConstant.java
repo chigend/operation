@@ -9,7 +9,7 @@ package com.cookabuy.constant;
 public class CosConstant {
     public static final String DIRECTORY_PREFIX_AD_PATH = "/ad/";
 
-
+    public static final String DIRECOTRY_PREFIX_STORE_PATH = "/store/";
 
     public static final String BUCKET = "test";
 }
