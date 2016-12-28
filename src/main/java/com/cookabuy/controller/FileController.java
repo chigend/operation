@@ -26,8 +26,9 @@ public class FileController {
 
     @Autowired
     private UpdateService updateService;
+
     @RequestMapping("/upload_ad_image")
-    public Result uploadAdImage(MultipartFile file,Result result){
+    public Result uploadAdImage(MultipartFile file, Result result){
         System.out.println(file.getName());
         try {
 
@@ -39,13 +40,11 @@ public class FileController {
     }
 
     @RequestMapping("/upload_store_img")
-    public Result uploadStoreImg(Long storeId,MultipartFile image,Result result){
+    public Result uploadStoreImg(Long storeId, MultipartFile image, Result result){
        String url = fileHelper.uploadFile(CosConstant.BUCKET,CosConstant.DIRECOTRY_PREFIX_STORE_PATH,image);
-
        if (url == null){
            return new Result("图片上传失败");
        }
-
        return updateService.updateStoreUrl(storeId,url);
     }
 }

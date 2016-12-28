@@ -13,6 +13,7 @@
         <mapping class="com.cookabuy.entity.operation.po.Operation"/>
         <mapping class="com.cookabuy.entity.operation.po.UserOp"/>
         <mapping class="com.cookabuy.entity.service.po.Stores"/>
+        <mapping class="com.cookabuy.entity.service.po.RecommendStore"/>
         <!-- DB schema will be updated if needed -->
         <!-- <property name="hbm2ddl.auto">update</property> -->
     </session-factory>
