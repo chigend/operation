@@ -22,7 +22,5 @@ public class TestRecommendStoreRepository extends AbstractJpaTest {
     }
     @Test
     public void testMaxposition() {
-        int maxPosition = recommendStoreRepository.findMaxPosition();
-        System.out.println(maxPosition);
     }
 }
