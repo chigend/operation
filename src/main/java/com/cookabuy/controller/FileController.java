@@ -1,6 +1,8 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.constant.CosConstant;
+import com.cookabuy.entity.service.po.RecommendStore;
+import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.service.UpdateService;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.util.Result;
@@ -27,6 +29,9 @@ public class FileController {
     @Autowired
     private UpdateService updateService;
 
+    @Autowired
+    private RecommendStoreRepository recommendStoreRepository;
+
     @RequestMapping("/upload_ad_image")
     public Result uploadAdImage(MultipartFile file, Result result){
         System.out.println(file.getName());
@@ -40,11 +45,20 @@ public class FileController {
     }
 
     @RequestMapping("/upload_store_img")
-    public Result uploadStoreImg(Long storeId, MultipartFile image, Result result){
+    public Result uploadStoreImg(Long storeId, MultipartFile image){
        String url = fileHelper.uploadFile(CosConstant.BUCKET,CosConstant.DIRECOTRY_PREFIX_STORE_PATH,image);
        if (url == null){
            return new Result("图片上传失败");
        }
-       return updateService.updateStoreUrl(storeId,url);
+
+       Result result =  updateService.updateStoreUrl(storeId,url);
+//       Optional<RecommendStore> store = Optional.ofNullable()
+       //如果重新索引成功并且
+
+//       if (result.getResult().equals(Result.ResponseType.SUCCESS.name())
+//               && ){
+//
+//       }
+        return null;
     }
 }

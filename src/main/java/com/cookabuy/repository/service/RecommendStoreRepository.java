@@ -27,4 +27,6 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     @Override
     void deleteAll();
 
+//    RecommendStore
+
 }

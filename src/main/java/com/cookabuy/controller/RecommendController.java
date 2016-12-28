@@ -40,7 +40,6 @@ public class RecommendController {
     public Result recommendStore(@RequestBody List<RecommendStoreDTO> stores){
         List<RecommendStore> recommendStores = dozerHelper.mapList(stores, RecommendStore.class);
         recommendStores.stream().forEach(store->{
-            store.setInsertedAt(new Date());
             store.setUpdatedAt(new Date());
             recommendStoreRepository.save(store);
         });
