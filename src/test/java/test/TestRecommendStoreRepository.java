@@ -20,4 +20,9 @@ public class TestRecommendStoreRepository extends AbstractJpaTest {
         String json = JSON.toJSONString(recommendStoreRepository.findAll());
         System.out.println(json);
     }
+    @Test
+    public void testMaxposition() {
+        int maxPosition = recommendStoreRepository.findMaxPosition();
+        System.out.println(maxPosition);
+    }
 }
