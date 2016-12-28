@@ -59,7 +59,7 @@ public class RecommendController {
      */
     @RequestMapping("list_stores")
     public Result listStores(String page, Result result) {
-        List<RecommendStore> recommendStores = recommendStoreRepository.findByPage(page);
+        List<RecommendStore> recommendStores = recommendStoreRepository.findByPageOrderByPositionAsc(page);
         List<RecommendStoreDTO> dtos = dozerHelper.mapList(recommendStores,RecommendStoreDTO.class);
         dtos.stream().forEach(dto -> {
             Store store = storeRepository.findOne(dto.getStoreId());
