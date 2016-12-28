@@ -40,7 +40,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     void updatePicUrlByStoreId(String picUrl,Long storeId);
 
 
-    List<RecommendStore> findByPage(String pageName);
+    List<RecommendStore> findByPageOrderByPositionAsc(String pageName);
 
     @Query(value = "select COALESCE(max(COALESCE(position,0)),0) from recommend_stores where page = ?1",nativeQuery = true)
     int findMaxPositionByPage(String page);
