@@ -91,7 +91,7 @@ public class RecommendController {
             result.setError("图片修改失败");
             return result;
         }
-
+        result.addData("picUrl",url);
         //修改推荐店铺的图片url为上述新上传的图片url
         store.ifPresent(value ->{
             value.setPicUrl(url);
