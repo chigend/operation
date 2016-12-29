@@ -127,4 +127,10 @@ public class RecommendController {
 
     }
 
+    @RequestMapping("toggle_store_effective")
+    public Result toggoleStoreEffective (Integer id, Result result) {
+        recommendStoreRepository.toggleEffectiveById(id);
+        return result;
+    }
+
 }

@@ -22,6 +22,7 @@ public class RecommendStore {
     private Date insertedAt;
     private Date updatedAt;
     private String picUrl;
+    private boolean effective;
 
     public RecommendStore() {
     }
@@ -137,6 +138,15 @@ public class RecommendStore {
         this.picUrl = picUrl;
     }
 
+    @Basic
+    @Column(name = "is_effective")
+    public boolean isEffective() {
+        return effective;
+    }
+
+    public void setEffective(boolean effective) {
+        this.effective = effective;
+    }
 
     @Override
     public boolean equals(Object o) {
