@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import static com.cookabuy.constant.ElasticSearchConstant.*;
+
 /**
  * elasticsearch的查询的service
  *
@@ -27,14 +29,12 @@ public class SearchService {
 
 
     public SearchResponse searchItems(ItemQuery query){
-        SearchRequestBuilder requestBuilder = client.prepareSearch("operation").setTypes("item");
+        SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_ITEM);
 
         if(StringUtils.hasLength(query.getTitle())){
-            log.info("set title");
             requestBuilder.setQuery(QueryBuilders.matchQuery("title",query.getTitle()));
         }
         if(StringUtils.hasLength(query.getStore())){
-            log.info("set store");
             requestBuilder.setQuery(QueryBuilders.matchQuery("store_name",query.getStore()));
         }
         requestBuilder.setPostFilter(
@@ -48,7 +48,7 @@ public class SearchService {
     }
 
     public SearchResponse searchStores(StoreQuery query){
-        SearchRequestBuilder requestBuilder = client.prepareSearch(ElasticSearchConstant.INDEX_NAME_OPERATION).setTypes(ElasticSearchConstant.TYPE_NAME_STORE);
+        SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_STORE);
 
         if(StringUtils.hasLength(query.getStoreName())){
             requestBuilder.setQuery(QueryBuilders.matchQuery("store_name",query.getStoreName()));

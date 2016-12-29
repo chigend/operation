@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.cookabuy.constant.CosConstant.*;
+import static com.cookabuy.constant.ErrorConstant.*;
 import static com.cookabuy.constant.PageContant.*;
 /**
  * 2016/12/5
@@ -84,9 +85,9 @@ public class RecommendStoreController {
     public Result deleteStore(Integer id, Result result) {
         Optional<RecommendStore> recommendStore = Optional.ofNullable(recommendStoreRepository.findOne(id));
         //如果推荐店铺的url存在表示该图片已经上传cos，那么在删除该店铺之前首先删除在cos上的图片
-        recommendStore.map(RecommendStore::getPicUrl).ifPresent(url->{
-            fileHelper.deleteFile(CosConstant.DIRECTORY_PREFIX_STORE_PATH,url);
-        });
+        recommendStore.map(RecommendStore::getPicUrl).ifPresent(url->
+            fileHelper.deleteFile(CosConstant.DIRECTORY_PREFIX_STORE_PATH,url)
+        );
         recommendStore.map(RecommendStore::getId).ifPresent(recommendStoreRepository::delete);
         return result;
     }
@@ -95,12 +96,12 @@ public class RecommendStoreController {
     public Result updateStoreImg(Integer id, MultipartFile image) {
         Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findOne(id));
         if (!store.isPresent()){
-            return new Result("该店铺未在推荐列表");
+            return new Result(STORE_NOT_IN_RECOMMEND);
         }
 
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_STORE_PATH, image);
         if (url == null) {
-            return new Result("图片修改失败");
+            return new Result(UPLOAD_IMAGE_FAIL);
         }
         Long storeId = store.get().getStoreId();
         //获取elastic 索引上原来的url
@@ -108,14 +109,10 @@ public class RecommendStoreController {
         //更新elastic 索引上的url
         Result result = updateService.updateStoreUrl(storeId,url);
         //如果更新成功就把cos上原来的url删除
-        result.ifSuccess(() -> {
-            cosOriginalUrl.ifPresent(value ->{
-                fileHelper.deleteFile(BUCKET,value);
-            });
-        });
+        result.ifSuccess(() -> cosOriginalUrl.ifPresent(value -> fileHelper.deleteFile(BUCKET,value)));
 
         //修改推荐店铺的图片url为上述新上传的图片url
-        store.ifPresent(value ->{
+        store.ifPresent(value -> {
             value.setPicUrl(url);
             recommendStoreRepository.save(value);
         });

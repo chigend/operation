@@ -26,6 +26,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 
+import static com.cookabuy.constant.ErrorConstant.*;
+
 /**
  * 2016/12/9
  */
@@ -65,12 +67,12 @@ public class LoginController {
         try {
             subject.login(token);
         } catch (UnknownAccountException e) {
-            return new Result("账户名不存在");
+            return new Result(ACCOUNT_NOT_EXIST);
         } catch (IncorrectCredentialsException e) {
             //// TODO: 2016/12/12 连续登录密码错误处理
-            return new Result("账户名或密码错误");
+            return new Result(PASSWORD_NOT_CORRECT);
         } catch (AuthenticationException e) {
-            return new Result("登录失败,请稍后重试");
+            return new Result(LOGIN_FAIL);
         }
         log.info("登录成功");
         return new Result();
@@ -93,13 +95,14 @@ public class LoginController {
         //验证原密码是否正确
         if (!user.getPassword().equals(new Md5Hash(original).toString())) {
             log.info("original password is not match");
-            result.setError("原密码不正确");
+            result.setError(ORIGINAL_PASSWORD_NOT_MATCH);
             return result;
         }
         String hashedPassword = new Md5Hash(form.getConfirmPassword()).toString();
         //验证新密码是否与原密码相同
         if(user.getPassword().equals(hashedPassword)){
             log.info("new password is same with ");
+            //todo  新密码与原密码相同时的处理
         }
         user.setPassword(hashedPassword);
 

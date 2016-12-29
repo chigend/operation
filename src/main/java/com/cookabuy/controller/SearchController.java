@@ -21,13 +21,14 @@ import org.springframework.web.bind.annotation.RestController;
 public class SearchController {
     @Autowired
     private SearchService searchService;
+
     @RequestMapping("/search_item")
-    public SearchResponse searchItem(ItemQuery itemQuery){
-      log.info("from:{},size : {}",itemQuery.getFrom(),itemQuery.getSize());
-                return searchService.searchItems(itemQuery);
+    public SearchResponse searchItem(ItemQuery itemQuery) {
+        return searchService.searchItems(itemQuery);
     }
+
     @RequestMapping("/search_store")
-    public SearchResponse searchItem(StoreQuery storeQuery){
+    public SearchResponse searchItem(StoreQuery storeQuery) {
         return searchService.searchStores(storeQuery);
     }
 }

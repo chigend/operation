@@ -102,13 +102,11 @@ public class AdController {
         if(form.getImage() != null){
 //          如果广告图片修改过，那么把之前把存储在cos的图片进行删除
 //            fileHelper.deleteFile(CosConstant.BUCKET,ad.getPicUrl());
-            Optional<String> picUrl = Optional.ofNullable(
-                    fileHelper.uploadFile(BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage())
-            );
-            picUrl.ifPresent((url)-> {
-                fileHelper.deleteFile(BUCKET, ad.getPicUrl());
-                ad.setPicUrl(url);
-            });
+           String picUrl = fileHelper.uploadFile(BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage());
+           if (picUrl != null){
+               fileHelper.deleteFile(BUCKET, ad.getPicUrl());
+               ad.setPicUrl(picUrl);
+           }
         }
         String activityUrl = form.getActivityUrl();
         if(activityUrl != null){

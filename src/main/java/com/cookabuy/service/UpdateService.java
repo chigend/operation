@@ -16,6 +16,7 @@ import java.util.concurrent.ExecutionException;
 
 import static com.cookabuy.constant.ElasticSearchConstant.INDEX_NAME_OPERATION;
 import static com.cookabuy.constant.ElasticSearchConstant.TYPE_NAME_ITEM;
+import static com.cookabuy.constant.ErrorConstant.UPDATE_IMAGE_FAIL;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 /**
@@ -43,7 +44,7 @@ public class UpdateService {
             client.update(updateRequest).get();
         } catch (Exception e) {
             log.warn("更新索引失败 reason:{}", e.getCause());
-            return new Result("图片更新失败");
+            return new Result(UPDATE_IMAGE_FAIL);
         }
         Result result = new Result();
         result.addData("picUrl", url);
