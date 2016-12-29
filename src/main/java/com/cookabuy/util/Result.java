@@ -1,6 +1,7 @@
 package com.cookabuy.util;
 
 import com.cookabuy.util.function.Consumer;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.text.StrBuilder;
@@ -30,7 +31,13 @@ public class Result {
         result = ResponseType.FAIL;
     }
 
+    public ResponseType getResult() {
+        return result;
+    }
 
+    public void setResult(ResponseType result) {
+        this.result = result;
+    }
 
     public Map<String, Object> getData() {
         return data;
@@ -59,7 +66,7 @@ public class Result {
         this.error = error;
     }
 
-
+    @JsonIgnore
     public boolean isSuccess() {
         return result.equals(ResponseType.SUCCESS);
     }

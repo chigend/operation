@@ -40,7 +40,7 @@ public class RecommendItemController {
             recommendItem.setLocation(data.getLocation());
             recommendItem.setInsertedAt(new Date());
             recommendItem.setUpdatedAt(new Date());
-            recommendItem.setPageName(INDEX);
+            recommendItem.setPageName(data.getPageName());
             recommendItem.setPosition(++maxPosition);
             recommendRepository.save(recommendItem);
         }
