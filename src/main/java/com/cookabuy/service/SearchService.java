@@ -3,6 +3,7 @@ package com.cookabuy.service;
 import com.cookabuy.constant.ElasticSearchConstant;
 import com.cookabuy.thirdParty.elasticsearch.ItemQuery;
 import com.cookabuy.thirdParty.elasticsearch.StoreQuery;
+import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
@@ -19,6 +20,7 @@ import org.springframework.util.StringUtils;
  * @create 2016-12-19-上午9:51
  */
 @Service
+@Slf4j
 public class SearchService {
     @Autowired
     private TransportClient client;
@@ -28,9 +30,11 @@ public class SearchService {
         SearchRequestBuilder requestBuilder = client.prepareSearch("operation").setTypes("item");
 
         if(StringUtils.hasLength(query.getTitle())){
+            log.info("set title");
             requestBuilder.setQuery(QueryBuilders.matchQuery("title",query.getTitle()));
         }
         if(StringUtils.hasLength(query.getStore())){
+            log.info("set store");
             requestBuilder.setQuery(QueryBuilders.matchQuery("store_name",query.getStore()));
         }
         requestBuilder.setPostFilter(
