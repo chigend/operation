@@ -19,6 +19,7 @@ import static com.cookabuy.constant.ElasticSearchConstant.TYPE_NAME_ITEM;
 import static com.cookabuy.constant.ErrorConstant.UPDATE_IMAGE_FAIL;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
+import static com.cookabuy.constant.ElasticSearchConstant.*;
 /**
  * elasticsearch 的更新索引的service
  *
@@ -34,7 +35,7 @@ public class UpdateService {
 
     public Result updateStoreUrl(Long storeId, String url) {
         UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME_OPERATION,
-                ElasticSearchConstant.TYPE_NAME_STORE, String.valueOf(storeId));
+                TYPE_NAME_STORE, String.valueOf(storeId));
         try {
 
             updateRequest.doc(jsonBuilder()
