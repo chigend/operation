@@ -18,6 +18,7 @@ public class Recommend {
     private Date updatedAt;
     private String pageName;
     private Integer position;
+    private String picUrl;
 
     @Id
     @Column(name = "id")
@@ -108,6 +109,16 @@ public class Recommend {
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    @Basic
+    @Column(name = "pic_url")
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.cookabuy.repository.service;
 
 import com.cookabuy.entity.service.po.Recommend;
+import com.cookabuy.entity.service.po.RecommendStore;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -42,4 +43,6 @@ public interface RecommendRepository extends JpaRepository<Recommend, Long>,JpaS
 
     @Query(value = "select case when count (*)>0 then true else false end from recommends where item_id = ?1",nativeQuery = true)
     boolean exists(Long itemId);
+
+    List<Recommend> findByPageNameAndLocationOrderByPositionAsc(String pageName, String location);
 }

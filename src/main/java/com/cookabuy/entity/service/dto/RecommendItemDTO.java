@@ -1,8 +1,12 @@
 package com.cookabuy.entity.service.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+
+import java.math.BigDecimal;
+import java.util.Date;
 
 /**
  * @author yejinbiao
@@ -18,4 +22,15 @@ public class RecommendItemDTO {
 
     private String picUrl;
 
+    private String title;
+
+    private BigDecimal price;
+
+    private String shopName;
+
+    private String market;
+
+
+    @JsonFormat(pattern = "yyyy-MM-dd ",timezone = "GMT+8")
+    private Date insertedAt;
 }

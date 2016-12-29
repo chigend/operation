@@ -3,8 +3,11 @@ package com.cookabuy.controller;
 import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
 import com.cookabuy.entity.service.dto.RecommendStoreDTO;
+import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.Recommend;
 import com.cookabuy.entity.service.po.RecommendStore;
+import com.cookabuy.entity.service.po.Store;
+import com.cookabuy.repository.service.ItemRepository;
 import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
@@ -30,6 +33,8 @@ public class RecommendItemController {
     private DozerHelper dozerHelper;
     @Autowired
     private RecommendRepository recommendRepository;
+    @Autowired
+    private ItemRepository itemRepository;
     @RequestMapping("/recommend_item")
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
@@ -44,5 +49,20 @@ public class RecommendItemController {
             recommendRepository.save(recommendItem);
         }
         return new Result();
+    }
+
+    @RequestMapping("list_items")
+    public Result listItems(String pageName, String location, Result result) {
+        List<Recommend> recommendItems = recommendRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
+        List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems,RecommendItemDTO.class);
+        dtos.stream().forEach(dto -> {
+            Item item = itemRepository.findOne(dto.getItemId());
+            dto.setTitle(item.getTitle());
+            dto.setPrice(item.getPrice());
+            dto.setShopName(item.getShopName());
+            //todo  设置market
+        });
+        result.addData("stores", dtos);
+        return result;
     }
 }
