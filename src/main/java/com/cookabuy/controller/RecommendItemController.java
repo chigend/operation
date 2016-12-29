@@ -2,11 +2,8 @@ package com.cookabuy.controller;
 
 import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
-import com.cookabuy.entity.service.dto.RecommendStoreDTO;
 import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.Recommend;
-import com.cookabuy.entity.service.po.RecommendStore;
-import com.cookabuy.entity.service.po.Store;
 import com.cookabuy.repository.service.ItemRepository;
 import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
@@ -18,7 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import static com.cookabuy.constant.PageContant.INDEX;
 
@@ -70,9 +66,9 @@ public class RecommendItemController {
     }
 
     @RequestMapping("delete_item")
-    public Result deleteItems (List<Integer> ids, Result result) {
+    public Result deleteItems (@RequestBody List<Integer> ids) {
         //todo 最好改成批量删除
         ids.stream().forEach(recommendRepository::delete);
-        return result;
+        return new Result();
     }
 }
