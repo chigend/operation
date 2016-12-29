@@ -68,4 +68,11 @@ public class RecommendItemController {
         result.addData("stores", dtos);
         return result;
     }
+
+    @RequestMapping("delete_item")
+    public Result deleteItems (List<Integer> ids, Result result) {
+        //todo 最好改成批量删除
+        ids.stream().forEach(recommendRepository::delete);
+        return result;
+    }
 }

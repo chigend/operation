@@ -14,7 +14,7 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.List;
 
 
-public interface RecommendRepository extends JpaRepository<Recommend, Long>,JpaSpecificationExecutor<Recommend>{
+public interface RecommendRepository extends JpaRepository<Recommend, Integer>,JpaSpecificationExecutor<Recommend>{
     @Override
     <S extends Recommend> S save(S entity);
 
@@ -45,4 +45,9 @@ public interface RecommendRepository extends JpaRepository<Recommend, Long>,JpaS
     boolean exists(Long itemId);
 
     List<Recommend> findByPageNameAndLocationOrderByPositionAsc(String pageName, String location);
+
+    @Modifying
+    @Query("delete from Recommend r where r.id in ?1")
+    void deleteRecommendWithIds(List<Integer> ids);
+
 }

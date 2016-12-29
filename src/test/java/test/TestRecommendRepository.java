@@ -11,7 +11,9 @@ import com.cookabuy.repository.service.RecommendRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static com.cookabuy.repository.service.specification.RecommendSpecifications.*;
 
@@ -86,5 +88,10 @@ public class TestRecommendRepository extends AbstractJpaTest {
         });
     }
 
+    @Test
+    public void testDeleteByInCollection(){
+        List<Integer> ids = Arrays.asList(307, 308);
+        recommendRepository.deleteRecommendWithIds(ids);
+    }
 
 }
