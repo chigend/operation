@@ -19,4 +19,6 @@ public class RecommendStoreDTO {
     private String location;
 
     private String picUrl;
+
+    private boolean effective;
 }

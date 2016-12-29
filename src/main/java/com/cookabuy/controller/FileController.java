@@ -37,17 +37,7 @@ public class FileController {
 
     @Autowired
     private GetService getService;
-    @RequestMapping("/upload_ad_image")
-    public Result uploadAdImage(MultipartFile file, Result result){
-        System.out.println(file.getName());
-        try {
 
-            byte[]data = file.getBytes();
-        }catch (IOException e)  {
-            result.setError("文件上传失败");
-        }
-        return result;
-    }
 
     @RequestMapping("/upload_store_img")
     public Result uploadStoreImg(Long storeId, MultipartFile image){
@@ -57,7 +47,7 @@ public class FileController {
        }
         Optional<String> originCosUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
        Result result =  updateService.updateStoreUrl(storeId, url);
-       //如果elasticsearch上给store添加（或者更新）了图片并索引成功，那么将该推荐店铺的pic_url也更新
+       //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
        if (result.getResult().equals(Result.ResponseType.SUCCESS.name())) {
            originCosUrl.ifPresent(value -> {
                fileHelper.deleteFile(BUCKET, value);
