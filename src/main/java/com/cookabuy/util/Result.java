@@ -6,6 +6,7 @@ import org.apache.commons.lang3.text.StrBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.function.Consumer;
 
 //统一定义的数据返回类
 
@@ -66,6 +67,8 @@ public class Result {
         this.result = result;
     }
 
+    public void ifSuccess(Consumer  consumer){
+    }
     public enum ResponseType{
         FAIL,SUCCESS
     }

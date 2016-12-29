@@ -36,10 +36,6 @@ public class RecommendItemController {
         List<Recommend> recommendItems = dozerHelper.mapList(data.getItems(), Recommend.class);
         int maxPosition = recommendRepository.findMaxPositionByPage(data.getPageName());
         for (Recommend recommendItem : recommendItems){
-            //如果推荐店铺列表中已经有该店铺则跳过
-//            if(recommendStoreRepository.exists(store.getStoreId())){
-//                continue;
-//            }
             recommendItem.setLocation(data.getLocation());
             recommendItem.setInsertedAt(new Date());
             recommendItem.setUpdatedAt(new Date());

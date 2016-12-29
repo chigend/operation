@@ -52,13 +52,13 @@ public class FileController {
         return result;
     }
 
-//    @RequestMapping("/upload_item_img")
-//    public Result uploadItemImg(Long itemId, MultipartFile image){
-//        String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_ITEM_PATH, image);
-//        if (url == null){
-//            return new Result("图片上传失败");
-//        }
-//        Optional<String> originCosUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
+    @RequestMapping("/upload_item_img")
+    public Result uploadItemImg(Long itemId, MultipartFile image){
+        String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_ITEM_PATH, image);
+        if (url == null){
+            return new Result("图片上传失败");
+        }
+        Optional<String> originCosUrl = Optional.ofNullable(getService.getItemPicUrl(itemId));
 //        Result result =  updateService.updateStoreUrl(storeId, url);
 //        //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
 //        if (result.getResult().equals(Result.ResponseType.SUCCESS.name())) {
@@ -67,5 +67,6 @@ public class FileController {
 //            });
 //        }
 //        return result;
-//    }
+        return null;
+    }
 }
