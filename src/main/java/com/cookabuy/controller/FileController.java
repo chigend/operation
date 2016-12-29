@@ -60,14 +60,9 @@ public class FileController {
             return new Result("图片上传失败");
         }
         Optional<String> originCosUrl = Optional.ofNullable(getService.getItemPicUrl(itemId));
-//        Result result =  updateService.updateStoreUrl(storeId, url);
-//        //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
-//        if (result.getResult().equals(Result.ResponseType.SUCCESS.name())) {
-//            originCosUrl.ifPresent(value -> {
-//                fileHelper.deleteFile(BUCKET, value);
-//            });
-//        }
-//        return result;
-        return null;
+        Result result =  updateService.updateItemUrl(itemId, url);
+        //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
+        result.ifSuccess(() ->  originCosUrl.ifPresent(value -> fileHelper.deleteFile(BUCKET, value)));
+        return result;
     }
 }

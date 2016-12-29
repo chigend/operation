@@ -31,7 +31,7 @@ public class UpdateService {
     @Autowired
     private TransportClient client;
 
-    public Result updateStoreUrl(Long storeId, String url){
+    public Result updateStoreUrl(Long storeId, String url) {
         UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME_OPERATION,
                 ElasticSearchConstant.TYPE_NAME_STORE, String.valueOf(storeId));
         try {
@@ -41,32 +41,32 @@ public class UpdateService {
                     .field("pic_url", url)
                     .endObject());
             client.update(updateRequest).get();
-        }catch (Exception e){
-            log.warn("更新索引失败 reason:{}",e.getCause());
+        } catch (Exception e) {
+            log.warn("更新索引失败 reason:{}", e.getCause());
             return new Result("图片更新失败");
         }
         Result result = new Result();
-        result.addData("picUrl",url);
+        result.addData("picUrl", url);
         return result;
     }
 
     public Result updateItemUrl(Long itemId, String url) {
-       Map<String, Object> source = new HashMap<>();
-       source.put("pic_url", url);
-       Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, itemId, source);
-        result.addData("picUrl",url);
+        Map<String, Object> source = new HashMap<>();
+        source.put("pic_url", url);
+        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, itemId, source);
+        result.ifSuccess(() -> result.addData("pic_url", url));
         return result;
     }
 
-    public Result updateField(String index, String type, Long id, Map<String, Object> source) {
+    private Result updateField(String index, String type, Long id, Map<String, Object> source) {
         UpdateRequest updateRequest = new UpdateRequest(index,
                 type, String.valueOf(id));
         try {
 
             updateRequest.doc(source);
             client.update(updateRequest).get();
-        }catch (Exception e){
-            log.warn("更新索引失败 reason:{}",e.getCause());
+        } catch (Exception e) {
+            log.warn("更新索引失败 reason:{}", e.getCause());
             return new Result("更新失败");
         }
         return new Result();
