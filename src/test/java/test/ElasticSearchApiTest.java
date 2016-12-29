@@ -57,4 +57,27 @@ public class ElasticSearchApiTest {
             System.out.println("更新失败");
         }
     }
+    @Test
+    public void testGetItemUrl() {
+            GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, String.valueOf(535482154236L)).get();
+            String s =  (String) response.getSourceAsMap().get("pic_url");
+            System.out.println(s);
+        }
+
+    @Test
+    public void testUpdateItemUrl() {
+        UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME_OPERATION,
+                TYPE_NAME_ITEM, String.valueOf(535482154236L));
+        String url = null;
+        try {
+
+            updateRequest.doc(jsonBuilder()
+                    .startObject()
+                    .field("pic_url", url)
+                    .endObject());
+            client.update(updateRequest).get();
+        }catch (Exception e){
+            System.out.println("更新失败");
+        }
+    }
 }

@@ -30,7 +30,7 @@ import static com.cookabuy.constant.PageContant.*;
 @RestController
 @RequestMapping("operate")
 @Slf4j
-public class RecommendController {
+public class RecommendStoreController {
     @Autowired
     private RecommendStoreRepository recommendStoreRepository;
     @Autowired
@@ -85,7 +85,7 @@ public class RecommendController {
         Optional<RecommendStore> recommendStore = Optional.ofNullable(recommendStoreRepository.findOne(id));
         //如果推荐店铺的url存在表示该图片已经上传cos，那么在删除该店铺之前首先删除在cos上的图片
         recommendStore.map(RecommendStore::getPicUrl).ifPresent(url->{
-            fileHelper.deleteFile(CosConstant.DIRECOTRY_PREFIX_STORE_PATH,url);
+            fileHelper.deleteFile(CosConstant.DIRECTORY_PREFIX_STORE_PATH,url);
         });
         recommendStore.map(RecommendStore::getId).ifPresent(recommendStoreRepository::delete);
         return result;
@@ -98,7 +98,7 @@ public class RecommendController {
             return new Result("该店铺未在推荐列表");
         }
 
-        String url = fileHelper.uploadFile(BUCKET, DIRECOTRY_PREFIX_STORE_PATH, image);
+        String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_STORE_PATH, image);
         if (url == null) {
             return new Result("图片修改失败");
         }

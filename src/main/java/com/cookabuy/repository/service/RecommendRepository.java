@@ -37,4 +37,6 @@ public interface RecommendRepository extends JpaRepository<Recommend, Long>,JpaS
             "and recommend.location=?3 and recommend.position=?4")
     public void replaceRecommend(Long numiid, String pagename, String location, Integer position);
 
+    @Query(value = "select COALESCE(max(COALESCE(position,0)),0) from recommends where page_name = ?1",nativeQuery = true)
+    int findMaxPositionByPage(String pageName);
 }
