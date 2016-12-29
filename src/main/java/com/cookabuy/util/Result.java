@@ -1,12 +1,12 @@
 package com.cookabuy.util;
 
+import com.cookabuy.util.function.Consumer;
 import org.apache.commons.collections.iterators.ObjectArrayIterator;
 import org.apache.commons.collections.map.HashedMap;
 import org.apache.commons.lang3.text.StrBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.function.Consumer;
 
 //统一定义的数据返回类
 
@@ -18,16 +18,16 @@ import java.util.function.Consumer;
 public class Result {
     private Map<String,Object> data;
     private String error;
-    private String result;
+    private ResponseType result;
 
     public Result(){
         data = new HashMap<>();
-        result = ResponseType.SUCCESS.name();
+        result = ResponseType.SUCCESS;
     }
 
     public Result(String error) {
         this.error = error;
-        result = ResponseType.FAIL.name();
+        result = ResponseType.FAIL;
     }
 
 
@@ -45,7 +45,7 @@ public class Result {
             data.put(key,value);
         }
     }
-    public void delData(String key){
+    public void removeData(String key){
         if(key != null){
             data.remove(key);
         }
@@ -55,21 +55,21 @@ public class Result {
     }
 
     public void setError(String error) {
-        this.result = ResponseType.FAIL.name();
+        this.result = ResponseType.FAIL;
         this.error = error;
     }
 
-    public String getResult() {
-        return result;
+
+    public boolean isSuccess() {
+        return result.equals(ResponseType.SUCCESS);
     }
 
-    public void setResult(String result) {
-        this.result = result;
-    }
-
-    public void ifSuccess(Consumer  consumer){
+    public void ifSuccess(Consumer consumer){
+        if (result.equals(ResponseType.SUCCESS)){
+            consumer.consume();
+        }
     }
     public enum ResponseType{
-        FAIL,SUCCESS
+        FAIL,SUCCESS;
     }
 }

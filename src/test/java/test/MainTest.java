@@ -2,6 +2,7 @@ package test;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.cookabuy.util.Result;
 import com.qcloud.cos.COSClient;
 import com.qcloud.cos.exception.AbstractCosException;
 import com.qcloud.cos.request.DelFileRequest;
@@ -110,5 +111,9 @@ public class MainTest {
       System.out.println(object.getInteger("code"));
    }
 
+   @Test
+   public void testResult () {
+      Result result = new Result();
+   }
 
 }

@@ -2,6 +2,7 @@ package com.cookabuy.thirdParty.elasticsearch;
 
 import lombok.Getter;
 import lombok.Setter;
+import lombok.ToString;
 
 /**
  * @author yejinbiao
@@ -9,6 +10,7 @@ import lombok.Setter;
  */
 @Setter
 @Getter
+@ToString
 public class ItemQuery {
     private String title;
 

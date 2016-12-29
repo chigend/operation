@@ -37,25 +37,26 @@ public class FileController {
 
     @RequestMapping("/upload_store_img")
     public Result uploadStoreImg(Long storeId, MultipartFile image) {
-       String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_STORE_PATH, image);
-       if (url == null){
-           return new Result("图片上传失败");
-       }
+        String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_STORE_PATH, image);
+        if (url == null) {
+            return new Result("图片上传失败");
+        }
         Optional<String> originCosUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
-       Result result =  updateService.updateStoreUrl(storeId, url);
-       //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
-       if (result.getResult().equals(Result.ResponseType.SUCCESS.name())) {
-           originCosUrl.ifPresent(value -> {
-               fileHelper.deleteFile(BUCKET, value);
-           });
-       }
+        Result result = updateService.updateStoreUrl(storeId, url);
+        //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
+        result.ifSuccess(() -> {
+            originCosUrl.ifPresent(value -> {
+                fileHelper.deleteFile(BUCKET, value);
+            });
+        });
+
         return result;
     }
 
     @RequestMapping("/upload_item_img")
-    public Result uploadItemImg(Long itemId, MultipartFile image){
+    public Result uploadItemImg(Long itemId, MultipartFile image) {
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_ITEM_PATH, image);
-        if (url == null){
+        if (url == null) {
             return new Result("图片上传失败");
         }
         Optional<String> originCosUrl = Optional.ofNullable(getService.getItemPicUrl(itemId));
