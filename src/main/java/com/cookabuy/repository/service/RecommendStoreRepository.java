@@ -48,6 +48,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     @Query(value = "select case when count(*) > 0 then true else false end from recommend_stores where store_id = ?1",nativeQuery = true)
     boolean exists(Long storeId);
 
+    @Modifying
     @Query(value = "update recommend_stores set is_effective = not is_effective where id = ?1", nativeQuery = true)
     void toggleEffectiveById(Integer id);
 }
