@@ -90,8 +90,8 @@ public class TestRecommendRepository extends AbstractJpaTest {
 
     @Test
     public void testDeleteByInCollection(){
-        List<Integer> ids = Arrays.asList(307, 308);
-        recommendRepository.deleteRecommendWithIds(ids);
+        List<Integer> ids = Arrays.asList(311, 310);
+        recommendRepository.deleteByIdIn(ids);
     }
 
 }

@@ -68,7 +68,7 @@ public class RecommendItemController {
     @RequestMapping("delete_item")
     public Result deleteItems (@RequestBody List<Integer> ids) {
         //todo 最好改成批量删除
-        ids.stream().forEach(recommendRepository::delete);
+        recommendRepository.deleteRecommendWithIds(ids);
         return new Result();
     }
 }

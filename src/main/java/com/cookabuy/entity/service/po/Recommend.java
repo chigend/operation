@@ -9,7 +9,7 @@ import java.util.Date;
 @Entity
 @Table(name = "recommends", schema = "public", catalog = "cookabuy_pc_dev")
 public class Recommend {
-    private Long id;
+    private Integer id;
     private Long itemId;
     private String location;
     private String type;
@@ -23,11 +23,11 @@ public class Recommend {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    public Long getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
