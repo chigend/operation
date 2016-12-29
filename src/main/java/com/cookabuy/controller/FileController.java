@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 
 import static com.cookabuy.constant.CosConstant.*;
+import static com.cookabuy.constant.ErrorConstant.*;
 
 /**
  * @author yejinbiao
@@ -39,16 +40,12 @@ public class FileController {
     public Result uploadStoreImg(Long storeId, MultipartFile image) {
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_STORE_PATH, image);
         if (url == null) {
-            return new Result("图片上传失败");
+            return new Result(UPLOAD_IMAGE_FAIL);
         }
         Optional<String> originCosUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
         Result result = updateService.updateStoreUrl(storeId, url);
         //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
-        result.ifSuccess(() -> {
-            originCosUrl.ifPresent(value -> {
-                fileHelper.deleteFile(BUCKET, value);
-            });
-        });
+        result.ifSuccess(() -> originCosUrl.ifPresent(value -> fileHelper.deleteFile(BUCKET, value)));
 
         return result;
     }
@@ -57,7 +54,7 @@ public class FileController {
     public Result uploadItemImg(Long itemId, MultipartFile image) {
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_ITEM_PATH, image);
         if (url == null) {
-            return new Result("图片上传失败");
+            return new Result(UPLOAD_IMAGE_FAIL);
         }
         Optional<String> originCosUrl = Optional.ofNullable(getService.getItemPicUrl(itemId));
         Result result =  updateService.updateItemUrl(itemId, url);

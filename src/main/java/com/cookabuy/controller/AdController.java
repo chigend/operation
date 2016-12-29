@@ -23,6 +23,9 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import static com.cookabuy.constant.CosConstant.BUCKET;
+import static com.cookabuy.constant.ErrorConstant.*;
+
 /**
  * @author yejinbiao
  * @create 2016-12-23-11:30
@@ -54,9 +57,9 @@ public class AdController {
 
     @RequestMapping("add_ad")
     public Result addAd(AddAdForm form , Result result){
-        String picUrl = fileHelper.uploadFile(CosConstant.BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage());
+        String picUrl = fileHelper.uploadFile(BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage());
         if(picUrl == null){
-            result.setError("图片上传失败");
+            result.setError(UPLOAD_IMAGE_FAIL);
             return result;
         }
         log.info("upload file successfully,source_url is {}",picUrl);
@@ -72,12 +75,12 @@ public class AdController {
     @RequestMapping("delete_ad")
     public Result deleteAd(@RequestBody List<Integer> ids){
         if(CollectionUtils.isEmpty(ids)){
-            return new Result("未指定要删除的广告轮播图");
+            return new Result(NOT_ASSIGN_ADS);
         }
         ids.stream().forEach(id->{
             Ad ad = adRepository.findOne(id);
             //删除广告之前把存储在cos的图片进行删除
-            fileHelper.deleteFile(CosConstant.BUCKET,ad.getPicUrl());
+            fileHelper.deleteFile(BUCKET,ad.getPicUrl());
             adRepository.delete(ad);
         });
         return new Result();
@@ -86,26 +89,24 @@ public class AdController {
     @RequestMapping("save_ad")
     public Result save(@RequestBody List<SaveAdForm> list){
         if(CollectionUtils.isEmpty(list)){
-            return new Result("未选中要保存的内容");
+            return new Result(NOT_ASSIGN_ADS);
         }
-        list.stream().filter(ad-> ad.getAdId()!=null && ad.getPosition()!=null).forEach(ad->{
-            adRepository.updatePositionById(ad.getAdId(),ad.getPosition());
-        });
+        list.stream().filter(ad-> ad.getAdId()!=null && ad.getPosition()!=null).forEach(ad->
+            adRepository.updatePositionById(ad.getAdId(),ad.getPosition()));
         return new Result();
     }
 
     @RequestMapping("update_ad")
     public Result update(UpdateAdForm form,Result result){
-        log.info("update form is {}",form);
         Ad ad = adRepository.findOne(form.getAdId());
         if(form.getImage() != null){
 //          如果广告图片修改过，那么把之前把存储在cos的图片进行删除
 //            fileHelper.deleteFile(CosConstant.BUCKET,ad.getPicUrl());
             Optional<String> picUrl = Optional.ofNullable(
-                    fileHelper.uploadFile(CosConstant.BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage())
+                    fileHelper.uploadFile(BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage())
             );
             picUrl.ifPresent((url)-> {
-                fileHelper.deleteFile(CosConstant.BUCKET, ad.getPicUrl());
+                fileHelper.deleteFile(BUCKET, ad.getPicUrl());
                 ad.setPicUrl(url);
             });
         }
