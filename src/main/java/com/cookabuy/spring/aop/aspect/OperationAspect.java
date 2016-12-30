@@ -28,21 +28,22 @@ public class OperationAspect {
     @Autowired
     private OperationRepository operationRepository;
     @Around("@annotation(com.cookabuy.spring.aop.annotation.MenuItem)")
-    public Result getOperationAvaiable(ProceedingJoinPoint joinPoint) throws Throwable {
-        Integer menuId = Integer.valueOf(request.getParameter("menuId"));
+    public Object getOperationAvaiable(ProceedingJoinPoint joinPoint) throws Throwable {
+        String value = request.getParameter("menuId");
         Object o = joinPoint.proceed();
-        if (menuId == null) {
-            return (Result) o;
+        if (value == null) {
+            return  o;
         }
         Result result = null;
         if (o instanceof Result){
             result = (Result) o;
             Integer userId = ShiroHelper.getCurrentUserId();
+            Integer menuId = Integer.valueOf(value);
             List<String> operations = operationRepository.findOperationAvaiableByMenuIdAndUserId(userId, menuId);
             result.addData("operations", operations);
         }
 
-        return  result == null ? (Result) o : result;
+        return  result == null ? o : result;
 
     }
 }
