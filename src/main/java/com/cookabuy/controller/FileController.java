@@ -1,6 +1,5 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.constant.CosConstant;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.service.GetService;
 import com.cookabuy.service.UpdateService;
@@ -14,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Optional;
 
 import static com.cookabuy.constant.CosConstant.*;
-import static com.cookabuy.constant.ErrorConstant.*;
+import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
 
 /**
  * @author yejinbiao
@@ -56,10 +55,10 @@ public class FileController {
         if (url == null) {
             return new Result(UPLOAD_IMAGE_FAIL);
         }
-        Optional<String> originCosUrl = Optional.ofNullable(getService.getItemPicUrl(itemId));
+        Optional<String> originalCosUrl = Optional.ofNullable(getService.getItemPicUrl(itemId));
         Result result =  updateService.updateItemUrl(itemId, url);
         //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
-        result.ifSuccess(() ->  originCosUrl.ifPresent(value -> fileHelper.deleteFile(BUCKET, value)));
+        result.ifSuccess(() ->  originalCosUrl.ifPresent(value -> fileHelper.deleteFile(BUCKET, value)));
         return result;
     }
 }

@@ -9,5 +9,11 @@ package com.cookabuy.constant;
 
 public class PageContant {
 
+
+
+    public static final String HOT = "hot";
+
     public static final String INDEX = "index";
+
+    public static final String [] PAGE_ARRAY = new String[] {INDEX, HOT};
 }

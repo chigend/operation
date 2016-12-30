@@ -5,7 +5,6 @@ import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.Recommend;
-import com.cookabuy.entity.service.po.Store;
 import com.cookabuy.repository.service.ItemRepository;
 import com.cookabuy.repository.service.RecommendRepository;
 import org.junit.Test;
@@ -15,7 +14,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static com.cookabuy.repository.service.specification.RecommendSpecifications.*;
+import static com.cookabuy.repository.service.specification.RecommendSpecifications.findByRecommend;
 
 /**
  * 2016/12/5
@@ -91,6 +90,12 @@ public class TestRecommendRepository extends AbstractJpaTest {
     @Test
     public void testDeleteByInCollection(){
         List<Integer> ids = Arrays.asList(311, 310);
+    }
+
+
+    @Test
+    public void testGroupBy() {
+        List<List<Recommend>> l = recommendRepository.findListGroupByPageNameAndLocation();
     }
 
 }

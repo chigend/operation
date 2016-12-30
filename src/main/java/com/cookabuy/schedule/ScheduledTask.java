@@ -1,0 +1,56 @@
+package com.cookabuy.schedule;
+
+import com.cookabuy.entity.service.po.Recommend;
+import com.cookabuy.entity.service.po.RecommendStore;
+import com.cookabuy.repository.service.RecommendRepository;
+import com.cookabuy.repository.service.RecommendStoreRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
+
+import static com.cookabuy.constant.PageContant.*;
+import static com.cookabuy.constant.LocationConstant.*;
+
+/**
+ * @author yejinbiao
+ * @create 2016-12-30-11:23
+ */
+@Component
+public class ScheduledTask {
+    /**
+     *   刷新推荐店铺的position  比如推荐店铺的position为1,3,5,200，,345，  刷新后position改为1,2,3,4,5
+     *   防止position一直增长
+     */
+    @Autowired
+    private RecommendStoreRepository recommendStoreRepository;
+    @Autowired
+    private RecommendRepository recommendRepository;
+    //todo 正式上服务器应改成cron表达式
+    @Scheduled(fixedRate = 30 * 60 * 1000)
+    public void refreshRecommendStorePosition() {
+        int initPosition = 1; //初始position为1
+        for (RecommendStore store : recommendStoreRepository.findByPageOrderByPositionAsc(INDEX)) {
+            store.setPosition(initPosition ++);
+            recommendStoreRepository.save(store);
+        }
+    }
+
+    /**
+     *  /**
+     *   刷新推荐商品的position  同上
+     */
+
+    @Scheduled(fixedRate = 30 * 60 * 1000)
+    public void refreshRecommendItemPosition() {
+
+        for (String page : PAGE_ARRAY) {
+            for (String location : LOCATION_ARRAY) {
+                int initPosition = 1; //初始position为1
+                for (Recommend item : recommendRepository.findByPageNameAndLocationOrderByPositionAsc(page, location)) {
+                    item.setPosition(initPosition ++);
+                    recommendRepository.save(item);
+                }
+            }
+        }
+    }
+}

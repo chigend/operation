@@ -1,7 +1,6 @@
 package com.cookabuy.repository.service;
 
 import com.cookabuy.entity.service.po.Recommend;
-import com.cookabuy.entity.service.po.RecommendStore;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -50,5 +49,9 @@ public interface RecommendRepository extends JpaRepository<Recommend, Integer>,J
     @Modifying
     @Query("delete from Recommend r where r.id in ?1")
     void deleteRecommendWithIds(List<Integer> ids);
+
+
+    @Query(value = "select * from recommends group by page_name, location", nativeQuery = true)
+    List<List<Recommend>> findListGroupByPageNameAndLocation();
 
 }
