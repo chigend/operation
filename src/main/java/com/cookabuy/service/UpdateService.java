@@ -1,10 +1,9 @@
 package com.cookabuy.service;
 
-import com.cookabuy.constant.CosConstant;
-import com.cookabuy.constant.ElasticSearchConstant;
+import com.cookabuy.entity.service.po.RecommendStore;
+import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.collections.map.HashedMap;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,14 +11,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ExecutionException;
-
-import static com.cookabuy.constant.ElasticSearchConstant.INDEX_NAME_OPERATION;
-import static com.cookabuy.constant.ElasticSearchConstant.TYPE_NAME_ITEM;
-import static com.cookabuy.constant.ErrorConstant.UPDATE_IMAGE_FAIL;
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 
 import static com.cookabuy.constant.ElasticSearchConstant.*;
+import static com.cookabuy.constant.ErrorConstant.UPDATE_IMAGE_FAIL;
+import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 /**
  * elasticsearch 的更新索引的service
  *
@@ -32,6 +27,9 @@ public class UpdateService {
 
     @Autowired
     private TransportClient client;
+
+    @Autowired
+    private RecommendStoreRepository recommendStoreRepository;
 
     public Result updateStoreUrl(Long storeId, String url) {
         UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME_OPERATION,
@@ -60,6 +58,19 @@ public class UpdateService {
         return result;
     }
 
+    /**
+     * 根据storeId 切换elasticsearch上store的是否已添加field  added
+     * @param storeId
+     * @return
+     */
+    public Result toggleStoreAdded(Long storeId) {
+        RecommendStore store = recommendStoreRepository.findByStoreId(storeId);
+        boolean added = store == null; //如果推荐店铺为空，则表示即将添加该店铺
+        Map<String, Object> source = new HashMap<>();
+        source.put("added", added);
+        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_STORE, storeId, source);
+        return result;
+    }
     private Result updateField(String index, String type, Long id, Map<String, Object> source) {
         UpdateRequest updateRequest = new UpdateRequest(index,
                 type, String.valueOf(id));
@@ -73,4 +84,5 @@ public class UpdateService {
         }
         return new Result();
     }
+
 }

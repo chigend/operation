@@ -58,7 +58,7 @@ public class TestItemRepository extends AbstractJpaTest {
 
     @Test(timeout = Long.MAX_VALUE)
     public void indexItem() {
-        int numOfOneTurn = 1000;
+        int numOfOneTurn = 500;
         long count = itemRepository.count();
         int offset = 0;
         List<IndexResponse> responses = new ArrayList<IndexResponse>();
@@ -71,6 +71,8 @@ public class TestItemRepository extends AbstractJpaTest {
                 map.put("price", item.getPrice());
                 map.put("store_name", item.getStore().getStoreName());
                 map.put("title", item.getTitle());
+                map.put("added", false);
+                map.put("pic_url", null);
                 bulkRequest.add(client.prepareIndex("operation","item",String.valueOf(item.getNumIid())).setSource(map));
             });
             BulkResponse response = bulkRequest.get();

@@ -1,22 +1,16 @@
 package test;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cookabuy.constant.ElasticSearchConstant;
-import com.cookabuy.util.Result;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.update.UpdateRequest;
 import org.elasticsearch.client.transport.TransportClient;
-import org.elasticsearch.common.Strings;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
-import org.elasticsearch.index.get.GetField;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.io.ObjectInputStream;
 import java.net.InetAddress;
-import java.util.Map;
 
 import static com.cookabuy.constant.ElasticSearchConstant.*;
 import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
@@ -80,4 +74,5 @@ public class ElasticSearchApiTest {
             System.out.println("更新失败");
         }
     }
+
 }

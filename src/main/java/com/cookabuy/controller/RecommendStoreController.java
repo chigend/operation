@@ -1,6 +1,5 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.constant.CosConstant;
 import com.cookabuy.entity.service.dto.RecommendStoreDTO;
 import com.cookabuy.entity.service.po.RecommendStore;
 import com.cookabuy.entity.service.po.Store;
@@ -23,9 +22,11 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
-import static com.cookabuy.constant.CosConstant.*;
-import static com.cookabuy.constant.ErrorConstant.*;
-import static com.cookabuy.constant.PageContant.*;
+import static com.cookabuy.constant.CosConstant.BUCKET;
+import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_STORE_PATH;
+import static com.cookabuy.constant.ErrorConstant.STORE_NOT_IN_RECOMMEND;
+import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
+import static com.cookabuy.constant.PageContant.INDEX;
 /**
  * 2016/12/5
  */
@@ -58,6 +59,7 @@ public class RecommendStoreController {
             store.setUpdatedAt(new Date());
             store.setPage(INDEX);
             store.setPosition(++maxPosition);
+            updateService.toggleStoreAdded(store.getStoreId());
             recommendStoreRepository.save(store);
         }
         return new Result();
@@ -88,9 +90,12 @@ public class RecommendStoreController {
         Optional<RecommendStore> recommendStore = Optional.ofNullable(recommendStoreRepository.findOne(id));
         //如果推荐店铺的url存在表示该图片已经上传cos，那么在删除该店铺之前首先删除在cos上的图片
         recommendStore.map(RecommendStore::getPicUrl).ifPresent(url->
-            fileHelper.deleteFile(CosConstant.DIRECTORY_PREFIX_STORE_PATH,url)
+            fileHelper.deleteFile(DIRECTORY_PREFIX_STORE_PATH, url)
         );
-        recommendStore.map(RecommendStore::getId).ifPresent(recommendStoreRepository::delete);
+        recommendStore.ifPresent(store -> {
+            updateService.toggleStoreAdded(store.getStoreId());
+            recommendStoreRepository.delete(store.getId());
+        });
         return result;
     }
 

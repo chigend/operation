@@ -11,7 +11,7 @@ import org.aspectj.lang.annotation.AfterThrowing;
 //@Aspect
 //@Component
 public class TestAspect {
-    @AfterThrowing(pointcut = "org.apache.shiro.authz.aop.AuthorizingAnnotationMethodInterceptor.assertAuthorized(..)", throwing = "e")
+    @AfterThrowing(pointcut = "execution(* org.apache.shiro.authz.aop.AuthorizingAnnotationMethodInterceptor.assertAuthorized(..))", throwing = "e")
     public Result catchAuthorizedException(AuthorizationException e) {
         System.out.println(e);
         return new Result();

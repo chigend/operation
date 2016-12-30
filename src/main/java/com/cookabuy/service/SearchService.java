@@ -1,6 +1,5 @@
 package com.cookabuy.service;
 
-import com.cookabuy.constant.ElasticSearchConstant;
 import com.cookabuy.thirdParty.elasticsearch.ItemQuery;
 import com.cookabuy.thirdParty.elasticsearch.StoreQuery;
 import lombok.extern.slf4j.Slf4j;
@@ -48,6 +47,7 @@ public class SearchService {
     }
 
     public SearchResponse searchStores(StoreQuery query){
+        //todo  过滤条件added true
         SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_STORE);
 
         if(StringUtils.hasLength(query.getStoreName())){
