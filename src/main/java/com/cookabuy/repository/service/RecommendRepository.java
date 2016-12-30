@@ -50,8 +50,4 @@ public interface RecommendRepository extends JpaRepository<Recommend, Integer>,J
     @Query("delete from Recommend r where r.id in ?1")
     void deleteRecommendWithIds(List<Integer> ids);
 
-
-    @Query(value = "select * from recommends group by page_name, location", nativeQuery = true)
-    List<List<Recommend>> findListGroupByPageNameAndLocation();
-
 }

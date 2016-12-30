@@ -48,7 +48,6 @@ public class SearchService {
     }
 
     public SearchResponse searchStores(StoreQuery query){
-        //todo  过滤条件added true
         SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_STORE);
 
         if(StringUtils.hasLength(query.getStoreName())){

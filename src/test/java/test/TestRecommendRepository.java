@@ -93,9 +93,5 @@ public class TestRecommendRepository extends AbstractJpaTest {
     }
 
 
-    @Test
-    public void testGroupBy() {
-        List<List<Recommend>> l = recommendRepository.findListGroupByPageNameAndLocation();
-    }
 
 }

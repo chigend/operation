@@ -2,9 +2,6 @@ package com.cookabuy.util;
 
 import com.cookabuy.util.function.Consumer;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import org.apache.commons.collections.iterators.ObjectArrayIterator;
-import org.apache.commons.collections.map.HashedMap;
-import org.apache.commons.lang3.text.StrBuilder;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -29,6 +26,11 @@ public class Result {
     public Result(String error) {
         this.error = error;
         result = ResponseType.FAIL;
+    }
+
+    public Result(String key, Object value) {
+        this();
+        addData(key, value);
     }
 
     public ResponseType getResult() {

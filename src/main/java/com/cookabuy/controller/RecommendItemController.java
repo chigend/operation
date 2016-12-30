@@ -43,7 +43,7 @@ public class RecommendItemController {
             recommendItem.setPosition(++maxPosition);
             recommendRepository.save(recommendItem);
         }
-        return new Result();
+        return new Result("items", recommendItems);
     }
 
     @RequestMapping("list_items")

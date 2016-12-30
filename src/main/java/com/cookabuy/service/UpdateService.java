@@ -1,6 +1,7 @@
 package com.cookabuy.service;
 
 import com.cookabuy.entity.service.po.RecommendStore;
+import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -14,8 +15,6 @@ import java.util.List;
 import java.util.Map;
 
 import static com.cookabuy.constant.ElasticSearchConstant.*;
-import static com.cookabuy.constant.ErrorConstant.UPDATE_IMAGE_FAIL;
-import static org.elasticsearch.common.xcontent.XContentFactory.jsonBuilder;
 /**
  * elasticsearch 的更新索引的service
  *
@@ -32,22 +31,30 @@ public class UpdateService {
     @Autowired
     private RecommendStoreRepository recommendStoreRepository;
 
-    public Result updateStoreUrl(Long storeId, String url) {
-        UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME_OPERATION,
-                TYPE_NAME_STORE, String.valueOf(storeId));
-        try {
+    @Autowired
+    private RecommendRepository recommendRepository;
 
-            updateRequest.doc(jsonBuilder()
-                    .startObject()
-                    .field("pic_url", url)
-                    .endObject());
-            client.update(updateRequest).get();
-        } catch (Exception e) {
-            log.warn("更新索引失败 reason:{}", e.getCause());
-            return new Result(UPDATE_IMAGE_FAIL);
-        }
-        Result result = new Result();
-        result.addData("picUrl", url);
+    public Result updateStoreUrl(Long storeId, String url) {
+//        UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME_OPERATION,
+//                TYPE_NAME_STORE, String.valueOf(storeId));
+//        try {
+//
+//            updateRequest.doc(jsonBuilder()
+//                    .startObject()
+//                    .field("pic_url", url)
+//                    .endObject());
+//            client.update(updateRequest).get();
+//        } catch (Exception e) {
+//            log.warn("更新索引失败 reason:{}", e.getCause());
+//            return new Result(UPDATE_IMAGE_FAIL);
+//        }
+//        Result result = new Result();
+//        result.addData("picUrl", url);
+//        return result;
+        Map<String, Object> source = new HashMap<>();
+        source.put("pic_url", url);
+        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_STORE,  storeId, source);
+        result.ifSuccess(() -> result.addData("pic_url", url));
         return result;
     }
 
@@ -75,6 +82,7 @@ public class UpdateService {
         Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_STORE, storeId, source);
         return result;
     }
+
     private Result updateField(String index, String type, Long id, Map<String, Object> source) {
         UpdateRequest updateRequest = new UpdateRequest(index,
                 type, String.valueOf(id));
