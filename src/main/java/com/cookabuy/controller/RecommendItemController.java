@@ -30,14 +30,14 @@ public class RecommendItemController {
     private RecommendRepository recommendRepository;
     @Autowired
     private ItemRepository itemRepository;
+
     @RequestMapping("/recommend_item")
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
         List<Recommend> recommendItems = dozerHelper.mapList(data.getItems(), Recommend.class);
         int maxPosition = recommendRepository.findMaxPositionByPage(data.getPageName());
-        for (Recommend recommendItem : recommendItems){
+        for (Recommend recommendItem : recommendItems) {
             Recommend recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommendItem.getItemId());
-
             if (recommend != null) {
                 continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
             }
@@ -48,18 +48,19 @@ public class RecommendItemController {
             recommendItem.setPosition(++maxPosition);
             recommendRepository.save(recommendItem);
         }
-        return new Result("items", recommendItems);
+//        return new Result("items", recommendItems); 返回添加的items
+            return new Result();
     }
 
     @RequestMapping("list_items")
     @MenuItem
     public Result listItems(String pageName, String location, Result result) {
         List<Recommend> recommendItems = recommendRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
-        List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems,RecommendItemDTO.class);
+        List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
             Item item = itemRepository.findOne(dto.getItemId());
             //todo 如果商品不存在 ，则表示该商品失效，应设置flag
-            if (item != null){
+            if (item != null) {
                 dto.setTitle(item.getTitle());
                 dto.setPrice(item.getPrice());
                 dto.setShopName(item.getShopName());
@@ -71,7 +72,7 @@ public class RecommendItemController {
     }
 
     @RequestMapping("delete_item")
-    public Result deleteItems (@RequestBody List<Integer> ids) {
+    public Result deleteItems(@RequestBody List<Integer> ids) {
         recommendRepository.deleteRecommendWithIds(ids);
         return new Result();
     }
