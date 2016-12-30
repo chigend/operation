@@ -47,9 +47,26 @@ public class RecommendItemController {
             recommendItem.setUpdatedAt(new Date());
             recommendItem.setPosition(++maxPosition);
             recommendRepository.save(recommendItem);
+
         }
-//        return new Result("items", recommendItems); 返回添加的items
-            return new Result();
+        return new Result();
+//        for (Iterator<Recommend>it = recommendItems.iterator(); it.hasNext(); ) {
+//            Recommend recommend = it.next();
+//            recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
+//            if (recommend != null) {
+//                it.remove();
+//                continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
+//            }
+//            recommend.setLocation(data.getLocation());
+//            recommend.setPageName(data.getPageName());
+//            recommend.setInsertedAt(new Date());
+//            recommend.setUpdatedAt(new Date());
+//            recommend.setPosition(++maxPosition);
+//            recommendRepository.save(recommend);
+//
+//        }
+//        return new Result("items", recommendItems);// 返回添加的items
+
     }
 
     @RequestMapping("list_items")

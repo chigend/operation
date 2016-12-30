@@ -8,11 +8,7 @@ import com.qcloud.cos.exception.AbstractCosException;
 import com.qcloud.cos.request.DelFileRequest;
 import com.qcloud.cos.request.UploadFileRequest;
 import com.qcloud.cos.sign.Credentials;
-import com.qcloud.cos.sign.Sign;
 import entity.Student;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.time.DateUtils;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
@@ -21,13 +17,12 @@ import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.Test;
 
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * 2016/12/8
@@ -114,6 +109,21 @@ public class MainTest {
    @Test
    public void testResult () {
       Result result = new Result();
+   }
+
+   @Test
+   public void testIterator() {
+      List<String > strings = new ArrayList<>();
+      strings.add("hello");
+      strings.add("word");
+      strings.add("heihei");
+      for (Iterator<String> it = strings.iterator(); it.hasNext();) {
+         String str = it.next();
+         if (str.equals("hello")) {
+            it.remove();
+         }
+      }
+      System.out.println(strings);
    }
 
 }
