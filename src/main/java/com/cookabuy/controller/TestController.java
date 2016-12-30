@@ -1,21 +1,16 @@
 package com.cookabuy.controller;
 
-import com.alibaba.fastjson.JSON;
-import com.cookabuy.constant.CosConstant;
-import com.cookabuy.entity.tmp.Test;
+import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Stream;
 
 /**
  * 2016/12/12
@@ -44,5 +39,16 @@ public class TestController {
         return result;
     }
 
+    @RequestMapping("/test_aop1")
+    public Result testaop1(Result result){
+        result.addData("aop", "test aop1");
+        return result;
+    }
+    @RequestMapping("/test_aop2")
+    @MenuItem
+    public Result testaop2(Result result){
+        result.addData("aop", "test aop2");
+        return result;
+    }
 
 }

@@ -1,4 +1,4 @@
-package com.cookabuy.validator;
+package com.cookabuy.spring.validator;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;

@@ -6,7 +6,7 @@ import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.repository.operation.OperationUserRepository;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
-import com.cookabuy.validator.CompoundValidator;
+import com.cookabuy.spring.validator.CompoundValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;

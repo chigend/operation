@@ -1,4 +1,4 @@
-package com.cookabuy.validator;
+package com.cookabuy.spring.validator;
 
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;

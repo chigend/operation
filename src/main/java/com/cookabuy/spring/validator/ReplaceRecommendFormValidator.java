@@ -1,4 +1,4 @@
-package com.cookabuy.validator;
+package com.cookabuy.spring.validator;
 
 import com.cookabuy.entity.service.dto.ReplaceRecommendForm;
 import lombok.extern.slf4j.Slf4j;

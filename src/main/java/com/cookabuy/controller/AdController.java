@@ -1,7 +1,5 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.constant.PageContant;
-import com.cookabuy.constant.CosConstant;
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
 import com.cookabuy.entity.service.dto.SaveAdForm;
@@ -21,10 +19,12 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 import static com.cookabuy.constant.CosConstant.BUCKET;
-import static com.cookabuy.constant.ErrorConstant.*;
+import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_AD_PATH;
+import static com.cookabuy.constant.ErrorConstant.NOT_ASSIGN_ADS;
+import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
+import static com.cookabuy.constant.PageContant.INDEX;
 
 /**
  * @author yejinbiao
@@ -48,7 +48,7 @@ public class AdController {
 
     @RequestMapping("ads")
     public Result findIndexAds(Result result){
-        List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(PageContant.INDEX);
+        List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(INDEX);
 
         List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads,DisPlayAd.class);
         result.addData("ads",disPlayAds);
@@ -57,7 +57,7 @@ public class AdController {
 
     @RequestMapping("add_ad")
     public Result addAd(AddAdForm form , Result result){
-        String picUrl = fileHelper.uploadFile(BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage());
+        String picUrl = fileHelper.uploadFile(BUCKET,DIRECTORY_PREFIX_AD_PATH,form.getImage());
         if(picUrl == null){
             result.setError(UPLOAD_IMAGE_FAIL);
             return result;
@@ -65,7 +65,7 @@ public class AdController {
         log.info("upload file successfully,source_url is {}",picUrl);
         Ad ad = dozerBeanMapper.map(form,Ad.class);
         ad.setPicUrl(picUrl);
-        ad.setPageName(PageContant.INDEX);
+        ad.setPageName(INDEX);
         ad.setCreateTime(new Date());
         adRepository.save(ad);
         return result;
@@ -102,7 +102,7 @@ public class AdController {
         if(form.getImage() != null){
 //          如果广告图片修改过，那么把之前把存储在cos的图片进行删除
 //            fileHelper.deleteFile(CosConstant.BUCKET,ad.getPicUrl());
-           String picUrl = fileHelper.uploadFile(BUCKET,CosConstant.DIRECTORY_PREFIX_AD_PATH,form.getImage());
+           String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH,form.getImage());
            if (picUrl != null){
                fileHelper.deleteFile(BUCKET, ad.getPicUrl());
                ad.setPicUrl(picUrl);

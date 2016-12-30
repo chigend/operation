@@ -35,4 +35,7 @@ public interface OperationRepository extends JpaRepository<Operation,Integer> {
     @Query(value = "select op_id from user_op where user_id=?1",nativeQuery = true)
     public List<Integer> findOperationIdsByUserId(Integer userId);
 
+    @Query(value = "select o.name from operation o JOIN user_op u on u.op_id = o.id where u.user_id = ?1 and o.menu_id =?2", nativeQuery = true)
+    public List<String> findOperationAvaiableByMenuIdAndUserId(Integer userId, Integer menuId);
+
 }

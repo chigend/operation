@@ -1,6 +1,5 @@
 package com.cookabuy.controller;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cookabuy.entity.operation.dto.DisplayUser;
 import com.cookabuy.entity.operation.dto.UpdateUserForm;
 import com.cookabuy.entity.operation.po.Menu;
@@ -10,7 +9,7 @@ import com.cookabuy.service.UserService;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import com.cookabuy.util.selector.Menu2Selector;
-import com.cookabuy.validator.CompoundValidator;
+import com.cookabuy.spring.validator.CompoundValidator;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
