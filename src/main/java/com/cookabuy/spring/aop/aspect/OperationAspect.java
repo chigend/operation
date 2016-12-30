@@ -39,9 +39,10 @@ public class OperationAspect {
             result = (Result) o;
             Integer userId = ShiroHelper.getCurrentUserId();
             List<String> operations = operationRepository.findOperationAvaiableByMenuIdAndUserId(userId, menuId);
+            result.addData("operations", operations);
         }
 
-        return  result;
+        return  result == null ? (Result) o : result;
 
     }
 }
