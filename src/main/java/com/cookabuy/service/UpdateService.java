@@ -10,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.cookabuy.constant.ElasticSearchConstant.*;
@@ -60,6 +61,9 @@ public class UpdateService {
 
     /**
      * 根据storeId 切换elasticsearch上store的是否已添加field  added
+     * 在添加推荐店铺和删除店铺时分别调用
+     * @see com.cookabuy.controller.RecommendStoreController#recommendStore(List)
+     * @see com.cookabuy.controller.RecommendStoreController#deleteStore(Integer, Result)
      * @param storeId
      * @return
      */
