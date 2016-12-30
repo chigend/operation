@@ -4,6 +4,7 @@ import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -48,6 +49,17 @@ public class TestController {
     @MenuItem
     public Result testaop2(Result result){
         result.addData("aop", "test aop2");
+        return result;
+    }
+
+    @RequestMapping("permission1")
+    @RequiresPermissions("modify")
+    public Result testPermission1(Result result) {
+        return result;
+    }
+    @RequestMapping("permission2")
+    @RequiresPermissions("add")
+    public Result testPermission2(Result result) {
         return result;
     }
 

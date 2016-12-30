@@ -1,30 +1,28 @@
 package com.cookabuy.shiro.realm;
 
 import com.cookabuy.entity.operation.po.OperationUser;
-import com.cookabuy.entity.operation.po.Permission;
 import com.cookabuy.repository.operation.OperationUserRepository;
+import com.cookabuy.repository.operation.PermissionRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
 import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authc.SimpleAuthenticationInfo;
 import org.apache.shiro.authz.AuthorizationInfo;
 import org.apache.shiro.authz.SimpleAuthorizationInfo;
-import org.apache.shiro.crypto.hash.SimpleHash;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Slf4j
 public class OperationUserRealm extends AuthorizingRealm {
     @Autowired
     private OperationUserRepository userRepository;
+
+    @Autowired
+    private PermissionRepository permissionRepository;
 
     @Override
     public void setName(String name) {
@@ -53,8 +51,8 @@ public class OperationUserRealm extends AuthorizingRealm {
         }
 
         OperationUser user = (OperationUser) principals.getPrimaryPrincipal();
-        List<String> stringPermissions = user.getPermissions().stream().map(Permission::getPermission).collect(Collectors.toList());
-        log.info("authorize user {},{}",user.getUsername(),stringPermissions);
+        List<String> stringPermissions = permissionRepository.findPermissionNameByUserId(user.getId());
+        log.info("authorize user {},{}", user.getUsername(), stringPermissions);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         info.addStringPermissions(stringPermissions);
         return info;

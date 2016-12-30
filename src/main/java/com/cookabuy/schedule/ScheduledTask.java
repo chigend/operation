@@ -26,7 +26,7 @@ public class ScheduledTask {
     @Autowired
     private RecommendRepository recommendRepository;
     //todo 正式上服务器应改成cron表达式
-    @Scheduled(fixedRate = 30 * 60 * 1000)
+    @Scheduled(cron = "* * 20 * * ?")
     public void refreshRecommendStorePosition() {
         int initPosition = 1; //初始position为1
         for (RecommendStore store : recommendStoreRepository.findByPageOrderByPositionAsc(INDEX)) {
@@ -40,7 +40,7 @@ public class ScheduledTask {
      *   刷新推荐商品的position  同上
      */
 
-    @Scheduled(fixedRate = 30 * 60 * 1000)
+    @Scheduled(cron = "* * 20 * * ?")
     public void refreshRecommendItemPosition() {
 
         for (String page : PAGE_ARRAY) {

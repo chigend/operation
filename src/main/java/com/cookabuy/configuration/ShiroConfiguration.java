@@ -9,7 +9,6 @@ import org.apache.shiro.mgt.SecurityManager;
 import org.apache.shiro.spring.LifecycleBeanPostProcessor;
 import org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
-import org.apache.shiro.web.filter.authc.AuthenticatingFilter;
 import org.apache.shiro.web.filter.authc.PassThruAuthenticationFilter;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator;
@@ -86,7 +85,7 @@ public class ShiroConfiguration {
 //	        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
         // 登录成功后要跳转的连接
 //	        shiroFilterFactoryBean.setSuccessUrl("/user");
-//	        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
+	        shiroFilterFactoryBean.setUnauthorizedUrl("/login");
         Map<String,Filter> filters = new HashMap<String,Filter>();
         filters.put("authc",getFormFilter());
         Map<String,String> definition = new HashMap<String,String>();

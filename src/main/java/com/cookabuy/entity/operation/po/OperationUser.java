@@ -2,7 +2,6 @@ package com.cookabuy.entity.operation.po;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author yejinbiao
@@ -24,7 +23,7 @@ public class OperationUser {
 
 //    private List<Menu> menus;
 
-    private List<Permission> permissions;
+//    private List<Permission> permissions;
 
 
 
@@ -90,16 +89,16 @@ public class OperationUser {
         this.realName = realName;
     }
 
-    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
-    @JoinTable(name="user_permission",joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "permission_id",referencedColumnName = "permission_id")})
-    public List<Permission> getPermissions() {
-        return permissions;
-    }
-
-    public void setPermissions(List<Permission> permissions) {
-        this.permissions = permissions;
-    }
+//    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+//    @JoinTable(name="user_permission",joinColumns = {@JoinColumn(name = "user_id",referencedColumnName = "id")},
+//            inverseJoinColumns = {@JoinColumn(name = "permission_id",referencedColumnName = "permission_id")})
+//    public List<Permission> getPermissions() {
+//        return permissions;
+//    }
+//
+//    public void setPermissions(List<Permission> permissions) {
+//        this.permissions = permissions;
+//    }
 
     @Basic
     @Column(name = "role_tag")
