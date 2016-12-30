@@ -1,13 +1,9 @@
 package test;
 
-import com.cookabuy.entity.operation.po.Menu;
 import com.cookabuy.entity.operation.po.OperationUser;
-import com.cookabuy.entity.operation.po.Permission;
 import com.cookabuy.repository.operation.OperationUserRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.List;
 
 /**
  * 2016/12/12

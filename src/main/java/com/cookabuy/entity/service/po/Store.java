@@ -2,7 +2,6 @@ package com.cookabuy.entity.service.po;
 
 import javax.persistence.*;
 import java.sql.Date;
-import java.util.List;
 
 /**
  * 2016/12/7

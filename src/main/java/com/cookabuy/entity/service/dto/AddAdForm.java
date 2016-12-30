@@ -4,8 +4,6 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-
 /**
  * @author yejinbiao
  * @create 2016-12-23-13:30

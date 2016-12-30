@@ -1,6 +1,6 @@
 package com.cookabuy.entity.service.po;
+
 import javax.persistence.*;
-import java.math.BigDecimal;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 

@@ -1,7 +1,6 @@
 package com.cookabuy.util.selector;
 
 import com.cookabuy.entity.operation.dto.DisplayMenu;
-import com.cookabuy.entity.operation.po.Menu;
 
 import java.util.Collection;
 

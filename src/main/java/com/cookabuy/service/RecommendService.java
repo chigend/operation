@@ -1,6 +1,7 @@
 package com.cookabuy.service;
 
 //import com.cookabuy.repository.service.RecommendRepository;
+
 import com.cookabuy.entity.service.dto.ReplaceRecommendForm;
 import com.cookabuy.entity.service.po.Recommend;
 import com.cookabuy.repository.service.RecommendRepository;
@@ -10,7 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import static com.cookabuy.repository.service.specification.RecommendSpecifications.*;
+import static com.cookabuy.repository.service.specification.RecommendSpecifications.findByAbsolutePosition;
 
 /**
  * 2016/12/6

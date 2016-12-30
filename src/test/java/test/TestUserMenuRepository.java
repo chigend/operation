@@ -1,6 +1,5 @@
 package test;
 
-import com.cookabuy.entity.operation.po.Menu;
 import com.cookabuy.entity.operation.po.UserMenu;
 import com.cookabuy.repository.operation.UserMenuRepository;
 import org.junit.Test;

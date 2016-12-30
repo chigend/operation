@@ -1,7 +1,10 @@
 package com.cookabuy.service;
 
 import com.cookabuy.entity.operation.dto.UpdateUserForm;
-import com.cookabuy.entity.operation.po.*;
+import com.cookabuy.entity.operation.po.OperationUser;
+import com.cookabuy.entity.operation.po.UserMenu;
+import com.cookabuy.entity.operation.po.UserOp;
+import com.cookabuy.entity.operation.po.UserPermission;
 import com.cookabuy.repository.operation.*;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -10,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
-import java.util.List;
-import java.util.concurrent.ExecutionException;
 
 /**处理用户相关的业务类
  * @author yejinbiao

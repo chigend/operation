@@ -1,6 +1,5 @@
 package com.cookabuy.entity.operation.dto;
 
-import com.cookabuy.entity.operation.po.Permission;
 import lombok.Getter;
 import lombok.Setter;
 

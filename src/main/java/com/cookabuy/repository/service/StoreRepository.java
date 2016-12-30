@@ -1,5 +1,5 @@
 package com.cookabuy.repository.service;
-import com.cookabuy.entity.service.po.Item;
+
 import com.cookabuy.entity.service.po.Store;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;

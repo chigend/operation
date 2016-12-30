@@ -5,9 +5,7 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import static com.cookabuy.constant.ElasticSearchConstant.INDEX_NAME_OPERATION;
-import static com.cookabuy.constant.ElasticSearchConstant.TYPE_NAME_ITEM;
-import static com.cookabuy.constant.ElasticSearchConstant.TYPE_NAME_STORE;
+import static com.cookabuy.constant.ElasticSearchConstant.*;
 
 /**
  * elasticsearch 获取doc的service

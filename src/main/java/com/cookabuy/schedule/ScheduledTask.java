@@ -8,8 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import static com.cookabuy.constant.PageContant.*;
-import static com.cookabuy.constant.LocationConstant.*;
+import static com.cookabuy.constant.LocationConstant.LOCATION_ARRAY;
+import static com.cookabuy.constant.PageContant.INDEX;
+import static com.cookabuy.constant.PageContant.PAGE_ARRAY;
 
 /**
  * @author yejinbiao

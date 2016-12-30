@@ -2,8 +2,6 @@ package test;
 
 import com.alibaba.fastjson.JSON;
 import com.cookabuy.repository.service.RecommendStoreRepository;
-import org.json.JSONArray;
-import org.json.JSONML;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
