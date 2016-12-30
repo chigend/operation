@@ -94,4 +94,10 @@ public class TestRecommendRepository extends AbstractJpaTest {
 
 
 
+    @Test
+    public void testFindByPageNameAndLocationAndItemId () {
+        Recommend recommend = recommendRepository.findByPageNameAndLocationAndItemId("index", "girl", 543130633958L);
+        System.out.println(recommend);
+
+    }
 }

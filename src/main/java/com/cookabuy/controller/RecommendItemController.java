@@ -36,10 +36,15 @@ public class RecommendItemController {
         List<Recommend> recommendItems = dozerHelper.mapList(data.getItems(), Recommend.class);
         int maxPosition = recommendRepository.findMaxPositionByPage(data.getPageName());
         for (Recommend recommendItem : recommendItems){
+            Recommend recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommendItem.getItemId());
+
+            if (recommend != null) {
+                continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
+            }
             recommendItem.setLocation(data.getLocation());
+            recommendItem.setPageName(data.getPageName());
             recommendItem.setInsertedAt(new Date());
             recommendItem.setUpdatedAt(new Date());
-            recommendItem.setPageName(data.getPageName());
             recommendItem.setPosition(++maxPosition);
             recommendRepository.save(recommendItem);
         }
