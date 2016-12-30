@@ -8,6 +8,7 @@ import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.repository.service.StoreRepository;
 import com.cookabuy.service.GetService;
 import com.cookabuy.service.UpdateService;
+import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
@@ -69,6 +70,7 @@ public class RecommendStoreController {
      * @return
      */
     @RequestMapping("list_stores")
+    @MenuItem
     public Result listStores(String page, Result result) {
         List<RecommendStore> recommendStores = recommendStoreRepository.findByPageOrderByPositionAsc(page);
         List<RecommendStoreDTO> dtos = dozerHelper.mapList(recommendStores,RecommendStoreDTO.class);

@@ -9,6 +9,7 @@ import lombok.Setter;
 @Setter
 @Getter
 public class DisplayMenu {
+    private Integer id;
     private String name;
     private String category;
 }

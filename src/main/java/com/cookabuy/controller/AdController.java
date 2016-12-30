@@ -6,6 +6,7 @@ import com.cookabuy.entity.service.dto.SaveAdForm;
 import com.cookabuy.entity.service.dto.UpdateAdForm;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
+import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
@@ -47,6 +48,7 @@ public class AdController {
     private FileHelper fileHelper;
 
     @RequestMapping("ads")
+    @MenuItem
     public Result findIndexAds(Result result){
         List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(INDEX);
 

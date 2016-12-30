@@ -6,6 +6,7 @@ import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.Recommend;
 import com.cookabuy.repository.service.ItemRepository;
 import com.cookabuy.repository.service.RecommendRepository;
+import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
-
-import static com.cookabuy.constant.PageContant.INDEX;
 
 /**
  * @author yejinbiao
@@ -48,6 +47,7 @@ public class RecommendItemController {
     }
 
     @RequestMapping("list_items")
+    @MenuItem
     public Result listItems(String pageName, String location, Result result) {
         List<Recommend> recommendItems = recommendRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems,RecommendItemDTO.class);
