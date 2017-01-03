@@ -48,4 +48,6 @@ public interface AdRepository extends JpaRepository<Ad,Integer> {
 
     void toggleHiddenByAdId(Integer id);
 
+    List<Ad> findByPageNameAndLocation(String pageName, String location);
+
 }

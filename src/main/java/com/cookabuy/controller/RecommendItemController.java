@@ -1,9 +1,12 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.entity.service.dto.DisPlayAd;
 import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
+import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.Recommend;
+import com.cookabuy.repository.service.AdRepository;
 import com.cookabuy.repository.service.ItemRepository;
 import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.spring.aop.annotation.MenuItem;
@@ -26,10 +29,15 @@ import java.util.List;
 public class RecommendItemController {
     @Autowired
     private DozerHelper dozerHelper;
+
     @Autowired
     private RecommendRepository recommendRepository;
+
     @Autowired
     private ItemRepository itemRepository;
+
+    @Autowired
+    private AdRepository adRepository;
 
     @RequestMapping("/recommend_item")
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
@@ -84,6 +92,11 @@ public class RecommendItemController {
             }
             //todo  设置market
         });
+
+        List<Ad> ads = adRepository.findByPageNameAndLocation(pageName, location);
+        List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads, DisPlayAd.class);
+
+        result.addData("ads", disPlayAds);
         result.addData("stores", dtos);
         return result;
     }
