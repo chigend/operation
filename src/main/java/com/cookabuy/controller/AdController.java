@@ -59,7 +59,7 @@ public class AdController {
 
     @RequestMapping("add_ad")
     public Result addAd(AddAdForm form , Result result){
-        String picUrl = fileHelper.uploadFile(BUCKET,DIRECTORY_PREFIX_AD_PATH,form.getImage());
+        String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
         if(picUrl == null){
             result.setError(UPLOAD_IMAGE_FAIL);
             return result;
@@ -82,7 +82,7 @@ public class AdController {
         ids.stream().forEach(id->{
             Ad ad = adRepository.findOne(id);
             //删除广告之前把存储在cos的图片进行删除
-            fileHelper.deleteFile(BUCKET,ad.getPicUrl());
+            fileHelper.deleteFile(BUCKET, ad.getPicUrl());
             adRepository.delete(ad);
         });
         return new Result();
@@ -125,6 +125,10 @@ public class AdController {
         return result;
     }
 
+//    @RequestMapping("upload_ad_image")
+//    public Result uploadAdImage(String page, String location, MultipartFile image) {
+//
+//    }
 
 
 }
