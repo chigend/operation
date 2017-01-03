@@ -41,18 +41,18 @@ public class FileHelper {
      * @param bytes 文件内容的byte数组格式
      * @return 上传成功后的文件名 e.g 	http://test-1252811756.cosgz.myqcloud.com/ad/e8c55733-935e-40ab-8dc0-605091d210ed.jpg
      */
-    public String uploadFile(String bucketName,String directoryPath,String originFileName,byte [] bytes){
+    public String uploadFile(String bucketName,String directoryPath,String originFileName,byte [] bytes) {
 
         String suffix = FileUtils.getSuffix(originFileName);
         String fileName = UUID.randomUUID().toString().concat(suffix);
-        UploadFileRequest uploadFileRequest = new UploadFileRequest(bucketName,directoryPath.concat(fileName), bytes);
+        UploadFileRequest uploadFileRequest = new UploadFileRequest(bucketName, directoryPath.concat(fileName), bytes);
         String res = cosClient.uploadFile(uploadFileRequest);
         JSONObject data = JSON.parseObject(res).getJSONObject("data");
         return data == null ? null : data.getString("source_url");
     }
 
     public String uploadFile(String bucketName, String directoryPath,
-                             MultipartFile file){
+                             MultipartFile file) {
         Objects.requireNonNull(file);
 
         try {
@@ -73,7 +73,7 @@ public class FileHelper {
         DelFileRequest request = new DelFileRequest(bucketName,cosPath);
         String res = cosClient.delFile(request);
         Integer code = JSONObject.parseObject(res).getInteger("code");
-            log.info("delete file {} in bucket:{} {}",fileUrl,bucketName,code==0?"successfully":"fail");
+            log.info("delete file {} in bucket:{} {}", fileUrl, bucketName,code==0 ? "successfully" : "fail");
         return JSONObject.parseObject(res).getString("message");
     }
 

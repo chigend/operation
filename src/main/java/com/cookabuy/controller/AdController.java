@@ -125,10 +125,4 @@ public class AdController {
         return result;
     }
 
-//    @RequestMapping("upload_ad_image")
-//    public Result uploadAdImage(String page, String location, MultipartFile image) {
-//
-//    }
-
-
 }

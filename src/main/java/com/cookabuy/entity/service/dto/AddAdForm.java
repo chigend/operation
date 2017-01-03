@@ -18,4 +18,6 @@ public class AddAdForm {
 
     private Integer position;
 
+    private String location;
+
 }

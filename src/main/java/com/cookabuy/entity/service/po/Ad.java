@@ -24,6 +24,9 @@ public class Ad {
     private String pageName;
 
     private boolean isHidden;
+
+    private String location;
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "ad_id")
@@ -34,9 +37,6 @@ public class Ad {
     public void setAdId(Integer adId) {
         this.adId = adId;
     }
-
-
-
 
     @Basic
     @Column(name = "pic_url")
@@ -96,5 +96,15 @@ public class Ad {
 
     public void setHidden(boolean hidden) {
         isHidden = hidden;
+    }
+
+    @Basic
+    @Column(name = "location")
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

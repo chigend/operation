@@ -31,7 +31,7 @@ public class TestItemRepository extends AbstractJpaTest {
     @Before
     public void init() throws Exception{
         client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.11.10"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
     }
 
     @Test

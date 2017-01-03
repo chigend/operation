@@ -1,10 +1,14 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.entity.service.dto.AddAdForm;
+import com.cookabuy.entity.service.po.Ad;
+import com.cookabuy.repository.service.AdRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.service.GetService;
 import com.cookabuy.service.UpdateService;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.util.Result;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,6 +38,11 @@ public class FileController {
     @Autowired
     private GetService getService;
 
+    @Autowired
+    private AdRepository adRepository;
+
+    @Autowired
+    private DozerBeanMapper mapper;
 
     @RequestMapping("/upload_store_img")
     public Result uploadStoreImg(Long storeId, MultipartFile image) {
@@ -60,5 +69,19 @@ public class FileController {
         //如果elasticsearch上给store添加（或者更新）了图片并索引成功，如果原来该store的pic_url存在，则删除原来的cos上的该图片
         result.ifSuccess(() ->  originalCosUrl.ifPresent(value -> fileHelper.deleteFile(BUCKET, value)));
         return result;
+    }
+
+    //用于爆款专区的广告图上传
+    @RequestMapping("/upload_ad_img")
+    public Result uploadAdImg(AddAdForm addAdForm) {
+        String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, addAdForm.getImage());
+        if (url == null) {
+            return new Result(UPLOAD_IMAGE_FAIL);
+        }
+        //todo 删除之前的
+        Ad ad = mapper.map(addAdForm, Ad.class);
+        ad.setPicUrl(url);
+        adRepository.save(ad);
+        return new Result();
     }
 }
