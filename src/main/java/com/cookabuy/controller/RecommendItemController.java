@@ -15,6 +15,7 @@ import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -94,6 +95,9 @@ public class RecommendItemController {
                 dto.setTitle(item.getTitle());
                 dto.setPrice(item.getPrice());
                 dto.setShopName(item.getShopName());
+                if (StringUtils.isEmpty(dto.getPicUrl())) {
+                    dto.setPicUrl(item.getPicUrl());
+                }
             }
             //todo  设置market
         });
