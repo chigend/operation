@@ -33,10 +33,10 @@ public class SearchService {
         //定义组合查询
         BoolQueryBuilder boolQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("added", false));
         if(StringUtils.hasLength(query.getTitle())){
-            boolQuery.must(QueryBuilders.matchQuery("title", query.getTitle()));
+            boolQuery.must(QueryBuilders.termQuery("title", query.getTitle()));
         }
         if(StringUtils.hasLength(query.getStore())){
-            boolQuery.must(QueryBuilders.matchQuery("store", query.getStore()));
+            boolQuery.must(QueryBuilders.matchQuery("store_name", query.getStore()));
         }
 //        requestBuilder.setQuery(QueryBuilders.multiMatchQuery())
         requestBuilder.setPostFilter(
