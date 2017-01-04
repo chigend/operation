@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -50,36 +51,36 @@ public class RecommendItemController {
         //todo 修改该参数类名
         List<Recommend> recommendItems = dozerHelper.mapList(data.getItems(), Recommend.class);
         int maxPosition = recommendRepository.findMaxPositionByPage(data.getPageName());
-        for (Recommend recommendItem : recommendItems) {
-            Recommend recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommendItem.getItemId());
-            if (recommend != null) {
-                continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
-            }
-            recommendItem.setLocation(data.getLocation());
-            recommendItem.setPageName(data.getPageName());
-            recommendItem.setInsertedAt(new Date());
-            recommendItem.setUpdatedAt(new Date());
-            recommendItem.setPosition(++maxPosition);
-            recommendRepository.save(recommendItem);
-
-        }
-        return new Result();
-//        for (Iterator<Recommend>it = recommendItems.iterator(); it.hasNext(); ) {
-//            Recommend recommend = it.next();
-//            recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
+//        for (Recommend recommendItem : recommendItems) {
+//            Recommend recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommendItem.getItemId());
 //            if (recommend != null) {
-//                it.remove();
 //                continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
 //            }
-//            recommend.setLocation(data.getLocation());
-//            recommend.setPageName(data.getPageName());
-//            recommend.setInsertedAt(new Date());
-//            recommend.setUpdatedAt(new Date());
-//            recommend.setPosition(++maxPosition);
-//            recommendRepository.save(recommend);
+//            recommendItem.setLocation(data.getLocation());
+//            recommendItem.setPageName(data.getPageName());
+//            recommendItem.setInsertedAt(new Date());
+//            recommendItem.setUpdatedAt(new Date());
+//            recommendItem.setPosition(++maxPosition);
+//            recommendRepository.save(recommendItem);
 //
 //        }
-//        return new Result("items", recommendItems);// 返回添加的items
+//        return new Result();
+        for (Iterator<Recommend> it = recommendItems.iterator(); it.hasNext(); ) {
+            Recommend recommend = it.next();
+            recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
+            if (recommend != null) {
+                it.remove();
+                continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
+            }
+            recommend.setLocation(data.getLocation());
+            recommend.setPageName(data.getPageName());
+            recommend.setInsertedAt(new Date());
+            recommend.setUpdatedAt(new Date());
+            recommend.setPosition(++maxPosition);
+            recommendRepository.save(recommend);
+
+        }
+        return new Result("items", recommendItems);// 返回添加的items
 
     }
 
