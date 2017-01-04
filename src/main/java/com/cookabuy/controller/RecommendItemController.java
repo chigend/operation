@@ -13,8 +13,8 @@ import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
-import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -106,9 +106,7 @@ public class RecommendItemController {
 
         List<RecommendCategory> categories = recommendCategoryRepository.findByPageName(pageName);
 
-        if (!CollectionUtils.isEmpty(ads)) {
-            result.addData("picUrl", ads);
-        }
+            result.addData("picUrl", CollectionUtils.isEmpty(ads) ? null : ads.get(0));
         result.addData("stores", dtos);
         result.addData("categories", categories);
         return result;
