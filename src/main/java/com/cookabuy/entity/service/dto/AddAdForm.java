@@ -20,4 +20,6 @@ public class AddAdForm {
 
     private String location;
 
+    private String pageName;
+
 }

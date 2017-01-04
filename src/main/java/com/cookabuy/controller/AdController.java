@@ -125,4 +125,26 @@ public class AdController {
         return result;
     }
 
+    //用于爆款专区的广告图上传
+    @RequestMapping("/upload_ad_img")
+    public Result uploadAdImg(AddAdForm addAdForm) {
+        String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, addAdForm.getImage());
+        if (url == null) {
+            return new Result(UPLOAD_IMAGE_FAIL);
+        }
+        //todo 删除之前的
+        List<Ad> ads = adRepository.findByPageNameAndLocation(addAdForm.getPageName(), addAdForm.getLocation());
+        if (CollectionUtils.isEmpty(ads)) {
+            adRepository.save(dozerBeanMapper.map(addAdForm, Ad.class));
+        }else {
+            Ad ad = ads.get(0);
+            if (ad.getPicUrl() != null) {
+                fileHelper.deleteFile(BUCKET, ad.getPicUrl());
+            }
+            ad.setPicUrl(url);
+            adRepository.save(ad);
+        }
+        return new Result("picUrl", url);
+    }
+
 }

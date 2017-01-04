@@ -1,7 +1,5 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.entity.service.dto.AddAdForm;
-import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.service.GetService;
@@ -71,17 +69,5 @@ public class FileController {
         return result;
     }
 
-    //用于爆款专区的广告图上传
-    @RequestMapping("/upload_ad_img")
-    public Result uploadAdImg(AddAdForm addAdForm) {
-        String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, addAdForm.getImage());
-        if (url == null) {
-            return new Result(UPLOAD_IMAGE_FAIL);
-        }
-        //todo 删除之前的
-        Ad ad = mapper.map(addAdForm, Ad.class);
-        ad.setPicUrl(url);
-        adRepository.save(ad);
-        return new Result("picUrl", url);
-    }
+
 }
