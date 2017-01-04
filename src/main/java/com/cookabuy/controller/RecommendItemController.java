@@ -2,14 +2,8 @@ package com.cookabuy.controller;
 
 import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
-import com.cookabuy.entity.service.po.Ad;
-import com.cookabuy.entity.service.po.Item;
-import com.cookabuy.entity.service.po.Recommend;
-import com.cookabuy.entity.service.po.RecommendCategory;
-import com.cookabuy.repository.service.AdRepository;
-import com.cookabuy.repository.service.ItemRepository;
-import com.cookabuy.repository.service.RecommendCategoryRepository;
-import com.cookabuy.repository.service.RecommendRepository;
+import com.cookabuy.entity.service.po.*;
+import com.cookabuy.repository.service.*;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
@@ -23,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author yejinbiao
@@ -45,6 +40,9 @@ public class RecommendItemController {
 
     @Autowired
     private RecommendCategoryRepository recommendCategoryRepository;
+
+    @Autowired
+    private StoreRepository storeRepository;
 
     @RequestMapping("/recommend_item")
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
@@ -80,7 +78,24 @@ public class RecommendItemController {
             recommendRepository.save(recommend);
 
         }
-        return new Result("items", recommendItems);// 返回添加的items
+        List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
+        dtos.stream().forEach(dto -> {
+            Item item = itemRepository.findOne(dto.getItemId());
+            //todo 如果商品不存在 ，则表示该商品失效，应设置flag
+            if (item != null) {
+                dto.setTitle(item.getTitle());
+                dto.setPrice(item.getPrice());
+                Optional<Store> store = Optional.ofNullable(item.getStore());
+                store.ifPresent(value -> {
+                    dto.setShopName(value.getStoreName());
+                    dto.setMarket(value.getMarket());
+                });
+                if (StringUtils.isEmpty(dto.getPicUrl())) {
+                    dto.setPicUrl(item.getPicUrl());
+                }
+            }
+        });
+        return new Result("items", dtos);// 返回添加的items
 
     }
 
@@ -95,12 +110,15 @@ public class RecommendItemController {
             if (item != null) {
                 dto.setTitle(item.getTitle());
                 dto.setPrice(item.getPrice());
-                dto.setShopName(item.getShopName());
+                Optional<Store> store = Optional.ofNullable(item.getStore());
+                store.ifPresent(value -> {
+                    dto.setShopName(value.getStoreName());
+                    dto.setMarket(value.getMarket());
+                });
                 if (StringUtils.isEmpty(dto.getPicUrl())) {
                     dto.setPicUrl(item.getPicUrl());
                 }
             }
-            //todo  设置market
         });
 
         List<Ad> ads = adRepository.findByPageNameAndLocation(pageName, location);
