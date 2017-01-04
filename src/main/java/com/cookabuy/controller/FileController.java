@@ -82,6 +82,6 @@ public class FileController {
         Ad ad = mapper.map(addAdForm, Ad.class);
         ad.setPicUrl(url);
         adRepository.save(ad);
-        return new Result();
+        return new Result("picUrl", url);
     }
 }

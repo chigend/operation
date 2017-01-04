@@ -6,8 +6,10 @@ import com.cookabuy.entity.service.dto.RecommendItemEntity;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.Recommend;
+import com.cookabuy.entity.service.po.RecommendCategory;
 import com.cookabuy.repository.service.AdRepository;
 import com.cookabuy.repository.service.ItemRepository;
+import com.cookabuy.repository.service.RecommendCategoryRepository;
 import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
@@ -38,6 +40,9 @@ public class RecommendItemController {
 
     @Autowired
     private AdRepository adRepository;
+
+    @Autowired
+    private RecommendCategoryRepository recommendCategoryRepository;
 
     @RequestMapping("/recommend_item")
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
@@ -96,8 +101,11 @@ public class RecommendItemController {
         List<Ad> ads = adRepository.findByPageNameAndLocation(pageName, location);
         List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads, DisPlayAd.class);
 
+        List<RecommendCategory> categories = recommendCategoryRepository.findByPageName(pageName);
+
         result.addData("ads", disPlayAds);
         result.addData("stores", dtos);
+        result.addData("categories", categories);
         return result;
     }
 

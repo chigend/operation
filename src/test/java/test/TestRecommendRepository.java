@@ -57,10 +57,10 @@ public class TestRecommendRepository extends AbstractJpaTest {
     }
     @Test
     public void testaddRecommend(){
-        itemRepository.findTopAndOffset(20,500).stream().map(Item::getNumIid).forEach(numiid->{
+        itemRepository.findTopAndOffset(100,500).stream().filter(item -> item.getTitle().contains("女装")).limit(20).map(Item::getNumIid).forEach(numiid->{
             Recommend recommend = new Recommend();
             recommend.setItemId(numiid);
-            recommend.setLocation("right");
+            recommend.setLocation("girl");
             recommend.setPageName("index");
             recommend.setInsertedAt(new Date());
             recommend.setUpdatedAt(new Date());

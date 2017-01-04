@@ -125,5 +125,12 @@ public class MainTest {
       }
       System.out.println(strings);
    }
+   @Test
+   public void testPattern() {
+      String pattern = "0||[1-4][0-9]||5[1-5]";
+      for (int i = 0; i < 100; i++) {
+         System.out.println(i + ":" + (String.valueOf(i)).matches(pattern));
+      }
+   }
 
 }
