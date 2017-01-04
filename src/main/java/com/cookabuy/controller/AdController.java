@@ -135,7 +135,9 @@ public class AdController {
         //todo 删除之前的
         List<Ad> ads = adRepository.findByPageNameAndLocation(addAdForm.getPageName(), addAdForm.getLocation());
         if (CollectionUtils.isEmpty(ads)) {
-            adRepository.save(dozerBeanMapper.map(addAdForm, Ad.class));
+            Ad ad = dozerBeanMapper.map(addAdForm, Ad.class);
+            ad.setPicUrl(url);
+            adRepository.save(ad);
         }else {
             Ad ad = ads.get(0);
             if (ad.getPicUrl() != null) {
