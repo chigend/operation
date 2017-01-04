@@ -78,6 +78,7 @@ public class RecommendItemController {
             recommendRepository.save(recommend);
 
         }
+        //todo 代码冗余
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
             Item item = itemRepository.findOne(dto.getItemId());

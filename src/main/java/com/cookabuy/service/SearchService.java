@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,20 +30,23 @@ public class SearchService {
 
     public SearchResponse searchItems(ItemQuery query){
         SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_ITEM);
-
+        //定义组合查询
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery().must(QueryBuilders.matchQuery("added", false));
         if(StringUtils.hasLength(query.getTitle())){
-            requestBuilder.setQuery(QueryBuilders.matchQuery("title",query.getTitle()));
+            boolQuery.must(QueryBuilders.matchQuery("title", query.getTitle()));
         }
         if(StringUtils.hasLength(query.getStore())){
-            requestBuilder.setQuery(QueryBuilders.matchQuery("store_name",query.getStore()));
+            boolQuery.must(QueryBuilders.matchQuery("store", query.getStore()));
         }
+//        requestBuilder.setQuery(QueryBuilders.multiMatchQuery())
         requestBuilder.setPostFilter(
                 QueryBuilders.rangeQuery("price")
                             .from(query.getPriceLow())
                             .to(query.getPriceHight())
         );
-        requestBuilder.setQuery(QueryBuilders.matchQuery("added", false));
+        requestBuilder.setQuery(boolQuery);
         //设置默认的排序方式，价格优先升序排序，上架时间降序排序
+
         requestBuilder.addSort("price", SortOrder.ASC).addSort("list_time",SortOrder.DESC).setFrom(query.getFrom()).setSize(query.getSize());
         return requestBuilder.get();
     }
@@ -50,13 +54,14 @@ public class SearchService {
     public SearchResponse searchStores(StoreQuery query){
         SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_STORE);
 
+        BoolQueryBuilder booleanQuery = QueryBuilders.boolQuery();
         if(StringUtils.hasLength(query.getStoreName())){
-            requestBuilder.setQuery(QueryBuilders.matchQuery("store_name",query.getStoreName()));
+            booleanQuery.must(QueryBuilders.matchQuery("store_name", query.getStoreName()));
         }
         if(StringUtils.hasLength(query.getLocation())){
-            requestBuilder.setQuery(QueryBuilders.matchQuery("location",query.getLocation()));
+            booleanQuery.must(QueryBuilders.matchQuery("location", query.getLocation()));
         }
-
+        requestBuilder.setQuery(booleanQuery);
         //设置默认的排序方式，价格优先升序排序，上架时间降序排序
         requestBuilder.setFrom(query.getFrom()).setSize(query.getSize());
         return requestBuilder.get();

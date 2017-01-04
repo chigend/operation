@@ -116,7 +116,7 @@ public class RecommendStoreController {
         //更新elastic 索引上的url
         Result result = updateService.updateStoreUrl(storeId,url);
         //如果更新成功就把cos上原来的url删除
-        result.ifSuccess(() -> cosOriginalUrl.ifPresent(value -> fileHelper.deleteFile(BUCKET,value)));
+        result.ifSuccess(() -> cosOriginalUrl.ifPresent(value -> fileHelper.deleteFile(BUCKET, value)));
 
         //修改推荐店铺的图片url为上述新上传的图片url
         store.ifPresent(value -> {
@@ -126,9 +126,6 @@ public class RecommendStoreController {
 
         result.addData("picUrl",url);
         return result;
-
-
-
     }
 
     @RequestMapping("toggle_store_effective")
