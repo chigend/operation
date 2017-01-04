@@ -106,7 +106,7 @@ public class RecommendItemController {
 
         List<RecommendCategory> categories = recommendCategoryRepository.findByPageName(pageName);
 
-            result.addData("picUrl", CollectionUtils.isEmpty(ads) ? null : ads.get(0));
+        result.addData("picUrl", CollectionUtils.isEmpty(ads) ? null : ads.get(0).getPicUrl());
         result.addData("stores", dtos);
         result.addData("categories", categories);
         return result;
