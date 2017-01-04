@@ -1,6 +1,5 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.entity.service.dto.DisPlayAd;
 import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
 import com.cookabuy.entity.service.po.Ad;
@@ -14,6 +13,7 @@ import com.cookabuy.repository.service.RecommendRepository;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
+import org.apache.shiro.util.CollectionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -103,11 +103,12 @@ public class RecommendItemController {
         });
 
         List<Ad> ads = adRepository.findByPageNameAndLocation(pageName, location);
-        List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads, DisPlayAd.class);
 
         List<RecommendCategory> categories = recommendCategoryRepository.findByPageName(pageName);
 
-        result.addData("ads", disPlayAds);
+        if (!CollectionUtils.isEmpty(ads)) {
+            result.addData("picUrl", ads);
+        }
         result.addData("stores", dtos);
         result.addData("categories", categories);
         return result;
