@@ -50,7 +50,7 @@ public class RecommendItemController {
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
         List<Recommend> recommendItems = dozerHelper.mapList(data.getItems(), Recommend.class);
-        int maxPosition = recommendRepository.findMaxPositionByPage(data.getPageName());
+        int maxPosition = recommendRepository.findMaxPositionByPageNameAndLocation(data.getPageName(), data.getLocation());
 //        for (Recommend recommendItem : recommendItems) {
 //            Recommend recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommendItem.getItemId());
 //            if (recommend != null) {
@@ -67,8 +67,8 @@ public class RecommendItemController {
 //        return new Result();
         for (Iterator<Recommend> it = recommendItems.iterator(); it.hasNext(); ) {
             Recommend recommend = it.next();
-            recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
-            if (recommend != null) {
+            Recommend old = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
+            if (old != null) {
                 it.remove();
                 continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
             }
