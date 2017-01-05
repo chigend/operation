@@ -8,7 +8,6 @@ import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.QueryBuilders;
-import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -45,9 +44,9 @@ public class SearchService {
                             .to(query.getPriceHight())
         );
         requestBuilder.setQuery(boolQuery);
-        //设置默认的排序方式，价格优先升序排序，上架时间降序排序
-
-        requestBuilder.addSort("price", SortOrder.ASC).addSort("list_time",SortOrder.DESC).setFrom(query.getFrom()).setSize(query.getSize());
+//        //设置默认的排序方式，价格优先升序排序，上架时间降序排序
+//
+//        requestBuilder.addSort("price", SortOrder.ASC).addSort("list_time",SortOrder.DESC).setFrom(query.getFrom()).setSize(query.getSize());
         return requestBuilder.get();
     }
 
