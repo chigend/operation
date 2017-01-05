@@ -75,4 +75,7 @@ public class ElasticSearchApiTest {
         }
     }
 
+    @Test
+    public void testDeleteField() {
+    }
 }
