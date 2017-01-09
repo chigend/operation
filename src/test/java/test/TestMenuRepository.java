@@ -41,4 +41,8 @@ public class TestMenuRepository extends AbstractJpaTest{
       List<Menu> menus =  menuRepository.findAll();
         System.out.println(JSON.toJSONString(menus));
     }
+    @Test
+    public void testFindMenuForOrdinaryUser() {
+        menuRepository.findAllMenuForOrdinaryUser().stream().map(Menu :: getName).forEach(System.out :: println);
+    }
 }

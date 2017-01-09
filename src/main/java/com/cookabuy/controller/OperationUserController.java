@@ -118,7 +118,8 @@ public class OperationUserController {
         result.addData("user",userInfo);
         Integer userId = user.getId();
         List<Integer> opIds = operationRepository.findOperationIdsByUserId(userId);
-        List<Menu> menus = menuRepository.findAll();
+        //有些菜单项只提供给最高权限管理员，所以不在权限分配列表中
+        List<Menu> menus = menuRepository.findAllMenuForOrdinaryUser();
         menus.stream().forEach(menu -> {
             menu.getOperations().stream()
                     .filter(operation -> opIds.contains(operation.getId()))

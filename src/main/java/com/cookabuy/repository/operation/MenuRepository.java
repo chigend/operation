@@ -44,6 +44,9 @@ public interface MenuRepository extends JpaRepository<Menu,Integer> {
     @Override
     List<Menu> findAll();
 
+    @Query(value = "select * from menu where for_admin = false", nativeQuery = true)
+    List<Menu> findAllMenuForOrdinaryUser();
+
     @Modifying
     @Query(value = "delete from user_menu where user_id=?1",nativeQuery = true)
     void deleteByUserId(Integer userId);
