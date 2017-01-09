@@ -25,7 +25,7 @@ public class ElasticSearchApiTest {
     @Before
     public void init() throws Exception{
         client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.11.10"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.11.35"), 9300));
     }
 
     @Test
