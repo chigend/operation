@@ -19,6 +19,8 @@ public class Menu {
     //菜单的类目
     private String category;
 
+    private String url;
+
     private List<Operation> operations;
 
 
@@ -52,6 +54,15 @@ public class Menu {
         this.category = category;
     }
 
+    @Basic
+    @Column(name = "url")
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
     @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name="menu_id")

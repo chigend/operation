@@ -12,6 +12,7 @@ public class DisplayMenu {
     private Integer id;
     private String name;
     private String category;
+    private String url;
 
     @Override
     public boolean equals(Object o) {
