@@ -11,6 +11,7 @@ import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.util.CollectionUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,7 @@ public class AdController {
     }
 
     @RequestMapping("add_ad")
+    @RequiresPermissions("ad:add")
     public Result addAd(AddAdForm form , Result result){
         String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
         if(picUrl == null){
@@ -75,6 +77,7 @@ public class AdController {
 
 
     @RequestMapping("delete_ad")
+    @RequiresPermissions("ad:delete")
     public Result deleteAd(@RequestBody List<Integer> ids){
         if(CollectionUtils.isEmpty(ids)){
             return new Result(NOT_ASSIGN_ADS);
@@ -89,6 +92,7 @@ public class AdController {
     }
     //根据adId 来更新每一个广告的position
     @RequestMapping("save_ad")
+    @RequiresPermissions("ad:move")
     public Result save(@RequestBody List<SaveAdForm> list){
         if(CollectionUtils.isEmpty(list)){
             return new Result(NOT_ASSIGN_ADS);
@@ -99,6 +103,7 @@ public class AdController {
     }
 
     @RequestMapping("update_ad")
+    @RequiresPermissions("ad:update")
     public Result update(UpdateAdForm form,Result result){
         Ad ad = adRepository.findOne(form.getAdId());
         if(form.getImage() != null){
@@ -119,6 +124,7 @@ public class AdController {
     }
 
     @RequestMapping("toggle_hidden")
+    @RequiresPermissions("ad:hide")
     public Result toggle(Integer adId,Result result){
 
         adRepository.toggleHiddenByAdId(adId);

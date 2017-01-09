@@ -5,7 +5,6 @@ import com.cookabuy.util.Result;
 import com.cookabuy.util.ShiroHelper;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
-import org.aspectj.lang.annotation.Aspect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -20,7 +19,7 @@ import java.util.List;
  * @author yejinbiao
  * @create 2016-12-30-9:50
  */
-@Aspect
+//@Aspect
 @Component
 public class OperationAspect {
     @Autowired(required = true)

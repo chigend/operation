@@ -12,6 +12,7 @@ import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -100,6 +101,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("update_store_img")
+    @RequiresPermissions("recommendStore:image:update")
     public Result updateStoreImg(Integer id, MultipartFile image) {
         Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findOne(id));
         if (!store.isPresent()){
@@ -129,6 +131,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("toggle_store_effective")
+    @RequiresPermissions("recommendStore:hide")
     public Result toggoleStoreEffective (Integer id, Result result) {
         recommendStoreRepository.toggleEffectiveById(id);
         return result;
