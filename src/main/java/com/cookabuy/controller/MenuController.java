@@ -34,7 +34,7 @@ public class MenuController {
     public Result getMenus(Result result, HttpSession session){
         Integer userId = ShiroHelper.getCurrentUserId();
         log.info("userId is {}",userId);
-        List<Menu> menus = menuRepository.findMenuByUserId(userId);
+        List<Menu> menus = menuRepository.findAllMenuForOrdinaryUser();
         //过滤掉po中不需要展示给前端的属性
         List<DisplayMenu> displayMenus = dozerHelper.mapList(menus,DisplayMenu.class);
         Selector menuSelector = new MenuSelector(displayMenus);

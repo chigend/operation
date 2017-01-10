@@ -50,4 +50,6 @@ public interface MenuRepository extends JpaRepository<Menu,Integer> {
     @Modifying
     @Query(value = "delete from user_menu where user_id=?1",nativeQuery = true)
     void deleteByUserId(Integer userId);
+
+
 }
