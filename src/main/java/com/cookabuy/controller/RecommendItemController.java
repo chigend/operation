@@ -5,8 +5,10 @@ import com.cookabuy.entity.service.dto.RecommendItemEntity;
 import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
 import com.cookabuy.spring.aop.annotation.MenuItem;
+import com.cookabuy.spring.aop.annotation.RequiresPermission;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -45,6 +47,7 @@ public class RecommendItemController {
     private StoreRepository storeRepository;
 
     @RequestMapping("/recommend_item")
+    @RequiresPermission
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
         List<Recommend> recommendItems = dozerHelper.mapList(data.getItems(), Recommend.class);
@@ -133,6 +136,7 @@ public class RecommendItemController {
     }
 
     @RequestMapping("delete_item")
+    @RequiresPermissions("recommendItem:delete")
     public Result deleteItems(@RequestBody List<Integer> ids) {
         recommendRepository.deleteRecommendWithIds(ids);
         return new Result();

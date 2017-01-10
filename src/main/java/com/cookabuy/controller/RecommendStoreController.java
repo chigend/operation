@@ -12,6 +12,7 @@ import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,6 +48,7 @@ public class RecommendStoreController {
     @Autowired
     private GetService getService;
     @RequestMapping("/recommend_store")
+    @RequiresPermissions("recommendStore:add")
     public Result recommendStore(@RequestBody List<RecommendStoreDTO> stores) {
         List<RecommendStore> recommendStores = dozerHelper.mapList(stores, RecommendStore.class);
         int maxPosition = recommendStoreRepository.findMaxPositionByPage(INDEX);
@@ -86,6 +88,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("delete_store")
+    @RequiresPermissions("recommendStore:delete")
     public Result deleteStore(Integer id, Result result) {
         Optional<RecommendStore> recommendStore = Optional.ofNullable(recommendStoreRepository.findOne(id));
         //如果推荐店铺的url存在表示该图片已经上传cos，那么在删除该店铺之前首先删除在cos上的图片
@@ -100,6 +103,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("update_store_img")
+    @RequiresPermissions("recommendStore:image:update")
     public Result updateStoreImg(Integer id, MultipartFile image) {
         Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findOne(id));
         if (!store.isPresent()){
@@ -129,6 +133,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("toggle_store_effective")
+    @RequiresPermissions("recommendStore:hide")
     public Result toggoleStoreEffective (Integer id, Result result) {
         recommendStoreRepository.toggleEffectiveById(id);
         return result;

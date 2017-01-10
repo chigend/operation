@@ -92,12 +92,14 @@ public class UserService {
         userOpRepository.deleteByUserId(userId);
         //为该用户生成新的Operation项，
         form.getOperationIds().stream().distinct().forEach(opId->{
+            log.info("operation id : {}", opId);
             UserOp userOp = new UserOp(userId,opId);
             userOpRepository.save(userOp);
         });
         //删除该用户下所有的权限
         userPermissionRepository.deleteByUserId(userId);
         //也为该用户分配所对应operation的权限
+        System.out.println(form.getPermissionIds());
         form.getPermissionIds().stream().distinct().forEach(permissionId->{
             UserPermission userPermission = new UserPermission(userId,permissionId);
             userPermissionRepository.save(userPermission);

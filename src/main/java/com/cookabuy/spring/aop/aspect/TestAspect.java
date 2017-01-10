@@ -1,8 +1,9 @@
 package com.cookabuy.spring.aop.aspect;
 
+import com.cookabuy.entity.tmp.Student;
 import com.cookabuy.util.Result;
-import org.apache.shiro.authz.AuthorizationException;
-import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Before;
 
 /**
  * @author yejinbiao
@@ -11,9 +12,14 @@ import org.aspectj.lang.annotation.AfterThrowing;
 //@Aspect
 //@Component
 public class TestAspect {
-    @AfterThrowing(pointcut = "execution(* org.apache.shiro.authz.aop.AuthorizingAnnotationMethodInterceptor.assertAuthorized(..))", throwing = "e")
-    public Result catchAuthorizedException(AuthorizationException e) {
-        System.out.println(e);
-        return new Result();
+
+    @Before(value = "@annotation(com.cookabuy.spring.aop.annotation.RequiresPermission) && args(parameter)")
+    public void checkPermission(JoinPoint point, Object parameter) {
+        if (parameter instanceof Result) {
+            System.out.println("result");
+        } else if (parameter instanceof Student) {
+            System.out.println("student");
+        }
+
     }
 }
