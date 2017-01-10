@@ -98,6 +98,7 @@ public class UserService {
         //删除该用户下所有的权限
         userPermissionRepository.deleteByUserId(userId);
         //也为该用户分配所对应operation的权限
+        System.out.println(form.getPermissionIds());
         form.getPermissionIds().stream().distinct().forEach(permissionId->{
             UserPermission userPermission = new UserPermission(userId,permissionId);
             userPermissionRepository.save(userPermission);

@@ -43,8 +43,7 @@ public class SearchService {
                             .to(query.getPriceHight())
         );
         requestBuilder.setQuery(boolQuery);
-//        //设置默认的排序方式，价格优先升序排序，上架时间降序排序
-//        requestBuilder.addSort("price", SortOrder.ASC).addSort("list_time",SortOrder.DESC).setFrom(query.getFrom()).setSize(query.getSize());
+        requestBuilder.setFrom(query.getFrom()).setSize(query.getSize());
         return requestBuilder.get();
     }
 

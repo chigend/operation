@@ -3,6 +3,7 @@ package com.cookabuy.shiro.realm;
 import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.repository.operation.OperationUserRepository;
 import com.cookabuy.repository.operation.PermissionRepository;
+import com.cookabuy.util.ShiroHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.AuthenticationInfo;
@@ -52,8 +53,10 @@ public class OperationUserRealm extends AuthorizingRealm {
 
         OperationUser user = (OperationUser) principals.getPrimaryPrincipal();
         List<String> stringPermissions = permissionRepository.findPermissionNameByUserId(user.getId());
+
         log.info("authorize user {},{}", user.getUsername(), stringPermissions);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+        ShiroHelper.setAttribute("permissions", stringPermissions);
         info.addStringPermissions(stringPermissions);
         return info;
     }

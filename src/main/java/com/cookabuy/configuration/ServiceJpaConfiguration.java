@@ -35,7 +35,7 @@ public class ServiceJpaConfiguration {
         Properties p = new Properties();
         p.put("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         p.put("hibernate.ejb.naming_strategy", "org.hibernate.cfg.ImprovedNamingStrategy");
-        p.put("hibernate.show_sql", true);
+        p.put("hibernate.show_sql", false);
         p.put("hibernate.format_sql", true);
         p.put("hibernate.hbm2ddl.auto", "update");
         factory.setJpaProperties(p);

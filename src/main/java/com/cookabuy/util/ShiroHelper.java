@@ -22,4 +22,16 @@ public class ShiroHelper {
         return getCurrentUser() == null ? null : getCurrentUser().getUsername();
     }
 
+    public static void setAttribute(String key, Object value) {
+        if (key != null) {
+            SecurityUtils.getSubject().getSession().setAttribute(key, value);
+        }
+    }
+
+    public static Object getAttribute(String key) {
+        if (key != null) {
+            return SecurityUtils.getSubject().getSession().getAttribute(key);
+        }
+        return null;
+    }
 }

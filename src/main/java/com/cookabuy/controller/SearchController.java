@@ -22,6 +22,7 @@ public class SearchController {
 
     @RequestMapping("/search_item")
     public SearchResponse searchItem(ItemQuery itemQuery) {
+        log.info("itemQuery:{}", itemQuery);
         return searchService.searchItems(itemQuery);
     }
 
