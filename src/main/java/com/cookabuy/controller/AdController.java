@@ -133,6 +133,7 @@ public class AdController {
 
     //用于爆款专区的广告图上传
     @RequestMapping("/upload_ad_img")
+    @RequiresPermissions("recommendItem:boom:adimage:add")
     public Result uploadAdImg(AddAdForm addAdForm) {
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, addAdForm.getImage());
         if (url == null) {

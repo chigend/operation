@@ -46,26 +46,21 @@ public class RecommendItemController {
     @Autowired
     private StoreRepository storeRepository;
 
+    /**
+     * @RequiresPermission   注意此注解并非shiro的@RequiresPermissions,由于爆款专区，热销类目，商品管理模块的推荐
+     * 功能一样，只是参数不同，故不能将权限粒度控制在以上3个页面上的每个操作上（即如果使用shiro的注解，以上3个页面三个页面
+     * 的操作权限是同步的，要么都能进入，要么都不能进入方法,故通过spring aop实现自己的逻辑）
+     * @see com.cookabuy.spring.aop.aspect.PermissionAspect#checkPermission(Object)
+     * @see RequiresPermission
+     * @param data
+     * @return
+     */
     @RequestMapping("/recommend_item")
     @RequiresPermission
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
         List<Recommend> recommendItems = dozerHelper.mapList(data.getItems(), Recommend.class);
         int maxPosition = recommendRepository.findMaxPositionByPageNameAndLocation(data.getPageName(), data.getLocation());
-//        for (Recommend recommendItem : recommendItems) {
-//            Recommend recommend = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommendItem.getItemId());
-//            if (recommend != null) {
-//                continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
-//            }
-//            recommendItem.setLocation(data.getLocation());
-//            recommendItem.setPageName(data.getPageName());
-//            recommendItem.setInsertedAt(new Date());
-//            recommendItem.setUpdatedAt(new Date());
-//            recommendItem.setPosition(++maxPosition);
-//            recommendRepository.save(recommendItem);
-//
-//        }
-//        return new Result();
         for (Iterator<Recommend> it = recommendItems.iterator(); it.hasNext(); ) {
             Recommend recommend = it.next();
             Recommend old = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());

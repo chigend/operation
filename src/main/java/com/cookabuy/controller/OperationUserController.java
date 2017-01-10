@@ -9,6 +9,7 @@ import com.cookabuy.service.UserService;
 import com.cookabuy.spring.validator.CompoundValidator;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
+import com.cookabuy.util.ShiroHelper;
 import com.cookabuy.util.selector.Menu2Selector;
 import lombok.extern.slf4j.Slf4j;
 import org.dozer.DozerBeanMapper;
@@ -63,6 +64,10 @@ public class OperationUserController {
         binder.setValidator(this.validator);
     }
 
+    @RequestMapping("username")
+    public Result getUsername(Result result) {
+        return new Result("username", ShiroHelper.getCurrentUsername());
+    }
 
 //    @RequestMapping("/add_user")
 //    public Result addUser(@RequestBody @Valid AddUserForm user, BindingResult bindingResult, Result result) {

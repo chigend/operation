@@ -24,4 +24,6 @@ public class ErrorConstant {
 
     public static final String STORE_NOT_IN_RECOMMEND = "该店铺未在推荐列表";
 
+    public static final String NO_PERMISSION = "你没有权限处理该项";
+
 }

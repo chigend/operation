@@ -6,6 +6,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import static com.cookabuy.constant.ErrorConstant.NO_PERMISSION;
+
 /**
  * @author yejinbiao
  * @create 2016-12-30-15:20
@@ -20,7 +22,7 @@ public class ExceptionHandlerAdvice {
     @ResponseBody
     public Result catchAuthorizationException() {
         Result result = new Result();
-        result.setError("no permission");
+        result.setError(NO_PERMISSION);
         return result;
     }
 }
