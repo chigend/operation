@@ -2,7 +2,6 @@ package com.cookabuy.service;
 
 import com.cookabuy.entity.operation.dto.UpdateUserForm;
 import com.cookabuy.entity.operation.po.OperationUser;
-import com.cookabuy.entity.operation.po.UserMenu;
 import com.cookabuy.entity.operation.po.UserOp;
 import com.cookabuy.entity.operation.po.UserPermission;
 import com.cookabuy.repository.operation.*;
@@ -38,33 +37,6 @@ public class UserService {
 
 
 
-
-//    @Autowired
-//    private
-
-//    /**
-//     *根据菜单id的集合 重新分配给用户新的菜单list，即删除原来的菜单list  重新添加
-//     * @return 返回处理结果
-//     */
-//    @Transactional(value = "operationTransactionManager",rollbackFor = Exception.class)
-//    public Result updateUserMenuList (String username,List<Integer> menuIds) {
-////        OperationUser user = operationUserRepository.findByUsername(username);
-////        if(user == null){
-////            return new Result("用户名不存在");
-////        }
-////        //删除该用户下所有的菜单项
-////        Integer userId = user.getId();
-////        menuRepository.deleteByUserId(userId);
-////        log.info("delete original menu successfully");
-////        //新增用户菜单
-////
-////        menuIds.stream().distinct().forEach(menuId ->{
-////            UserMenu userMenu = new UserMenu(userId,menuId);
-////            userMenuRepository.save(userMenu);
-////        });
-//        return new Result();
-//    }
-
     @Transactional(value = "operationTransactionManager",rollbackFor = Exception.class)
     public Result updateUser(UpdateUserForm form){
         OperationUser user = operationUserRepository.findByUsername(form.getUsername());
@@ -78,16 +50,16 @@ public class UserService {
         user.setRealName(form.getRealName());
         user.setRoleTag(form.getRoleTag());
         operationUserRepository.save(user);
-        //删除该用户下所有的菜单项
         Integer userId = user.getId();
-        menuRepository.deleteByUserId(userId);
-        log.info("delete original menu successfully");
-        //新增用户菜单
-
-        form.getMenuIds().stream().distinct().forEach(menuId ->{
-            UserMenu userMenu = new UserMenu(userId,menuId);
-            userMenuRepository.save(userMenu);
-        });
+//        //删除该用户下所有的菜单项
+//        menuRepository.deleteByUserId(userId);
+//        log.info("delete original menu successfully");
+//        //新增用户菜单
+//
+//        form.getMenuIds().stream().distinct().forEach(menuId ->{
+//            UserMenu userMenu = new UserMenu(userId,menuId);
+//            userMenuRepository.save(userMenu);
+//        });
         //删除该用户下所有的操作Operation项
         userOpRepository.deleteByUserId(userId);
         //为该用户生成新的Operation项，

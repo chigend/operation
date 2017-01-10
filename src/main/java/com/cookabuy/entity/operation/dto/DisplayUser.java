@@ -21,4 +21,6 @@ public class DisplayUser {
     private Date createTime;
 
     private String username;
+
+    private String roleTag;
 }
