@@ -92,6 +92,7 @@ public class UserService {
         userOpRepository.deleteByUserId(userId);
         //为该用户生成新的Operation项，
         form.getOperationIds().stream().distinct().forEach(opId->{
+            log.info("operation id : {}", opId);
             UserOp userOp = new UserOp(userId,opId);
             userOpRepository.save(userOp);
         });

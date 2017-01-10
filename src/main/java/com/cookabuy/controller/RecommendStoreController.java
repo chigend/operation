@@ -48,6 +48,7 @@ public class RecommendStoreController {
     @Autowired
     private GetService getService;
     @RequestMapping("/recommend_store")
+    @RequiresPermissions("recommendStore:add")
     public Result recommendStore(@RequestBody List<RecommendStoreDTO> stores) {
         List<RecommendStore> recommendStores = dozerHelper.mapList(stores, RecommendStore.class);
         int maxPosition = recommendStoreRepository.findMaxPositionByPage(INDEX);
@@ -87,6 +88,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("delete_store")
+    @RequiresPermissions("recommendStore:delete")
     public Result deleteStore(Integer id, Result result) {
         Optional<RecommendStore> recommendStore = Optional.ofNullable(recommendStoreRepository.findOne(id));
         //如果推荐店铺的url存在表示该图片已经上传cos，那么在删除该店铺之前首先删除在cos上的图片
