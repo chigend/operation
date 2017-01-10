@@ -2,6 +2,7 @@ package com.cookabuy.controller;
 
 import com.cookabuy.entity.operation.dto.DisplayMenu;
 import com.cookabuy.entity.operation.po.Menu;
+import com.cookabuy.entity.operation.po.OperationUser;
 import com.cookabuy.repository.operation.MenuRepository;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
@@ -32,9 +33,23 @@ public class MenuController {
     @RequestMapping("/menus")
     @ResponseBody
     public Result getMenus(Result result, HttpSession session){
-        Integer userId = ShiroHelper.getCurrentUserId();
+        List<Menu> menus = (List<Menu>) session.getAttribute("menus");
+        if (menus != null) {
+            log.info("get menu from session");
+            result.addData("menus", menus);
+            return result;
+        }
+        OperationUser user = ShiroHelper.getCurrentUser();
+        Integer userId = user.getId();
         log.info("userId is {}",userId);
-        List<Menu> menus = menuRepository.findAllMenuForOrdinaryUser();
+
+
+        if (user.isAdministrator()) {
+            menus = menuRepository.findAll();
+        } else {
+            menus = menuRepository.findAllMenuForOrdinaryUser();
+        }
+        log.info("get menus from db");
         //过滤掉po中不需要展示给前端的属性
         List<DisplayMenu> displayMenus = dozerHelper.mapList(menus,DisplayMenu.class);
         Selector menuSelector = new MenuSelector(displayMenus);
