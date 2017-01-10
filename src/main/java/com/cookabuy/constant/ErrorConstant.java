@@ -12,7 +12,11 @@ public class ErrorConstant {
 
     public static final String PASSWORD_NOT_CORRECT = "账户名或密码错误";
 
+    public static final String SAME_AS_THE_ORIGINAL_PASSWORD = "新密码与原密码相同";
+
     public static final String LOGIN_FAIL = "登录失败,请稍后重试";
+
+    public static final String HAS_LOGGED_OUT = "已注销，请勿重复操作";
 
     public static final String ORIGINAL_PASSWORD_NOT_MATCH = "原密码不正确";
 
@@ -25,5 +29,7 @@ public class ErrorConstant {
     public static final String STORE_NOT_IN_RECOMMEND = "该店铺未在推荐列表";
 
     public static final String NO_PERMISSION = "你没有权限处理该项";
+
+
 
 }

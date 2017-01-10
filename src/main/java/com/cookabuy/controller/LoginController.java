@@ -102,7 +102,8 @@ public class LoginController {
         //验证新密码是否与原密码相同
         if(user.getPassword().equals(hashedPassword)){
             log.info("new password is same with ");
-            //todo  新密码与原密码相同时的处理
+            result.setError(SAME_AS_THE_ORIGINAL_PASSWORD);
+            return result;
         }
         user.setPassword(hashedPassword);
 
@@ -110,4 +111,14 @@ public class LoginController {
         return result;
     }
 
+    @RequestMapping("/logout")
+    public Result doLogout(Result result) {
+        Subject subject = SecurityUtils.getSubject();
+        if (!subject.isAuthenticated()) {
+            result.setError(HAS_LOGGED_OUT);
+            return result;
+        }
+        subject.logout();
+        return result;
+    }
 }
