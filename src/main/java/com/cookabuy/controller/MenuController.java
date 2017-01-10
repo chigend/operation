@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpSession;
+import java.util.Collection;
 import java.util.List;
 
 /**
@@ -33,17 +34,17 @@ public class MenuController {
     @RequestMapping("/menus")
     @ResponseBody
     public Result getMenus(Result result, HttpSession session){
-        List<Menu> menus = (List<Menu>) session.getAttribute("menus");
-        if (menus != null) {
+        Collection<Menu> sessionMenus = (Collection<Menu>) session.getAttribute("menus");
+        if (sessionMenus != null) {
             log.info("get menu from session");
-            result.addData("menus", menus);
+            result.addData("menus", sessionMenus);
             return result;
         }
         OperationUser user = ShiroHelper.getCurrentUser();
         Integer userId = user.getId();
         log.info("userId is {}",userId);
 
-
+        List<Menu> menus = null;
         if (user.isAdministrator()) {
             menus = menuRepository.findAll();
         } else {
@@ -56,7 +57,7 @@ public class MenuController {
 
         result.addData("menus",menuSelector.getSelectResult());
 
-        session.setAttribute("menus",menus);
+        session.setAttribute("menus",menuSelector.getSelectResult());
 
         return result;
 
