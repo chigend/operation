@@ -70,10 +70,10 @@ public class FileHelper {
      */
     public String deleteFile(String bucketName,String fileUrl){
         String cosPath = FileUtils.getCosPath(fileUrl);
-        DelFileRequest request = new DelFileRequest(bucketName,cosPath);
+        DelFileRequest request = new DelFileRequest(bucketName, cosPath);
         String res = cosClient.delFile(request);
         Integer code = JSONObject.parseObject(res).getInteger("code");
-            log.info("delete file {} in bucket:{} {}", fileUrl, bucketName,code==0 ? "successfully" : "fail");
+            log.info("delete file {} in bucket:{} {}", fileUrl, bucketName,code == 0 ? "successfully" : "fail");
         return JSONObject.parseObject(res).getString("message");
     }
 

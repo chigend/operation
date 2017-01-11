@@ -139,7 +139,6 @@ public class AdController {
         if (url == null) {
             return new Result(UPLOAD_IMAGE_FAIL);
         }
-        //todo 删除之前的
         List<Ad> ads = adRepository.findByPageNameAndLocation(addAdForm.getPageName(), addAdForm.getLocation());
         if (CollectionUtils.isEmpty(ads)) {
             Ad ad = dozerBeanMapper.map(addAdForm, Ad.class);
@@ -155,5 +154,9 @@ public class AdController {
         }
         return new Result("picUrl", url);
     }
+//
+//    @RequestMapping("delete_ad_image")
+//    @RequiresPermissions("recommendItem:boom:adimage:add")
+//    public Result deleteAdImage
 
 }
