@@ -1,6 +1,5 @@
 FROM java:latest
-VOLUME /tmp
-ADD app.jar
-RUN bash -c 'touch /app.jar'
-
-ENTRYPOINT ["java","-jar","/app.jar"]
+RUN  mkdir /app
+ADD app.jar /app/
+WORKDIR /app
+CMD java -jar app.jar
