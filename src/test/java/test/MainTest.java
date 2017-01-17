@@ -19,10 +19,7 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * 2016/12/8
@@ -131,6 +128,32 @@ public class MainTest {
       for (int i = 0; i < 100; i++) {
          System.out.println(i + ":" + (String.valueOf(i)).matches(pattern));
       }
+   }
+
+   @Test
+   public void testTreeMap() {
+      Map<String, Integer> order = new HashMap<>();
+      order.put("频道管理", 2);
+      order.put("公共板块管理", 3);
+      order.put("首页管理", 1);
+      order.put("账户管理", 4);
+      Map<String, String> map = new TreeMap<>(new Comparator<String>() {
+          @Override
+          public int compare(String o1, String o2) {
+              return order.get(o1) - order.get(o2);
+          }
+      });
+      map.put("账户管理", "account manage");
+      map.put("公共板块管理", "public manage");
+      map.put("频道管理", "channel manage");
+      map.put("首页管理", "index manage");
+
+      Collection<String> strings = map.values();
+      for (String s : strings) {
+         System.out.println(s);
+      }
+
+
    }
 
 }

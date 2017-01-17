@@ -23,4 +23,18 @@ public class GlobalConfiguration {
        permissionMap.put("hot", "recommendItem:boom:add");
        return permissionMap;
     }
+
+    /**
+     *
+     *运营后台菜单的目录顺序在此指定
+     */
+    @Bean(name = "menuCategoryOrder")
+    public Map<String, Integer> menuCategoryOrder() {
+        HashMap<String, Integer> order = new HashMap<>();
+        order.put("频道管理", 2);
+        order.put("公共板块管理", 3);
+        order.put("首页管理", 1);
+        order.put("账户管理", 4);
+        return order;
+    }
 }

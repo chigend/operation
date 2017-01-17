@@ -15,7 +15,7 @@ import java.util.*;
 public abstract class Selector<CONDITION, ENTITY> {
 
     // 存货柜
-    private Map<CONDITION, Cell> cabinet = new HashMap<>();
+    protected Map<CONDITION, Cell> cabinet = new HashMap<>();
 
     protected abstract CONDITION selectCondition(ENTITY entity);
 
