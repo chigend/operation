@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import static com.cookabuy.constant.ErrorConstant.*;
@@ -50,7 +51,7 @@ public class LoginController {
 
     @RequestMapping("/login")
     public Result dologin(@Validated LoginForm user, BindingResult bindingResult
-            , Result result) {
+            , Result result, HttpServletResponse response) {
         log.info("the login form :{}", user);
         Subject subject = SecurityUtils.getSubject();
         if (bindingResult.hasErrors()) {
@@ -58,7 +59,8 @@ public class LoginController {
             result.setError(error);
             return result;
         }
-
+//        Cookie cookie = new Cookie("username", "heiheihei");
+//        response.addCookie(cookie);
         UsernamePasswordToken token = new UsernamePasswordToken(user.getUsername(), user.getPassword());
         if (subject.isAuthenticated()) {
             log.info("使用另一个账号进行登录,登出第一个用户");

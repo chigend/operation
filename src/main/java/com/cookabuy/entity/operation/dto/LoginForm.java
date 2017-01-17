@@ -15,4 +15,5 @@ public class LoginForm {
 
     private String password;
 
+
 }

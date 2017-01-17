@@ -44,6 +44,7 @@ public class SearchService {
         );
         requestBuilder.setQuery(boolQuery);
         requestBuilder.setFrom(query.getFrom()).setSize(query.getSize());
+//        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));
         return requestBuilder.get();
     }
 
@@ -59,6 +60,7 @@ public class SearchService {
         }
         requestBuilder.setQuery(booleanQuery);
         requestBuilder.setFrom(query.getFrom()).setSize(query.getSize());
+
         return requestBuilder.get();
     }
 
