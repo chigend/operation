@@ -3,6 +3,8 @@ package com.cookabuy.util.selector;
 import com.cookabuy.entity.operation.dto.DisplayMenu;
 
 import java.util.Collection;
+import java.util.Comparator;
+import java.util.TreeMap;
 
 /**
  * 菜单分拣器，根据菜单的category字段进行分拣
@@ -17,6 +19,10 @@ public class MenuSelector extends Selector<String,DisplayMenu>{
         this.select(menus);
     }
 
+    public MenuSelector(Collection<DisplayMenu> menus, Comparator<String> comparator) {
+        cabinet = new TreeMap<>(comparator);
+        this.select(menus);
+    }
     public MenuSelector() {
     }
 

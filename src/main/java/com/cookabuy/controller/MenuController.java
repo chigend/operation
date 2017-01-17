@@ -15,9 +15,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 2016/12/13
@@ -30,6 +32,9 @@ public class MenuController {
     private MenuRepository menuRepository;
     @Autowired
     private DozerHelper dozerHelper;
+
+    @Resource(name = "menuCategoryOrder")
+    private Map<String, Integer> order;
 
     @RequestMapping("/menus")
     @ResponseBody
@@ -53,7 +58,7 @@ public class MenuController {
         log.info("get menus from db");
         //过滤掉po中不需要展示给前端的属性
         List<DisplayMenu> displayMenus = dozerHelper.mapList(menus,DisplayMenu.class);
-        Selector menuSelector = new MenuSelector(displayMenus);
+        Selector menuSelector = new MenuSelector(displayMenus, (a, b) -> order.get(a).compareTo(order.get(b)));
 
         result.addData("menus",menuSelector.getSelectResult());
 
