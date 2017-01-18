@@ -32,7 +32,7 @@ public class SearchService {
         //定义组合查询
         BoolQueryBuilder boolQuery = boolQuery().must(matchQuery("added", false));
         if(StringUtils.hasLength(query.getTitle())){
-            boolQuery.must(termQuery("title", query.getTitle()));
+            boolQuery.must(matchQuery("title", query.getTitle()));
         }
         if(StringUtils.hasLength(query.getStore())){
             boolQuery.must(matchQuery("store_name", query.getStore()));

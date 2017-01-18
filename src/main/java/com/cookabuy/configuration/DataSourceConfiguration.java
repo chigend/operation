@@ -16,6 +16,7 @@ public class DataSourceConfiguration {
     @Bean
     @ConfigurationProperties(prefix = "operation.datasource")
     public DataSource operationDataSource() {
+
         return DataSourceBuilder.create().build();
     }
 

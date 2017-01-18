@@ -34,7 +34,8 @@ public class GlobalConfiguration {
         order.put("频道管理", 2);
         order.put("公共板块管理", 3);
         order.put("首页管理", 1);
-        order.put("账户管理", 4);
+        order.put("权限管理", 4);
+        order.put("账户管理", 5);
         return order;
     }
 }
