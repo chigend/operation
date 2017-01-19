@@ -8,7 +8,7 @@ import java.util.Date;
  * @create 2016-12-23-11:19
  */
 @Entity
-@Table(name = "ad", schema = "public", catalog = "cookabuy_pc_dev")
+@Table(name = "ad", schema = "public", catalog = "cookabuy_pc_int")
 public class Ad {
 
     private Integer adId;

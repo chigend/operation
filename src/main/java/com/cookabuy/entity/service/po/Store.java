@@ -7,7 +7,7 @@ import java.sql.Date;
  * 2016/12/7
  */
 @Entity
-@Table(name = "stores", schema = "public", catalog = "cookabuy_pc_dev")
+@Table(name = "stores", schema = "public", catalog = "cookabuy_pc_int")
 public class Store {
     private Long id;
     private String storeName;

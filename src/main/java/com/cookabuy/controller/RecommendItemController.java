@@ -122,7 +122,7 @@ public class RecommendItemController {
 
         List<Ad> ads = adRepository.findByPageNameAndLocation(pageName, location);
 
-        List<RecommendCategory> categories = recommendCategoryRepository.findByPageName(pageName);
+        List<RecommendCategory> categories = recommendCategoryRepository.findByPageNameOrderByOrder(pageName);
 
         result.addData("picUrl", CollectionUtils.isEmpty(ads) ? null : ads.get(0).getPicUrl());
         result.addData("stores", dtos);

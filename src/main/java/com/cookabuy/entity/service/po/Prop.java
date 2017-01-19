@@ -6,7 +6,7 @@ import javax.persistence.*;
  * 2016/12/7
  */
 @Entity
-@Table(name = "tb_prop", schema = "public", catalog = "cookabuy_pc_dev")
+@Table(name = "tb_prop", schema = "public", catalog = "cookabuy_pc_int")
 @IdClass(PropPK.class)
 public class Prop {
     private Long cid;

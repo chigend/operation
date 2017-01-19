@@ -7,7 +7,7 @@ import java.util.Date;
  * 2016/12/8
  */
 @Entity
-@Table(name = "recommends", schema = "public", catalog = "cookabuy_pc_dev")
+@Table(name = "recommends", schema = "public", catalog = "cookabuy_pc_int")
 public class Recommend {
     private Integer id;
     private Long itemId;

@@ -10,7 +10,7 @@ import java.sql.Timestamp;
  */
 
 @Entity
-@Table(name = "tb_item", schema = "public", catalog = "cookabuy_pc_dev")
+@Table(name = "tb_item", schema = "public", catalog = "cookabuy_pc_int")
 public class Item {
     private Long numIid;
     private Long sid;

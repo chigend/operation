@@ -8,12 +8,13 @@ import javax.persistence.*;
  */
 
 @Entity
-@Table(name = "recommend_category", schema = "public", catalog = "cookabuy_pc_dev")
+@Table(name = "recommend_category", schema = "public", catalog = "cookabuy_pc_int")
 public class RecommendCategory {
     private String pageName;
     private String name;
     private String value;
     private Integer id;
+    private Integer order;
 
     @Basic
     @Column(name = "page_name")
@@ -54,6 +55,19 @@ public class RecommendCategory {
     public void setId(Integer id) {
         this.id = id;
     }
+
+    @Basic
+    @Column(name = "order")
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
+
+
+
 
     @Override
     public boolean equals(Object o) {

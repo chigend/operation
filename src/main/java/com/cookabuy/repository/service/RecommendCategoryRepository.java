@@ -30,6 +30,6 @@ public interface RecommendCategoryRepository extends JpaRepository<RecommendCate
     @Override
     void deleteAll();
 
-    List<RecommendCategory> findByPageName(String pageName);
+    List<RecommendCategory> findByPageNameOrderByOrder(String pageName);
 
 }

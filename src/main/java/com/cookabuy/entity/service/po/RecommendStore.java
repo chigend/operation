@@ -9,7 +9,7 @@ import java.util.Date;
  */
 
 @Entity
-@Table(name = "recommend_stores", schema = "public", catalog = "cookabuy_pc_dev")
+@Table(name = "recommend_stores", schema = "public", catalog = "cookabuy_pc_int")
 public class RecommendStore {
     private Integer id;
     private Long storeId;

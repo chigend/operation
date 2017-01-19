@@ -7,6 +7,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -30,7 +31,7 @@ public class SearchService {
     public SearchResponse searchItems(ItemQuery query){
         SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_ITEM);
         //定义组合查询
-        BoolQueryBuilder boolQuery = boolQuery().must(matchQuery("added", false));
+        BoolQueryBuilder boolQuery = boolQuery();
         if(StringUtils.hasLength(query.getTitle())){
             boolQuery.must(matchQuery("title", query.getTitle()));
         }
@@ -44,7 +45,11 @@ public class SearchService {
         );
         requestBuilder.setQuery(boolQuery);
         requestBuilder.setFrom(query.getFrom()).setSize(query.getSize());
+        if(StringUtils.isEmpty(query.getTitle()) && StringUtils.isEmpty(query.getStore())) {
+            requestBuilder.addSort("price", SortOrder.ASC);
+        }
 //        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));
+        System.out.println(requestBuilder.toString());
         return requestBuilder.get();
     }
 
