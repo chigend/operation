@@ -105,7 +105,7 @@ public class RecommendItemController {
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
             Item item = itemRepository.findOne(dto.getItemId());
-            //todo 如果商品不存在 ，则表示该商品失效，应设置flag
+            //todo 如果商品不存在 或者下架，则表示该商品失效，应设置flag
             if (item != null) {
                 dto.setTitle(item.getTitle());
                 dto.setPrice(item.getPrice());
