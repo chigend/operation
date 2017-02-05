@@ -38,6 +38,9 @@ public class SearchService {
         if(StringUtils.hasLength(query.getStore())){
             boolQuery.must(matchQuery("store_name", query.getStore()));
         }
+        if (StringUtils.hasLength(query.getLocation())) {
+            boolQuery.must(matchQuery("location", query.getLocation()));
+        }
         requestBuilder.setPostFilter(
                 rangeQuery("price")
                             .from(query.getPriceLow())
@@ -45,7 +48,8 @@ public class SearchService {
         );
         requestBuilder.setQuery(boolQuery);
         requestBuilder.setFrom(query.getFrom()).setSize(query.getSize());
-        if(StringUtils.isEmpty(query.getTitle()) && StringUtils.isEmpty(query.getStore())) {
+        if(StringUtils.isEmpty(query.getTitle()) && StringUtils.isEmpty(query.getStore()) &&
+                StringUtils.isEmpty(query.getLocation())) {
             requestBuilder.addSort("price", SortOrder.ASC);
         }
 //        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));

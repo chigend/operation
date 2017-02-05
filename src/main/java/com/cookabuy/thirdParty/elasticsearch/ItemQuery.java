@@ -16,6 +16,8 @@ public class ItemQuery {
 
     private String store;
 
+    private String location;
+
     private Integer priceLow = 0;
 
     private Integer priceHight = Integer.MAX_VALUE;
