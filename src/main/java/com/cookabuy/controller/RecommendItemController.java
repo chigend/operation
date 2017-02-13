@@ -73,6 +73,7 @@ public class RecommendItemController {
             recommend.setInsertedAt(new Date());
             recommend.setUpdatedAt(new Date());
             recommend.setPosition(++maxPosition);
+            System.out.println("recommendId:"+recommend.getId());
             recommendRepository.save(recommend);
 
         }

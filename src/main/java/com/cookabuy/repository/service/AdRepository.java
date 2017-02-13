@@ -33,6 +33,7 @@ public interface AdRepository extends JpaRepository<Ad,Integer> {
     void deleteAll();
 
 
+    @Query(value = "select * from ad where page_name=?1 and deleted=false order by position asc",nativeQuery = true)
     List<Ad> findByPageNameOrderByPositionAsc(String pageName);
 
     @Modifying
@@ -49,5 +50,13 @@ public interface AdRepository extends JpaRepository<Ad,Integer> {
     void toggleHiddenByAdId(Integer id);
 
     List<Ad> findByPageNameAndLocation(String pageName, String location);
+
+    @Query(value = "select count(modify_time)>0 as activate from ad where modify_time > (select max(publish_time) from publish_log)", nativeQuery = true )
+    boolean publishActicate();
+
+    @Modifying
+    @Query(value = "update ad set deleted = true where ad_id in ?1",nativeQuery = true)
+    void logicDelete(List<Integer> ids);
+
 
 }

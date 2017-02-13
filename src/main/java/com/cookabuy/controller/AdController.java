@@ -6,6 +6,7 @@ import com.cookabuy.entity.service.dto.SaveAdForm;
 import com.cookabuy.entity.service.dto.UpdateAdForm;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
+import com.cookabuy.service.AdService;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
@@ -37,6 +38,8 @@ import static com.cookabuy.constant.PageContant.INDEX;
 @Slf4j
 public class AdController {
     @Autowired
+    private AdService adService;
+    @Autowired
     private AdRepository adRepository;
 
     @Autowired
@@ -54,7 +57,9 @@ public class AdController {
         List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(INDEX);
 
         List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads,DisPlayAd.class);
+        boolean activate = adRepository.publishActicate();
         result.addData("ads",disPlayAds);
+        result.addData("activate", activate);
         return  result;
     }
 
@@ -82,12 +87,8 @@ public class AdController {
         if(CollectionUtils.isEmpty(ids)){
             return new Result(NOT_ASSIGN_ADS);
         }
-        ids.stream().forEach(id->{
-            Ad ad = adRepository.findOne(id);
-            //删除广告之前把存储在cos的图片进行删除
-            fileHelper.deleteFile(BUCKET, ad.getPicUrl());
-            adRepository.delete(ad);
-        });
+        //todo  删除对应的存储在cos上的图片
+        adRepository.logicDelete(ids);
         return new Result();
     }
     //根据adId 来更新每一个广告的position
@@ -154,9 +155,10 @@ public class AdController {
         }
         return new Result("picUrl", url);
     }
-//
-//    @RequestMapping("delete_ad_image")
-//    @RequiresPermissions("recommendItem:boom:adimage:add")
-//    public Result deleteAdImage
 
+    @RequestMapping("publish_ads")
+    public Result publishAds() {
+        adService.publishAds();
+        return new Result();
+    }
 }
