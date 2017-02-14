@@ -5,13 +5,15 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 /**
- * 2016/12/7
+ * @author yejinbiao
+ * @create 2017-02-14-下午2:08
  */
+
 public class PropPK implements Serializable {
     private Long cid;
     private Long pid;
 
-    @Column(name = "cid")
+    @Column(name = "cid", nullable = false)
     @Id
     public Long getCid() {
         return cid;
@@ -21,7 +23,7 @@ public class PropPK implements Serializable {
         this.cid = cid;
     }
 
-    @Column(name = "pid")
+    @Column(name = "pid", nullable = false)
     @Id
     public Long getPid() {
         return pid;

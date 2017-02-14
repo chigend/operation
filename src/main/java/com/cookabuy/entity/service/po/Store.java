@@ -1,20 +1,23 @@
 package com.cookabuy.entity.service.po;
 
 import javax.persistence.*;
-import java.sql.Date;
+import java.sql.Timestamp;
 
 /**
- * 2016/12/7
+ * @author yejinbiao
+ * @create 2017-02-14-下午1:57
  */
+
 @Entity
-@Table(name = "stores", schema = "public", catalog = "cookabuy_pc_int")
+@Table(name = "stores", schema = "public", catalog = "cookabuy_pc_int2")
 public class Store {
-    private Long id;
+    private String id;
     private String storeName;
     private String storeNumber;
     private String storeLogo;
+    private String cat;
+    private String cates;
     private String market;
-    private Integer marketId;
     private String floor;
     private String location;
     private String originArea;
@@ -28,45 +31,25 @@ public class Store {
     private String ww;
     private String status;
     private String fetchStatus;
-    private Date insertedAt;
-    private Date updatedAt;
-    private Integer sellerId;
-
-    private String category;
-
-    @Basic
-    @Column(name = "cat")
-    public String getCategory() {
-        return category;
-    }
-
-    public void setCategory(String category) {
-        this.category = category;
-    }
-    //    private List<Item> items;
-
-
-//    @OneToMany(cascade = CascadeType.ALL,fetch = FetchType.EAGER,mappedBy = "store")
-//    public List<Item> getItems() {
-//        return items;
-//    }
-
-//    public void setItems(List<Item> items) {
-//        this.items = items;
-//    }
+    private String indexStatus;
+    private String parseStatus;
+    private Integer totalCount;
+    private Integer newCount;
+    private Timestamp insertedAt;
+    private Timestamp updatedAt;
 
     @Id
-    @Column(name = "id")
-    public Long getId() {
+    @Column(name = "id", nullable = false)
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "store_name")
+    @Column(name = "store_name", nullable = true, length = 64)
     public String getStoreName() {
         return storeName;
     }
@@ -76,7 +59,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "store_number")
+    @Column(name = "store_number", nullable = true, length = 64)
     public String getStoreNumber() {
         return storeNumber;
     }
@@ -86,7 +69,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "store_logo")
+    @Column(name = "store_logo", nullable = true, length = 255)
     public String getStoreLogo() {
         return storeLogo;
     }
@@ -96,7 +79,27 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "market")
+    @Column(name = "cat", nullable = true, length = 64)
+    public String getCat() {
+        return cat;
+    }
+
+    public void setCat(String cat) {
+        this.cat = cat;
+    }
+
+    @Basic
+    @Column(name = "cates", nullable = true, length = 128)
+    public String getCates() {
+        return cates;
+    }
+
+    public void setCates(String cates) {
+        this.cates = cates;
+    }
+
+    @Basic
+    @Column(name = "market", nullable = true, length = 64)
     public String getMarket() {
         return market;
     }
@@ -106,17 +109,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "market_id")
-    public Integer getMarketId() {
-        return marketId;
-    }
-
-    public void setMarketId(Integer marketId) {
-        this.marketId = marketId;
-    }
-
-    @Basic
-    @Column(name = "floor")
+    @Column(name = "floor", nullable = true, length = 32)
     public String getFloor() {
         return floor;
     }
@@ -126,7 +119,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "location")
+    @Column(name = "location", nullable = true, length = 128)
     public String getLocation() {
         return location;
     }
@@ -136,7 +129,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "origin_area")
+    @Column(name = "origin_area", nullable = true, length = 64)
     public String getOriginArea() {
         return originArea;
     }
@@ -146,7 +139,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "taobao_url")
+    @Column(name = "taobao_url", nullable = true, length = 255)
     public String getTaobaoUrl() {
         return taobaoUrl;
     }
@@ -156,7 +149,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "mobile")
+    @Column(name = "mobile", nullable = true, length = 32)
     public String getMobile() {
         return mobile;
     }
@@ -166,7 +159,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "mobile2")
+    @Column(name = "mobile2", nullable = true, length = 32)
     public String getMobile2() {
         return mobile2;
     }
@@ -176,7 +169,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "qq")
+    @Column(name = "qq", nullable = true, length = 64)
     public String getQq() {
         return qq;
     }
@@ -186,7 +179,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "reduce_type")
+    @Column(name = "reduce_type", nullable = true, length = 16)
     public String getReduceType() {
         return reduceType;
     }
@@ -196,7 +189,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "reduce")
+    @Column(name = "reduce", nullable = true, length = 16)
     public String getReduce() {
         return reduce;
     }
@@ -206,7 +199,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "wechat")
+    @Column(name = "wechat", nullable = true, length = 32)
     public String getWechat() {
         return wechat;
     }
@@ -216,7 +209,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "ww")
+    @Column(name = "ww", nullable = true, length = 32)
     public String getWw() {
         return ww;
     }
@@ -226,7 +219,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "status")
+    @Column(name = "status", nullable = true, length = 16)
     public String getStatus() {
         return status;
     }
@@ -236,7 +229,7 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "fetch_status")
+    @Column(name = "fetch_status", nullable = true, length = 32)
     public String getFetchStatus() {
         return fetchStatus;
     }
@@ -246,33 +239,63 @@ public class Store {
     }
 
     @Basic
-    @Column(name = "inserted_at")
-    public Date getInsertedAt() {
+    @Column(name = "index_status", nullable = true, length = 32)
+    public String getIndexStatus() {
+        return indexStatus;
+    }
+
+    public void setIndexStatus(String indexStatus) {
+        this.indexStatus = indexStatus;
+    }
+
+    @Basic
+    @Column(name = "parse_status", nullable = true, length = 32)
+    public String getParseStatus() {
+        return parseStatus;
+    }
+
+    public void setParseStatus(String parseStatus) {
+        this.parseStatus = parseStatus;
+    }
+
+    @Basic
+    @Column(name = "total_count", nullable = true)
+    public Integer getTotalCount() {
+        return totalCount;
+    }
+
+    public void setTotalCount(Integer totalCount) {
+        this.totalCount = totalCount;
+    }
+
+    @Basic
+    @Column(name = "new_count", nullable = true)
+    public Integer getNewCount() {
+        return newCount;
+    }
+
+    public void setNewCount(Integer newCount) {
+        this.newCount = newCount;
+    }
+
+    @Basic
+    @Column(name = "inserted_at", nullable = false)
+    public Timestamp getInsertedAt() {
         return insertedAt;
     }
 
-    public void setInsertedAt(Date insertedAt) {
+    public void setInsertedAt(Timestamp insertedAt) {
         this.insertedAt = insertedAt;
     }
 
     @Basic
-    @Column(name = "updated_at")
-    public Date getUpdatedAt() {
+    @Column(name = "updated_at", nullable = false)
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @Basic
-    @Column(name = "seller_id")
-    public Integer getSellerId() {
-        return sellerId;
-    }
-
-    public void setSellerId(Integer sellerId) {
-        this.sellerId = sellerId;
     }
 
     @Override
@@ -286,8 +309,9 @@ public class Store {
         if (storeName != null ? !storeName.equals(store.storeName) : store.storeName != null) return false;
         if (storeNumber != null ? !storeNumber.equals(store.storeNumber) : store.storeNumber != null) return false;
         if (storeLogo != null ? !storeLogo.equals(store.storeLogo) : store.storeLogo != null) return false;
+        if (cat != null ? !cat.equals(store.cat) : store.cat != null) return false;
+        if (cates != null ? !cates.equals(store.cates) : store.cates != null) return false;
         if (market != null ? !market.equals(store.market) : store.market != null) return false;
-        if (marketId != null ? !marketId.equals(store.marketId) : store.marketId != null) return false;
         if (floor != null ? !floor.equals(store.floor) : store.floor != null) return false;
         if (location != null ? !location.equals(store.location) : store.location != null) return false;
         if (originArea != null ? !originArea.equals(store.originArea) : store.originArea != null) return false;
@@ -301,9 +325,12 @@ public class Store {
         if (ww != null ? !ww.equals(store.ww) : store.ww != null) return false;
         if (status != null ? !status.equals(store.status) : store.status != null) return false;
         if (fetchStatus != null ? !fetchStatus.equals(store.fetchStatus) : store.fetchStatus != null) return false;
+        if (indexStatus != null ? !indexStatus.equals(store.indexStatus) : store.indexStatus != null) return false;
+        if (parseStatus != null ? !parseStatus.equals(store.parseStatus) : store.parseStatus != null) return false;
+        if (totalCount != null ? !totalCount.equals(store.totalCount) : store.totalCount != null) return false;
+        if (newCount != null ? !newCount.equals(store.newCount) : store.newCount != null) return false;
         if (insertedAt != null ? !insertedAt.equals(store.insertedAt) : store.insertedAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(store.updatedAt) : store.updatedAt != null) return false;
-        if (sellerId != null ? !sellerId.equals(store.sellerId) : store.sellerId != null) return false;
 
         return true;
     }
@@ -314,8 +341,9 @@ public class Store {
         result = 31 * result + (storeName != null ? storeName.hashCode() : 0);
         result = 31 * result + (storeNumber != null ? storeNumber.hashCode() : 0);
         result = 31 * result + (storeLogo != null ? storeLogo.hashCode() : 0);
+        result = 31 * result + (cat != null ? cat.hashCode() : 0);
+        result = 31 * result + (cates != null ? cates.hashCode() : 0);
         result = 31 * result + (market != null ? market.hashCode() : 0);
-        result = 31 * result + (marketId != null ? marketId.hashCode() : 0);
         result = 31 * result + (floor != null ? floor.hashCode() : 0);
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (originArea != null ? originArea.hashCode() : 0);
@@ -329,9 +357,12 @@ public class Store {
         result = 31 * result + (ww != null ? ww.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (fetchStatus != null ? fetchStatus.hashCode() : 0);
+        result = 31 * result + (indexStatus != null ? indexStatus.hashCode() : 0);
+        result = 31 * result + (parseStatus != null ? parseStatus.hashCode() : 0);
+        result = 31 * result + (totalCount != null ? totalCount.hashCode() : 0);
+        result = 31 * result + (newCount != null ? newCount.hashCode() : 0);
         result = 31 * result + (insertedAt != null ? insertedAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
-        result = 31 * result + (sellerId != null ? sellerId.hashCode() : 0);
         return result;
     }
 }

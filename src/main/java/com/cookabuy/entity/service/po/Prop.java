@@ -3,16 +3,31 @@ package com.cookabuy.entity.service.po;
 import javax.persistence.*;
 
 /**
- * 2016/12/7
+ * @author yejinbiao
+ * @create 2017-02-14-下午2:08
  */
+
 @Entity
-@Table(name = "tb_prop", schema = "public", catalog = "cookabuy_pc_int")
+@Table(name = "tb_prop", schema = "public", catalog = "cookabuy_pc_int2")
 @IdClass(PropPK.class)
 public class Prop {
     private Long cid;
+    private Long pid;
+    private String name;
+    private Long parentPid;
+    private Long parentVid;
+    private Boolean isKeyProp;
+    private Boolean isSaleProp;
+    private Boolean isColorProp;
+    private Boolean isEnumProp;
+    private Boolean isInputProp;
+    private Boolean isItemProp;
+    private String childPath;
+    private Integer type;
+    private String attrKeys;
 
     @Id
-    @Column(name = "cid")
+    @Column(name = "cid", nullable = false)
     public Long getCid() {
         return cid;
     }
@@ -21,10 +36,8 @@ public class Prop {
         this.cid = cid;
     }
 
-    private Long pid;
-
     @Id
-    @Column(name = "pid")
+    @Column(name = "pid", nullable = false)
     public Long getPid() {
         return pid;
     }
@@ -33,10 +46,8 @@ public class Prop {
         this.pid = pid;
     }
 
-    private String name;
-
     @Basic
-    @Column(name = "name")
+    @Column(name = "name", nullable = true, length = 16)
     public String getName() {
         return name;
     }
@@ -45,10 +56,8 @@ public class Prop {
         this.name = name;
     }
 
-    private Long parentPid;
-
     @Basic
-    @Column(name = "parent_pid")
+    @Column(name = "parent_pid", nullable = true)
     public Long getParentPid() {
         return parentPid;
     }
@@ -57,19 +66,18 @@ public class Prop {
         this.parentPid = parentPid;
     }
 
-    private Long parentVid;
-
     @Basic
-    @Column(name = "parent_vid")
+    @Column(name = "parent_vid", nullable = true)
+    public Long getParentVid() {
+        return parentVid;
+    }
 
     public void setParentVid(Long parentVid) {
         this.parentVid = parentVid;
     }
 
-    private Boolean isKeyProp;
-
     @Basic
-    @Column(name = "is_key_prop")
+    @Column(name = "is_key_prop", nullable = false)
     public Boolean getKeyProp() {
         return isKeyProp;
     }
@@ -78,10 +86,8 @@ public class Prop {
         isKeyProp = keyProp;
     }
 
-    private Boolean isSaleProp;
-
     @Basic
-    @Column(name = "is_sale_prop")
+    @Column(name = "is_sale_prop", nullable = false)
     public Boolean getSaleProp() {
         return isSaleProp;
     }
@@ -90,10 +96,8 @@ public class Prop {
         isSaleProp = saleProp;
     }
 
-    private Boolean isColorProp;
-
     @Basic
-    @Column(name = "is_color_prop")
+    @Column(name = "is_color_prop", nullable = false)
     public Boolean getColorProp() {
         return isColorProp;
     }
@@ -102,10 +106,8 @@ public class Prop {
         isColorProp = colorProp;
     }
 
-    private Boolean isEnumProp;
-
     @Basic
-    @Column(name = "is_enum_prop")
+    @Column(name = "is_enum_prop", nullable = false)
     public Boolean getEnumProp() {
         return isEnumProp;
     }
@@ -114,10 +116,8 @@ public class Prop {
         isEnumProp = enumProp;
     }
 
-    private Boolean isInputProp;
-
     @Basic
-    @Column(name = "is_input_prop")
+    @Column(name = "is_input_prop", nullable = false)
     public Boolean getInputProp() {
         return isInputProp;
     }
@@ -126,10 +126,8 @@ public class Prop {
         isInputProp = inputProp;
     }
 
-    private Boolean isItemProp;
-
     @Basic
-    @Column(name = "is_item_prop")
+    @Column(name = "is_item_prop", nullable = false)
     public Boolean getItemProp() {
         return isItemProp;
     }
@@ -138,10 +136,8 @@ public class Prop {
         isItemProp = itemProp;
     }
 
-    private String childPath;
-
     @Basic
-    @Column(name = "child_path")
+    @Column(name = "child_path", nullable = true, length = 8)
     public String getChildPath() {
         return childPath;
     }
@@ -150,22 +146,18 @@ public class Prop {
         this.childPath = childPath;
     }
 
-    private Integer type;
-
     @Basic
-    @Column(name = "type")
+    @Column(name = "type", nullable = true)
     public Integer getType() {
         return type;
     }
 
-
-
     public void setType(Integer type) {
         this.type = type;
-    }    private String attrKeys;
+    }
 
     @Basic
-    @Column(name = "attr_keys")
+    @Column(name = "attr_keys", nullable = true, length = 16)
     public String getAttrKeys() {
         return attrKeys;
     }

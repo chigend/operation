@@ -32,7 +32,7 @@ public class RecommendItemController {
     private DozerHelper dozerHelper;
 
     @Autowired
-    private RecommendRepository recommendRepository;
+    private RecommendItemRepository recommendRepository;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -59,11 +59,11 @@ public class RecommendItemController {
     @RequiresPermission
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
-        List<Recommend> recommendItems = dozerHelper.mapList(data.getItems(), Recommend.class);
+        List<RecommendItem> recommendItems = dozerHelper.mapList(data.getItems(), RecommendItem.class);
         int maxPosition = recommendRepository.findMaxPositionByPageNameAndLocation(data.getPageName(), data.getLocation());
-        for (Iterator<Recommend> it = recommendItems.iterator(); it.hasNext(); ) {
-            Recommend recommend = it.next();
-            Recommend old = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
+        for (Iterator<RecommendItem> it = recommendItems.iterator(); it.hasNext(); ) {
+            RecommendItem recommend = it.next();
+            RecommendItem old = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
             if (old != null) {
                 it.remove();
                 continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
@@ -72,7 +72,7 @@ public class RecommendItemController {
             recommend.setPageName(data.getPageName());
             recommend.setInsertedAt(new Date());
             recommend.setUpdatedAt(new Date());
-            recommend.setPosition(++maxPosition);
+//            recommend.setPosition(++maxPosition);
             System.out.println("recommendId:"+recommend.getId());
             recommendRepository.save(recommend);
 

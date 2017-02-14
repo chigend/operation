@@ -1,65 +1,59 @@
 package com.cookabuy.entity.service.po;
 
 import javax.persistence.*;
-import java.util.Date;
+import java.sql.Timestamp;
 
 /**
  * @author yejinbiao
- * @create 2016-12-28-10:31
+ * @create 2017-02-14-下午1:57
  */
 
 @Entity
-@Table(name = "recommend_stores", schema = "public", catalog = "cookabuy_pc_int")
+@Table(name = "recommend_stores", schema = "public", catalog = "cookabuy_pc_int2")
 public class RecommendStore {
-    private Integer id;
-    private Long storeId;
-    private String page;
+    private String id;
+    private String storeId;
+    private Integer page;
     private Integer location;
     private Integer position;
     private String status;
     private String type;
     private String city;
-    private Date insertedAt;
-    private Date updatedAt;
-    private String picUrl;
-    private boolean effective;
-
-    public RecommendStore() {
-    }
+    private Timestamp insertedAt;
+    private Timestamp updatedAt;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    public Integer getId() {
+    @Column(name = "id", nullable = false)
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 
     @Basic
-    @Column(name = "store_id")
-    public Long getStoreId() {
+    @Column(name = "store_id", nullable = true)
+    public String getStoreId() {
         return storeId;
     }
 
-    public void setStoreId(Long storeId) {
+    public void setStoreId(String storeId) {
         this.storeId = storeId;
     }
 
     @Basic
-    @Column(name = "page")
-    public String getPage() {
+    @Column(name = "page", nullable = true)
+    public Integer getPage() {
         return page;
     }
 
-    public void setPage(String page) {
+    public void setPage(Integer page) {
         this.page = page;
     }
 
     @Basic
-    @Column(name = "location")
+    @Column(name = "location", nullable = true)
     public Integer getLocation() {
         return location;
     }
@@ -69,7 +63,7 @@ public class RecommendStore {
     }
 
     @Basic
-    @Column(name = "position")
+    @Column(name = "position", nullable = true)
     public Integer getPosition() {
         return position;
     }
@@ -79,7 +73,7 @@ public class RecommendStore {
     }
 
     @Basic
-    @Column(name = "status")
+    @Column(name = "status", nullable = true, length = 8)
     public String getStatus() {
         return status;
     }
@@ -89,7 +83,7 @@ public class RecommendStore {
     }
 
     @Basic
-    @Column(name = "type")
+    @Column(name = "type", nullable = true, length = 8)
     public String getType() {
         return type;
     }
@@ -99,7 +93,7 @@ public class RecommendStore {
     }
 
     @Basic
-    @Column(name = "city")
+    @Column(name = "city", nullable = true, length = 16)
     public String getCity() {
         return city;
     }
@@ -109,43 +103,23 @@ public class RecommendStore {
     }
 
     @Basic
-    @Column(name = "inserted_at")
-    public Date getInsertedAt() {
+    @Column(name = "inserted_at", nullable = false)
+    public Timestamp getInsertedAt() {
         return insertedAt;
     }
 
-    public void setInsertedAt(Date insertedAt) {
+    public void setInsertedAt(Timestamp insertedAt) {
         this.insertedAt = insertedAt;
     }
 
     @Basic
-    @Column(name = "updated_at")
-    public Date getUpdatedAt() {
+    @Column(name = "updated_at", nullable = false)
+    public Timestamp getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
+    public void setUpdatedAt(Timestamp updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    @Basic
-    @Column(name = "pic_url")
-    public String getPicUrl() {
-        return picUrl;
-    }
-
-    public void setPicUrl(String picUrl) {
-        this.picUrl = picUrl;
-    }
-
-    @Basic
-    @Column(name = "is_effective")
-    public boolean isEffective() {
-        return effective;
-    }
-
-    public void setEffective(boolean effective) {
-        this.effective = effective;
     }
 
     @Override
@@ -165,7 +139,6 @@ public class RecommendStore {
         if (city != null ? !city.equals(that.city) : that.city != null) return false;
         if (insertedAt != null ? !insertedAt.equals(that.insertedAt) : that.insertedAt != null) return false;
         if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-        if (picUrl != null ? !picUrl.equals(that.picUrl) : that.picUrl != null) return false;
 
         return true;
     }
@@ -182,7 +155,6 @@ public class RecommendStore {
         result = 31 * result + (city != null ? city.hashCode() : 0);
         result = 31 * result + (insertedAt != null ? insertedAt.hashCode() : 0);
         result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
-        result = 31 * result + (picUrl != null ? picUrl.hashCode() : 0);
         return result;
     }
 }

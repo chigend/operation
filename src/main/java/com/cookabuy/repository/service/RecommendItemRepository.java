@@ -1,6 +1,6 @@
 package com.cookabuy.repository.service;
 
-import com.cookabuy.entity.service.po.Recommend;
+import com.cookabuy.entity.service.po.RecommendItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -14,29 +14,29 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Transactional
-public interface RecommendRepository extends JpaRepository<Recommend, Integer>,JpaSpecificationExecutor<Recommend>{
+public interface RecommendItemRepository extends JpaRepository<RecommendItem, Integer>,JpaSpecificationExecutor<RecommendItem>{
     @Override
-    <S extends Recommend> S save(S entity);
+    <S extends RecommendItem> S save(S entity);
 
     @Override
-    Recommend findOne(Specification<Recommend> spec);
+    RecommendItem findOne(Specification<RecommendItem> spec);
 
     @Override
-    List<Recommend> findAll(Specification<Recommend> spec);
+    List<RecommendItem> findAll(Specification<RecommendItem> spec);
 
     @Override
-    Page<Recommend> findAll(Specification<Recommend> spec, Pageable pageable);
+    Page<RecommendItem> findAll(Specification<RecommendItem> spec, Pageable pageable);
 
     @Override
-    List<Recommend> findAll(Specification<Recommend> spec, Sort sort);
+    List<RecommendItem> findAll(Specification<RecommendItem> spec, Sort sort);
 
     @Override
-    long count(Specification<Recommend> spec);
+    long count(Specification<RecommendItem> spec);
 
     @Modifying
-    @Query("update Recommend recommend set recommend.itemId =?1 where recommend.pageName=?2 " +
+    @Query("update RecommendItem recommend set recommend.itemId =?1 where recommend.pageName=?2 " +
             "and recommend.location=?3 and recommend.position=?4")
-    public void replaceRecommend(Long numiid, String pagename, String location, Integer position);
+    public void replaceRecommendItem(Long numiid, String pagename, String location, Integer position);
 
     @Query(value = "select COALESCE(max(COALESCE(position,0)),0) from recommends where page_name = ?1 and location = ?2",nativeQuery = true)
     int findMaxPositionByPageNameAndLocation(String pageName, String location);
@@ -44,12 +44,12 @@ public interface RecommendRepository extends JpaRepository<Recommend, Integer>,J
     @Query(value = "select case when count (*)>0 then true else false end from recommends where item_id = ?1",nativeQuery = true)
     boolean exists(Long itemId);
 
-    List<Recommend> findByPageNameAndLocationOrderByPositionAsc(String pageName, String location);
+    List<RecommendItem> findByPageNameAndLocationOrderByPositionAsc(String pageName, String location);
 
     @Modifying
-    @Query("delete from Recommend r where r.id in ?1")
-    void deleteRecommendWithIds(List<Integer> ids);
+    @Query("delete from RecommendItem r where r.id in ?1")
+    void deleteRecommendItemWithIds(List<Integer> ids);
 
-    Recommend findByPageNameAndLocationAndItemId(String pageName, String location, Long itemId);
+    RecommendItem findByPageNameAndLocationAndItemId(String pageName, String location, Long itemId);
 
 }
