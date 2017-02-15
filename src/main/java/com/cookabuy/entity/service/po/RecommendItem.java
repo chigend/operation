@@ -11,7 +11,7 @@ import java.util.Date;
 @Entity
 @Table(name = "recommends", schema = "public", catalog = "cookabuy_pc_int2")
 public class RecommendItem {
-    private String id;
+    private Integer id;
     private Long itemId;
     private String pageName;
     private String location;
@@ -23,11 +23,11 @@ public class RecommendItem {
 
     @Id
     @Column(name = "id", nullable = false)
-    public String getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

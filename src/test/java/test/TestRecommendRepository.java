@@ -68,7 +68,7 @@ public class TestRecommendRepository extends AbstractJpaTest {
 
     @Test
     public void testTitle(){
-        itemRepository.findByTitleLike("%女装%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(6).map(Item::getNumIid).forEach(numiid -> {
+        itemRepository.findByTitleLike("%春季%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(6).map(Item::getNumIid).forEach(numiid -> {
             RecommendItem recommend = new RecommendItem();
             recommend.setItemId(numiid);
             recommend.setLocation("girl");

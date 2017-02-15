@@ -20,7 +20,7 @@ public class TestRecommendStoreRepository extends AbstractJpaTest {
     }
     @Test
     public void testExistStoreId() {
-        boolean flag = recommendStoreRepository.exists(8L);
+        boolean flag = recommendStoreRepository.exists(1);
         System.out.println(flag);
     }
 }

@@ -10,21 +10,21 @@ import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<Item,Long>,JpaSpecificationExecutor<Item> {
+public interface ItemRepository extends JpaRepository<Item,String>,JpaSpecificationExecutor<Item> {
     @Override
     <S extends Item> S save(S entity);
 
     @Override
-    Item findOne(Long id);
+    Item findOne(String id);
 
     @Override
-    boolean exists(Long id);
+    boolean exists(String id);
 
     @Override
     long count();
 
     @Override
-    void delete(Long id);
+    void delete(String id);
 
     @Override
     void delete(Item entity);
@@ -48,4 +48,5 @@ public interface ItemRepository extends JpaRepository<Item,Long>,JpaSpecificatio
     public List<Item> findTopAndOffset(Integer limit,Integer offset);
 
     public List<Item> findByTitleLike(String title);
+    @Q
 }

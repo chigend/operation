@@ -37,7 +37,7 @@ public class TestAdRepository extends AbstractJpaTest{
     public void testListads() {
         adRepository.findByPageNameOrderByPositionAsc(
                 PageContant.INDEX).stream().forEach(ad->{
-                    System.out.println(ad.getAdId());
+                    System.out.println(ad.getPicUrl());
         });
     }
 }

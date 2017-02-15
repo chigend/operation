@@ -11,9 +11,20 @@ import javax.persistence.*;
 @Table(name = "recommend_category", schema = "public", catalog = "cookabuy_pc_int2")
 public class RecommendCategory {
     private String pageName;
-    private String categoryName;
-    private String categoryValue;
+    private String name;
+    private String value;
     private Integer id;
+    private Integer order;
+
+    @Basic
+    @Column(name = "order")
+    public Integer getOrder() {
+        return order;
+    }
+
+    public void setOrder(Integer order) {
+        this.order = order;
+    }
 
     @Basic
     @Column(name = "page_name", nullable = true, length = -1)
@@ -27,22 +38,22 @@ public class RecommendCategory {
 
     @Basic
     @Column(name = "category_name", nullable = true, length = -1)
-    public String getCategoryName() {
-        return categoryName;
+    public String getName() {
+        return this.name;
     }
 
-    public void setCategoryName(String categoryName) {
-        this.categoryName = categoryName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     @Basic
     @Column(name = "category_value", nullable = true, length = -1)
-    public String getCategoryValue() {
-        return categoryValue;
+    public String getValue() {
+        return value;
     }
 
-    public void setCategoryValue(String categoryValue) {
-        this.categoryValue = categoryValue;
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Id
@@ -63,8 +74,8 @@ public class RecommendCategory {
         RecommendCategory that = (RecommendCategory) o;
 
         if (pageName != null ? !pageName.equals(that.pageName) : that.pageName != null) return false;
-        if (categoryName != null ? !categoryName.equals(that.categoryName) : that.categoryName != null) return false;
-        if (categoryValue != null ? !categoryValue.equals(that.categoryValue) : that.categoryValue != null)
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (value != null ? !value.equals(that.value) : that.value != null)
             return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
 
@@ -74,8 +85,8 @@ public class RecommendCategory {
     @Override
     public int hashCode() {
         int result = pageName != null ? pageName.hashCode() : 0;
-        result = 31 * result + (categoryName != null ? categoryName.hashCode() : 0);
-        result = 31 * result + (categoryValue != null ? categoryValue.hashCode() : 0);
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (value != null ? value.hashCode() : 0);
         result = 31 * result + (id != null ? id.hashCode() : 0);
         return result;
     }

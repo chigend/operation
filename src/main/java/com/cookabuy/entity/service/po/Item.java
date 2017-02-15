@@ -3,7 +3,7 @@ package com.cookabuy.entity.service.po;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.math.BigInteger;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author yejinbiao
@@ -17,7 +17,6 @@ public class Item {
     private String id;
     private Long numIid;
     private Long sid;
-    private String storeId;
     private String detailUrl;
     private String h5DetailUrl;
     private String title;
@@ -41,7 +40,7 @@ public class Item {
     private Integer num;
     private Integer validThru;
     private Long listTime;
-    private Timestamp delistTime;
+    private Date delistTime;
     private BigDecimal price;
     private BigDecimal tbPrice;
     private BigDecimal postFee;
@@ -62,8 +61,19 @@ public class Item {
     private String shopName;
     private Boolean deleted;
     private Boolean valid;
-    private Timestamp insertedAt;
-    private Timestamp updatedAt;
+    private Date insertedAt;
+    private Date updatedAt;
+    private Store store;
+
+    @ManyToOne
+    @JoinColumn(name="store_id")
+    public Store getStore() {
+        return store;
+    }
+
+    public void setStore(Store store) {
+        this.store = store;
+    }
 
     @Id
     @Column(name = "id", nullable = false)
@@ -95,15 +105,6 @@ public class Item {
         this.sid = sid;
     }
 
-    @Basic
-    @Column(name = "store_id", nullable = true)
-    public String getStoreId() {
-        return storeId;
-    }
-
-    public void setStoreId(String storeId) {
-        this.storeId = storeId;
-    }
 
     @Basic
     @Column(name = "detail_url", nullable = true, length = 120)
@@ -337,11 +338,11 @@ public class Item {
 
     @Basic
     @Column(name = "delist_time", nullable = true)
-    public Timestamp getDelistTime() {
+    public Date getDelistTime() {
         return delistTime;
     }
 
-    public void setDelistTime(Timestamp delistTime) {
+    public void setDelistTime(Date delistTime) {
         this.delistTime = delistTime;
     }
 
@@ -547,21 +548,21 @@ public class Item {
 
     @Basic
     @Column(name = "inserted_at", nullable = false)
-    public Timestamp getInsertedAt() {
+    public Date getInsertedAt() {
         return insertedAt;
     }
 
-    public void setInsertedAt(Timestamp insertedAt) {
+    public void setInsertedAt(Date insertedAt) {
         this.insertedAt = insertedAt;
     }
 
     @Basic
     @Column(name = "updated_at", nullable = false)
-    public Timestamp getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 
@@ -575,7 +576,6 @@ public class Item {
         if (id != null ? !id.equals(item.id) : item.id != null) return false;
         if (numIid != null ? !numIid.equals(item.numIid) : item.numIid != null) return false;
         if (sid != null ? !sid.equals(item.sid) : item.sid != null) return false;
-        if (storeId != null ? !storeId.equals(item.storeId) : item.storeId != null) return false;
         if (detailUrl != null ? !detailUrl.equals(item.detailUrl) : item.detailUrl != null) return false;
         if (h5DetailUrl != null ? !h5DetailUrl.equals(item.h5DetailUrl) : item.h5DetailUrl != null) return false;
         if (title != null ? !title.equals(item.title) : item.title != null) return false;
@@ -634,7 +634,6 @@ public class Item {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (numIid != null ? numIid.hashCode() : 0);
         result = 31 * result + (sid != null ? sid.hashCode() : 0);
-        result = 31 * result + (storeId != null ? storeId.hashCode() : 0);
         result = 31 * result + (detailUrl != null ? detailUrl.hashCode() : 0);
         result = 31 * result + (h5DetailUrl != null ? h5DetailUrl.hashCode() : 0);
         result = 31 * result + (title != null ? title.hashCode() : 0);
