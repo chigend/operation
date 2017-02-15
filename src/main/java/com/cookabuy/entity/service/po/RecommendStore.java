@@ -1,7 +1,7 @@
 package com.cookabuy.entity.service.po;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * @author yejinbiao
@@ -13,14 +13,15 @@ import java.sql.Timestamp;
 public class RecommendStore {
     private String id;
     private String storeId;
-    private Integer page;
+    private String page;
     private Integer location;
     private Integer position;
     private String status;
     private String type;
     private String city;
-    private Timestamp insertedAt;
-    private Timestamp updatedAt;
+    private Date insertedAt;
+    private Date updatedAt;
+    private String picUrl;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -30,6 +31,16 @@ public class RecommendStore {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "pic_url")
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Basic
@@ -44,11 +55,11 @@ public class RecommendStore {
 
     @Basic
     @Column(name = "page", nullable = true)
-    public Integer getPage() {
+    public String getPage() {
         return page;
     }
 
-    public void setPage(Integer page) {
+    public void setPage(String page) {
         this.page = page;
     }
 
@@ -104,21 +115,21 @@ public class RecommendStore {
 
     @Basic
     @Column(name = "inserted_at", nullable = false)
-    public Timestamp getInsertedAt() {
+    public Date getInsertedAt() {
         return insertedAt;
     }
 
-    public void setInsertedAt(Timestamp insertedAt) {
+    public void setInsertedAt(Date insertedAt) {
         this.insertedAt = insertedAt;
     }
 
     @Basic
     @Column(name = "updated_at", nullable = false)
-    public Timestamp getUpdatedAt() {
+    public Date getUpdatedAt() {
         return updatedAt;
     }
 
-    public void setUpdatedAt(Timestamp updatedAt) {
+    public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
     }
 

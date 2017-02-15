@@ -1,7 +1,7 @@
 package com.cookabuy.service;
 
 import com.cookabuy.entity.service.po.RecommendStore;
-import com.cookabuy.repository.service.RecommendRepository;
+import com.cookabuy.repository.service.RecommendItemRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
@@ -32,9 +32,9 @@ public class UpdateService {
     private RecommendStoreRepository recommendStoreRepository;
 
     @Autowired
-    private RecommendRepository recommendRepository;
+    private RecommendItemRepository recommendRepository;
 
-    public Result updateStoreUrl(Long storeId, String url) {
+    public Result updateStoreUrl(String storeId, String url) {
 //        UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME_OPERATION,
 //                TYPE_NAME_STORE, String.valueOf(storeId));
 //        try {
@@ -61,7 +61,7 @@ public class UpdateService {
     public Result updateItemUrl(Long itemId, String url) {
         Map<String, Object> source = new HashMap<>();
         source.put("pic_url", url);
-        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, itemId, source);
+        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, String.valueOf(itemId), source);
         result.ifSuccess(() -> result.addData("pic_url", url));
         return result;
     }
@@ -74,7 +74,7 @@ public class UpdateService {
      * @param storeId
      * @return
      */
-    public Result toggleStoreAdded(Long storeId) {
+    public Result toggleStoreAdded(String storeId) {
         RecommendStore store = recommendStoreRepository.findByStoreId(storeId);
         boolean added = store == null; //如果推荐店铺为空，则表示即将添加该店铺
         Map<String, Object> source = new HashMap<>();
@@ -83,9 +83,9 @@ public class UpdateService {
         return result;
     }
 
-    private Result updateField(String index, String type, Long id, Map<String, Object> source) {
+    private Result updateField(String index, String type, String id, Map<String, Object> source) {
         UpdateRequest updateRequest = new UpdateRequest(index,
-                type, String.valueOf(id));
+                type, id);
         try {
 
             updateRequest.doc(source);

@@ -1,6 +1,6 @@
 package com.cookabuy.repository.service.specification;
 
-import com.cookabuy.entity.service.po.Recommend;
+import com.cookabuy.entity.service.po.RecommendItem;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.jpa.domain.Specification;
 
@@ -18,10 +18,10 @@ import java.util.List;
 @Slf4j
 public class RecommendSpecifications {
     //根据page_name,location,position精确定位
-    public static Specification<Recommend> findByAbsolutePosition(Recommend recommend){
-        return new Specification<Recommend>() {
+    public static Specification<RecommendItem> findByAbsolutePosition(RecommendItem recommend){
+        return new Specification<RecommendItem>() {
             @Override
-            public Predicate toPredicate(Root<Recommend> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+            public Predicate toPredicate(Root<RecommendItem> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
 
                 return cb.and(cb.equal(root.get("pageName"),recommend.getPageName()),
                                 cb.equal(root.get("location"),recommend.getLocation()),
@@ -30,10 +30,10 @@ public class RecommendSpecifications {
         };
 
     }
-    public static Specification<Recommend> findByRecommend(Recommend recommend){
-        return new Specification<Recommend>() {
+    public static Specification<RecommendItem> findByRecommend(RecommendItem recommend){
+        return new Specification<RecommendItem>() {
             @Override
-            public Predicate toPredicate(Root<Recommend> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
+            public Predicate toPredicate(Root<RecommendItem> root, CriteriaQuery<?> query, CriteriaBuilder cb) {
                 List<Predicate> predicateList = new ArrayList<>();
                 Class clazz = recommend.getClass();
                 for(Field field:clazz.getDeclaredFields()){

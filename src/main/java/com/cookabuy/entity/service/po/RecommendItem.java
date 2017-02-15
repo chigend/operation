@@ -19,6 +19,7 @@ public class RecommendItem {
     private String status;
     private Date insertedAt;
     private Date updatedAt;
+    private Integer position;
 
     @Id
     @Column(name = "id", nullable = false)
@@ -98,6 +99,14 @@ public class RecommendItem {
 
     public void setUpdatedAt(Date updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
     }
 
     @Override

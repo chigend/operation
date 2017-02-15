@@ -2,9 +2,6 @@ package test;
 
 import com.cookabuy.repository.service.ItemRepository;
 import lombok.extern.slf4j.Slf4j;
-import org.elasticsearch.action.bulk.BulkRequestBuilder;
-import org.elasticsearch.action.bulk.BulkResponse;
-import org.elasticsearch.action.index.IndexResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -14,10 +11,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  * 2016/12/7
@@ -53,38 +46,4 @@ public class TestItemRepository extends AbstractJpaTest {
 //        System.out.println(json);
 //        client.close();
     }
-
-
-
-    @Test(timeout = Long.MAX_VALUE)
-    public void indexItem() {
-        int numOfOneTurn = 500;
-        long count = itemRepository.count();
-        int offset = 0;
-        List<IndexResponse> responses = new ArrayList<IndexResponse>();
-        for (long i=1;i<=Math.ceil((double)count/numOfOneTurn);i++){
-            BulkRequestBuilder bulkRequest = client.prepareBulk();
-            itemRepository.findTopAndOffset(numOfOneTurn,offset).stream().forEach(item -> {
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("list_time", item.getListTime());
-                map.put("market", item.getStore().getMarket());
-                map.put("price", item.getPrice());
-                map.put("store_name", item.getStore().getStoreName());
-                map.put("title", item.getTitle());
-                map.put("added", false);
-                map.put("pic_url", null);
-                bulkRequest.add(client.prepareIndex("operation","item",String.valueOf(item.getNumIid())).setSource(map));
-            });
-            BulkResponse response = bulkRequest.get();
-            if (response.hasFailures()){
-                String error = response.buildFailureMessage();
-                System.out.println(i+":"+error);
-
-            }
-            offset = (int)(numOfOneTurn*i);
-        }
-
-    }
-
-
 }

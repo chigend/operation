@@ -18,8 +18,8 @@ public class GetService {
     @Autowired
     private TransportClient client;
 
-    public String getStorePicUrl (Long storeId) {
-        GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_STORE, String.valueOf(storeId)).get();
+    public String getStorePicUrl (String storeId) {
+        GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_STORE, storeId).get();
         return (String) response.getSourceAsMap().get("pic_url");
     }
 

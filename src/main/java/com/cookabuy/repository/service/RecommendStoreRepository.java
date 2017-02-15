@@ -33,7 +33,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     @Override
     void deleteAll();
 
-    RecommendStore findByStoreId(Long storeId);
+    RecommendStore findByStoreId(String storeId);
 
     @Modifying
     @Query(value = "update recommend_stores set pic_url = ?1 where store_id=?2",nativeQuery = true)
@@ -46,7 +46,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     int findMaxPositionByPage(String page);
 
     @Query(value = "select case when count(*) > 0 then true else false end from recommend_stores where store_id = ?1",nativeQuery = true)
-    boolean exists(Long storeId);
+    boolean existRecommendStore(String storeId);
 
     @Modifying
     @Query(value = "update recommend_stores set is_effective = not is_effective where id = ?1", nativeQuery = true)

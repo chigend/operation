@@ -54,7 +54,7 @@ public class RecommendStoreController {
         int maxPosition = recommendStoreRepository.findMaxPositionByPage(INDEX);
         for (RecommendStore store : recommendStores){
             //如果推荐店铺列表中已经有该店铺则跳过
-            if(recommendStoreRepository.exists(store.getStoreId())){
+            if(recommendStoreRepository.existRecommendStore(store.getStoreId())){
                 continue;
             }
             store.setInsertedAt(new Date());
@@ -114,7 +114,7 @@ public class RecommendStoreController {
         if (url == null) {
             return new Result(UPLOAD_IMAGE_FAIL);
         }
-        Long storeId = store.get().getStoreId();
+        String storeId = store.get().getStoreId();
         //获取elastic 索引上原来的url
         Optional <String> cosOriginalUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
         //更新elastic 索引上的url

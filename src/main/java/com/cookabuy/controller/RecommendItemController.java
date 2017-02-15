@@ -102,7 +102,7 @@ public class RecommendItemController {
     @RequestMapping("list_items")
     @MenuItem
     public Result listItems(String pageName, String location, Result result) {
-        List<Recommend> recommendItems = recommendRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
+        List<RecommendItem> recommendItems = recommendRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
             Item item = itemRepository.findOne(dto.getItemId());
@@ -134,7 +134,7 @@ public class RecommendItemController {
     @RequestMapping("delete_item")
     @RequiresPermissions("recommendItem:delete")
     public Result deleteItems(@RequestBody List<Integer> ids) {
-        recommendRepository.deleteRecommendWithIds(ids);
+        recommendRepository.deleteRecommendItemWithIds(ids);
         return new Result();
     }
 }
