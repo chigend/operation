@@ -43,7 +43,7 @@ public class FileController {
     private DozerBeanMapper mapper;
 
     @RequestMapping("/upload_store_img")
-    public Result uploadStoreImg(Long storeId, MultipartFile image) {
+    public Result uploadStoreImg(String storeId, MultipartFile image) {
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_STORE_PATH, image);
         if (url == null) {
             return new Result(UPLOAD_IMAGE_FAIL);
