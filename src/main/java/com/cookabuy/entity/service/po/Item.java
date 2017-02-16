@@ -1,9 +1,13 @@
 package com.cookabuy.entity.service.po;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -12,9 +16,8 @@ import java.util.Date;
 
 @Entity
 @Table(name = "tb_item", schema = "public", catalog = "cookabuy_pc_int2")
-@IdClass(ItemPK.class)
-public class Item {
-    private String id;
+public class Item implements Serializable{
+    private UUID id;
     private Long numIid;
     private Long sid;
     private String detailUrl;
@@ -65,8 +68,9 @@ public class Item {
     private Date updatedAt;
     private Store store;
 
-    @ManyToOne
-    @JoinColumn(name="store_id")
+//    @ManyToOne
+//    @JoinColumn(name="store_id")
+    @Transient
     public Store getStore() {
         return store;
     }
@@ -76,17 +80,17 @@ public class Item {
     }
 
     @Id
-    @Column(name = "id", nullable = false)
-    public String getId() {
+    @Type(type = "pg-uuid")
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 
-    @Id
-    @Column(name = "num_iid", nullable = false)
+    @Basic
+    @Column(name = "num_iid")
     public Long getNumIid() {
         return numIid;
     }

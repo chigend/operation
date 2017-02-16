@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import static com.cookabuy.constant.CosConstant.BUCKET;
 import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_AD_PATH;
@@ -126,7 +127,7 @@ public class AdController {
 
     @RequestMapping("toggle_hidden")
     @RequiresPermissions("ad:hide")
-    public Result toggle(Integer adId,Result result){
+    public Result toggle(UUID adId, Result result){
 
         adRepository.toggleHiddenByAdId(adId);
         return result;

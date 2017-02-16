@@ -5,6 +5,8 @@ import lombok.Setter;
 import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.UUID;
+
 /**
  * 修改广告时所提交的表单
  *
@@ -15,7 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Getter
 @ToString
 public class UpdateAdForm {
-    private Integer adId;
+    private UUID adId;
 
     private MultipartFile image;
 

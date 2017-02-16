@@ -1,7 +1,6 @@
 package com.cookabuy.service;
 
 import com.cookabuy.constant.PublishType;
-import com.cookabuy.entity.service.po.ActiveAd;
 import com.cookabuy.entity.service.po.PublishLog;
 import com.cookabuy.repository.service.ActiveAdRepository;
 import com.cookabuy.repository.service.AdRepository;
@@ -33,8 +32,8 @@ public class AdService {
         //重新添加所有启用的广告
         adRepository.findByPageNameOrderByPositionAsc(INDEX).stream().filter(ad -> !ad.isHidden())
                 .forEach(ad -> {
-            ActiveAd aa = new ActiveAd(ad.getAdId());
-            activeAdRepository.save(aa);
+//            ActiveAd aa = new ActiveAd(ad.getAdId());
+//            activeAdRepository.save(aa);
         });
         publishLogRepository.save(new PublishLog(PublishType.AD, new Date()));
 

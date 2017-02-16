@@ -80,7 +80,7 @@ public class RecommendItemController {
         //todo 代码冗余
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
-            Item item = itemRepository.findOne(dto.getItemId());
+            Item item = itemRepository.findByNumIid(dto.getItemId());
             //todo 如果商品不存在 ，则表示该商品失效，应设置flag
             if (item != null) {
                 dto.setTitle(item.getTitle());
@@ -105,7 +105,7 @@ public class RecommendItemController {
         List<RecommendItem> recommendItems = recommendRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
-            Item item = itemRepository.findOne(dto.getItemId());
+            Item item = itemRepository.findByNumIid(dto.getItemId());
             //todo 如果商品不存在 或者下架，则表示该商品失效，应设置flag
             if (item != null) {
                 dto.setTitle(item.getTitle());

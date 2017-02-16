@@ -1,8 +1,11 @@
 package com.cookabuy.entity.service.po;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -10,16 +13,22 @@ import java.io.Serializable;
  */
 
 public class ItemPK implements Serializable {
-    private String id;
+    private UUID id;
     private Long numIid;
+
+    public ItemPK(UUID id, Long numIid) {
+        this.id = id;
+        this.numIid = numIid;
+    }
 
     @Column(name = "id", nullable = false)
     @Id
-    public String getId() {
+    @Type(type = "pg-uuid")
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

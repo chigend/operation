@@ -1,7 +1,11 @@
 package com.cookabuy.entity.service.po;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -11,7 +15,7 @@ import java.util.Date;
 @Entity
 @Table(name = "recommends", schema = "public", catalog = "cookabuy_pc_int2")
 public class RecommendItem {
-    private Integer id;
+    private UUID id;
     private Long itemId;
     private String pageName;
     private String location;
@@ -22,12 +26,14 @@ public class RecommendItem {
     private Integer position;
 
     @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2",strategy = "uuid2")
+    @Type(type = "pg-uuid")
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -1,6 +1,7 @@
 package com.cookabuy.repository.service;
 
 import com.cookabuy.entity.service.po.Item;
+import com.cookabuy.entity.service.po.ItemPK;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
@@ -9,22 +10,23 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface ItemRepository extends JpaRepository<Item,String>,JpaSpecificationExecutor<Item> {
+public interface ItemRepository extends JpaRepository<Item,UUID>,JpaSpecificationExecutor<Item> {
     @Override
     <S extends Item> S save(S entity);
 
     @Override
-    Item findOne(String id);
+    Item findOne(UUID id);
 
     @Override
-    boolean exists(String id);
+    boolean exists(UUID id);
 
     @Override
     long count();
 
     @Override
-    void delete(String id);
+    void delete(UUID id);
 
     @Override
     void delete(Item entity);
@@ -48,5 +50,6 @@ public interface ItemRepository extends JpaRepository<Item,String>,JpaSpecificat
     public List<Item> findTopAndOffset(Integer limit,Integer offset);
 
     public List<Item> findByTitleLike(String title);
-    @Q
+    @Query
+    public Item findByNumIid(Long numiid);
 }

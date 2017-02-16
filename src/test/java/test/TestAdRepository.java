@@ -40,4 +40,8 @@ public class TestAdRepository extends AbstractJpaTest{
                     System.out.println(ad.getPicUrl());
         });
     }
+    @Test
+    public void testToggleAdHidden() {
+
+    }
 }

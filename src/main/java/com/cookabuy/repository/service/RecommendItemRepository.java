@@ -1,5 +1,6 @@
 package com.cookabuy.repository.service;
 
+import com.cookabuy.entity.service.po.ItemPK;
 import com.cookabuy.entity.service.po.RecommendItem;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,9 +13,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
-public interface RecommendItemRepository extends JpaRepository<RecommendItem, Integer>,JpaSpecificationExecutor<RecommendItem>{
+public interface RecommendItemRepository extends JpaRepository<RecommendItem, UUID>,JpaSpecificationExecutor<RecommendItem>{
     @Override
     <S extends RecommendItem> S save(S entity);
 

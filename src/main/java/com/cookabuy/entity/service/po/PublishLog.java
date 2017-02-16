@@ -2,6 +2,7 @@ package com.cookabuy.entity.service.po;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -13,7 +14,10 @@ import java.util.Date;
 public class PublishLog {
     private String type;
     private Date publishTime;
-    private Integer id;
+    private UUID id;
+
+    public PublishLog() {
+    }
 
     public PublishLog(String type, Date publishTime) {
         this.type = type;
@@ -42,11 +46,11 @@ public class PublishLog {
 
     @Id
     @Column(name = "id", nullable = false)
-    public Integer getId() {
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

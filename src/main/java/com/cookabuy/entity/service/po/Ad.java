@@ -1,10 +1,10 @@
 package com.cookabuy.entity.service.po;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -13,7 +13,7 @@ import java.util.Date;
 
 @Entity
 public class Ad {
-    private Integer adId;
+    private UUID adId;
     private String activityUrl;
     private Date createTime;
     private Boolean hidden;
@@ -27,11 +27,13 @@ public class Ad {
 
     @Id
     @Column(name = "ad_id", nullable = false)
-    public Integer getAdId() {
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    public UUID getAdId() {
         return adId;
     }
 
-    public void setAdId(Integer adId) {
+    public void setAdId(UUID adId) {
         this.adId = adId;
     }
 

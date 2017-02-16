@@ -1,6 +1,10 @@
 package com.cookabuy.entity.service.po;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -10,33 +14,36 @@ import javax.persistence.*;
 @Entity
 @Table(name = "active_ad", schema = "public", catalog = "cookabuy_pc_int2")
 public class ActiveAd {
-    private Integer adId;
-    private Integer id;
+    private UUID adId;
+    private UUID id;
 
     public ActiveAd() {
     }
 
-    public ActiveAd(Integer adId) {
+    public ActiveAd(UUID adId) {
         this.adId = adId;
     }
 
     @Basic
-    @Column(name = "ad_id", nullable = false)
-    public Integer getAdId() {
+    @Column(name = "ad_id",nullable = false)
+    @Type(type = "pg-uuid")
+    public UUID getAdId() {
         return adId;
     }
 
-    public void setAdId(Integer adId) {
+    public void setAdId(UUID adId) {
         this.adId = adId;
     }
 
     @Id
-    @Column(name = "id", nullable = false)
-    public Integer getId() {
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Type(type = "pg-uuid")
+    public UUID getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

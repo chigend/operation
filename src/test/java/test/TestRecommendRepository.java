@@ -50,10 +50,11 @@ public class TestRecommendRepository extends AbstractJpaTest {
     }
     @Test
     public void testaddRecommend(){
-        itemRepository.findTopAndOffset(500,1000).stream().filter(item -> item.getTitle().contains("女装")).limit(20).map(Item::getNumIid).forEach(numiid->{
+        itemRepository.findTopAndOffset(162,0).stream().filter(item -> item.getTitle().contains("女装")).limit(20).map(Item::getNumIid).forEach(numiid->{
+            System.out.println(numiid);
             RecommendItem recommend = new RecommendItem();
             recommend.setItemId(numiid);
-            recommend.setLocation("left");
+            recommend.setLocation("girl");
             recommend.setPageName("index");
             recommend.setInsertedAt(new Date());
             recommend.setUpdatedAt(new Date());
@@ -67,8 +68,22 @@ public class TestRecommendRepository extends AbstractJpaTest {
     }
 
     @Test
+    public void testaddRecommend2() {
+        itemRepository.findAll().stream().filter(item -> item.getTitle().contains("男生")).limit(20).map(Item::getNumIid).forEach(numiid -> {
+            System.out.println(numiid);
+            RecommendItem recommend = new RecommendItem();
+            recommend.setItemId(numiid);
+            recommend.setLocation("boy");
+            recommend.setPageName("index");
+            recommend.setInsertedAt(new Date());
+            recommend.setUpdatedAt(new Date());
+            recommendRepository.save(recommend);
+        });
+    }
+    @Test
     public void testTitle(){
         itemRepository.findByTitleLike("%春季%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(6).map(Item::getNumIid).forEach(numiid -> {
+            System.out.println(numiid);
             RecommendItem recommend = new RecommendItem();
             recommend.setItemId(numiid);
             recommend.setLocation("girl");

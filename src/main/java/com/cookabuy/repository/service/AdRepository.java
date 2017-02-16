@@ -6,22 +6,24 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
+
 @Transactional
-public interface AdRepository extends JpaRepository<Ad,Integer> {
+public interface AdRepository extends JpaRepository<Ad,UUID> {
     @Override
     <S extends Ad> S save(S entity);
 
     @Override
-    Ad findOne(Integer id);
+    Ad findOne(UUID id);
 
     @Override
-    boolean exists(Integer id);
+    boolean exists(UUID id);
 
     @Override
     long count();
 
     @Override
-    void delete(Integer id);
+    void delete(UUID id);
 
     @Override
     void delete(Ad entity);
@@ -47,7 +49,7 @@ public interface AdRepository extends JpaRepository<Ad,Integer> {
     @Modifying
     @Query(value = "update ad set is_hidden = not is_hidden where ad_id=?1",nativeQuery = true)
 
-    void toggleHiddenByAdId(Integer id);
+    void toggleHiddenByAdId(UUID id);
 
     List<Ad> findByPageNameAndLocation(String pageName, String location);
 
