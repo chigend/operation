@@ -12,7 +12,7 @@ import java.util.UUID;
  * @create 2016-12-28-13:42
  */
 
-public class TestRecommendStoreRepository extends AbstractJpaTest {
+public class TestRecommendStoreRepository extends AbstractServiceJpaTest {
     @Autowired
     private RecommendStoreRepository recommendStoreRepository;
     @Test
@@ -22,12 +22,12 @@ public class TestRecommendStoreRepository extends AbstractJpaTest {
     }
     @Test
     public void testExistId() {
-        boolean flag = recommendStoreRepository.exists(UUID.fromString("ea11faorg.postgresql.util.PSQLException: ERROR: operator does not exist: uuid = 56-9fdf-461f-8e44-3a3691da6853"));
+        boolean flag = recommendStoreRepository.exists(UUID.fromString(""));
         System.out.println(flag);
     }
     @Test
     public void testExistStoreId() {
-        boolean flag = recommendStoreRepository.existRecommendStore(UUID.fromString("ea11fa56-9fdf-461f-8e44-3a3691da6853").toString());
+        boolean flag = recommendStoreRepository.existRecommendStore(UUID.fromString("ea11fa56-9fdf-461f-8e44-3a3691da6853"));
         System.out.println(flag);
     }
 }

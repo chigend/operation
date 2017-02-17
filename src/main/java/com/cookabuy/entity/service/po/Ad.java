@@ -17,20 +17,19 @@ public class Ad {
     private UUID adId;
     private String activityUrl;
     private Date createTime;
-    private Boolean hidden;
+    private Boolean hidden = true;
     private String location;
     private String pageName;
     private String picUrl;
     private Integer position;
-    private Boolean deleted;
-    private Boolean selected;
+    private Boolean deleted = false;
     private Date modifyTime;
 
     @Id
     @Column(name = "ad_id", nullable = false)
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @Type(type = "org.hibernate.type.UUIDBinaryType")
+    @Type(type = "pg-uuid")
     public UUID getAdId() {
         return adId;
     }
@@ -60,7 +59,7 @@ public class Ad {
     }
 
     @Basic
-    @Column(name = "is_hidden")
+    @Column(name = "is_hidden",nullable = false)
     public boolean isHidden() {
         return hidden;
     }
@@ -110,7 +109,7 @@ public class Ad {
     }
 
     @Basic
-    @Column(name = "deleted", nullable = true)
+    @Column(name = "deleted", nullable = false)
     public Boolean getDeleted() {
         return deleted;
     }
@@ -119,15 +118,6 @@ public class Ad {
         this.deleted = deleted;
     }
 
-    @Basic
-    @Column(name = "selected", nullable = true)
-    public Boolean getSelected() {
-        return selected;
-    }
-
-    public void setSelected(Boolean selected) {
-        this.selected = selected;
-    }
 
     @Basic
     @Column(name = "modify_time", nullable = true)
@@ -155,7 +145,6 @@ public class Ad {
         if (picUrl != null ? !picUrl.equals(ad.picUrl) : ad.picUrl != null) return false;
         if (position != null ? !position.equals(ad.position) : ad.position != null) return false;
         if (deleted != null ? !deleted.equals(ad.deleted) : ad.deleted != null) return false;
-        if (selected != null ? !selected.equals(ad.selected) : ad.selected != null) return false;
         if (modifyTime != null ? !modifyTime.equals(ad.modifyTime) : ad.modifyTime != null) return false;
 
         return true;
@@ -172,7 +161,6 @@ public class Ad {
         result = 31 * result + (picUrl != null ? picUrl.hashCode() : 0);
         result = 31 * result + (position != null ? position.hashCode() : 0);
         result = 31 * result + (deleted != null ? deleted.hashCode() : 0);
-        result = 31 * result + (selected != null ? selected.hashCode() : 0);
         result = 31 * result + (modifyTime != null ? modifyTime.hashCode() : 0);
         return result;
     }

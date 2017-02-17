@@ -13,7 +13,7 @@ import java.util.UUID;
  * @create 2016-12-26-10:31
  */
 
-public class TestAdRepository extends AbstractJpaTest{
+public class TestAdRepository extends AbstractServiceJpaTest{
     @Autowired
     private AdRepository adRepository;
 
@@ -41,6 +41,6 @@ public class TestAdRepository extends AbstractJpaTest{
     }
     @Test
     public void testToggleAdHidden() {
-        adRepository.toggleHiddenByAdId(UUID.fromString("7b765238-3612-4f6d-926a-209a56931e83"));
+        adRepository.toggleHiddenByAdId(UUID.fromString("b76cfbbd-e8f9-443a-ba70-da7ceb03175e"));
     }
 }

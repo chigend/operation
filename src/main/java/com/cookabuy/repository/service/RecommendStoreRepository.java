@@ -46,10 +46,10 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,U
     @Query(value = "select COALESCE(max(COALESCE(position,0)),0) from recommend_stores where page = ?1",nativeQuery = true)
     int findMaxPositionByPage(String page);
 
-    @Query(value = "select case when count(*) > 0 then true else false end from recommend_stores where store_id = '?1'",nativeQuery = true)
-    boolean existRecommendStore(String storeId);
+    @Query(value = "select case when count(*) > 0 then true else false end from RecommendStore store where store.storeId = ?1")
+    boolean existRecommendStore(UUID storeId);
 
     @Modifying
-    @Query(value = "update recommend_stores set is_effective = not is_effective where id = ?1", nativeQuery = true)
+    @Query(value = "update recommend_stores set is_effective = not is_effective where id = ?1",nativeQuery = true)
     void toggleEffectiveById(Integer id);
 }

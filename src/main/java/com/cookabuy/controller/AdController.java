@@ -18,6 +18,7 @@ import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
@@ -128,7 +129,7 @@ public class AdController {
 
     @RequestMapping("toggle_hidden")
     @RequiresPermissions("ad:hide")
-    public Result toggle(UUID adId, Result result){
+    public Result toggle(@RequestParam UUID adId, Result result){
 
         adRepository.toggleHiddenByAdId(adId);
         return result;

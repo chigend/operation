@@ -47,7 +47,7 @@ public interface AdRepository extends JpaRepository<Ad,UUID> {
      * @param id
      */
     @Modifying
-    @Query(value = "update ad set is_hidden = not is_hidden where ad_id=?1",nativeQuery = true)
+    @Query(value = "update Ad ad set ad.hidden = case ad.hidden when true then false else true end where ad.adId = ?1")
 
     void toggleHiddenByAdId(UUID id);
 
@@ -57,7 +57,7 @@ public interface AdRepository extends JpaRepository<Ad,UUID> {
     boolean publishActicate();
 
     @Modifying
-    @Query(value = "update ad set deleted = true where ad_id in ?1",nativeQuery = true)
+    @Query(value = "update Ad ad set ad.deleted = true where ad.adId in ?1")
     void logicDelete(List<UUID> ids);
 
 
