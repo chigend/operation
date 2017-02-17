@@ -58,7 +58,7 @@ public interface AdRepository extends JpaRepository<Ad,UUID> {
 
     @Modifying
     @Query(value = "update ad set deleted = true where ad_id in ?1",nativeQuery = true)
-    void logicDelete(List<Integer> ids);
+    void logicDelete(List<UUID> ids);
 
 
 }

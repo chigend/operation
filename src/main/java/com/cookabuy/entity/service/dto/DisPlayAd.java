@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -13,7 +14,7 @@ import java.util.Date;
 @Setter
 @Getter
 public class DisPlayAd {
-    private Integer adId;
+    private UUID adId;
 
     private String picUrl;
 

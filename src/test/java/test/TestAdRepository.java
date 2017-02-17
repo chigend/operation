@@ -6,7 +6,7 @@ import com.cookabuy.repository.service.AdRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.Arrays;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -31,7 +31,6 @@ public class TestAdRepository extends AbstractJpaTest{
     }
     @Test
     public void testDelete() {
-        adRepository.logicDelete(Arrays.asList(4,7));
     }
     @Test
     public void testListads() {
@@ -42,6 +41,6 @@ public class TestAdRepository extends AbstractJpaTest{
     }
     @Test
     public void testToggleAdHidden() {
-
+        adRepository.toggleHiddenByAdId(UUID.fromString("7b765238-3612-4f6d-926a-209a56931e83"));
     }
 }

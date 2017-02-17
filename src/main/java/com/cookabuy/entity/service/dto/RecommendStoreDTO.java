@@ -3,6 +3,8 @@ package com.cookabuy.entity.service.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.UUID;
+
 /**
  * @author yejinbiao
  * @create 2016-12-28-10:34
@@ -10,9 +12,9 @@ import lombok.Setter;
 @Setter
 @Getter
 public class RecommendStoreDTO {
-    private Integer id;
+    private UUID id;
 
-    private Long storeId;
+    private UUID storeId;
 
     private String storeName;
 

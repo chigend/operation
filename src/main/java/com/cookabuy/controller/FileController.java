@@ -9,10 +9,12 @@ import com.cookabuy.util.Result;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.cookabuy.constant.CosConstant.*;
 import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
@@ -43,7 +45,8 @@ public class FileController {
     private DozerBeanMapper mapper;
 
     @RequestMapping("/upload_store_img")
-    public Result uploadStoreImg(String storeId, MultipartFile image) {
+    public Result uploadStoreImg(@RequestParam("id") UUID storeId, MultipartFile image) {
+        System.out.println(storeId);
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_STORE_PATH, image);
         if (url == null) {
             return new Result(UPLOAD_IMAGE_FAIL);

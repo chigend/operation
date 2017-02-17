@@ -1,7 +1,10 @@
 package com.cookabuy.entity.service.po;
 
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -11,7 +14,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name = "stores", schema = "public", catalog = "cookabuy_pc_int2")
 public class Store {
-    private String id;
+    private UUID id;
     private String storeName;
     private String storeNumber;
     private String storeLogo;
@@ -40,11 +43,12 @@ public class Store {
 
     @Id
     @Column(name = "id", nullable = false)
-    public String getId() {
+    @Type(type = "pg-uuid")
+    public UUID getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(UUID id) {
         this.id = id;
     }
 

@@ -22,6 +22,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import static com.cookabuy.constant.CosConstant.BUCKET;
 import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_STORE_PATH;
@@ -54,7 +55,7 @@ public class RecommendStoreController {
         int maxPosition = recommendStoreRepository.findMaxPositionByPage(INDEX);
         for (RecommendStore store : recommendStores){
             //如果推荐店铺列表中已经有该店铺则跳过
-            if(recommendStoreRepository.existRecommendStore(store.getStoreId())){
+            if(recommendStoreRepository.findByStoreId(store.getStoreId()) != null){
                 continue;
             }
             store.setInsertedAt(new Date());
@@ -89,7 +90,7 @@ public class RecommendStoreController {
 
     @RequestMapping("delete_store")
     @RequiresPermissions("recommendStore:delete")
-    public Result deleteStore(Integer id, Result result) {
+    public Result deleteStore(UUID id, Result result) {
         Optional<RecommendStore> recommendStore = Optional.ofNullable(recommendStoreRepository.findOne(id));
         //如果推荐店铺的url存在表示该图片已经上传cos，那么在删除该店铺之前首先删除在cos上的图片
         recommendStore.map(RecommendStore::getPicUrl).ifPresent(url->
@@ -104,7 +105,7 @@ public class RecommendStoreController {
 
     @RequestMapping("update_store_img")
     @RequiresPermissions("recommendStore:image:update")
-    public Result updateStoreImg(Integer id, MultipartFile image) {
+    public Result updateStoreImg(UUID id, MultipartFile image) {
         Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findOne(id));
         if (!store.isPresent()){
             return new Result(STORE_NOT_IN_RECOMMEND);
@@ -114,7 +115,7 @@ public class RecommendStoreController {
         if (url == null) {
             return new Result(UPLOAD_IMAGE_FAIL);
         }
-        String storeId = store.get().getStoreId();
+        UUID storeId = store.get().getStoreId();
         //获取elastic 索引上原来的url
         Optional <String> cosOriginalUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
         //更新elastic 索引上的url

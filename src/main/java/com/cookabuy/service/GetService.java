@@ -5,6 +5,8 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.UUID;
+
 import static com.cookabuy.constant.ElasticSearchConstant.*;
 
 /**
@@ -18,8 +20,8 @@ public class GetService {
     @Autowired
     private TransportClient client;
 
-    public String getStorePicUrl (String storeId) {
-        GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_STORE, storeId).get();
+    public String getStorePicUrl (UUID storeId) {
+        GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_STORE, storeId.toString()).get();
         return (String) response.getSourceAsMap().get("pic_url");
     }
 

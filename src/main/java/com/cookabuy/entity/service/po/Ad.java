@@ -1,6 +1,7 @@
 package com.cookabuy.entity.service.po;
 
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -29,6 +30,7 @@ public class Ad {
     @Column(name = "ad_id", nullable = false)
     @GeneratedValue(generator = "uuid2")
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
+    @Type(type = "org.hibernate.type.UUIDBinaryType")
     public UUID getAdId() {
         return adId;
     }

@@ -6,23 +6,24 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.UUID;
 
 @Transactional
-public interface RecommendStoreRepository extends JpaRepository<RecommendStore,Integer> {
+public interface RecommendStoreRepository extends JpaRepository<RecommendStore,UUID> {
     @Override
     <S extends RecommendStore> S save(S entity);
 
     @Override
-    RecommendStore findOne(Integer id);
+    RecommendStore findOne(UUID id);
 
     @Override
-    boolean exists(Integer id);
+    boolean exists(UUID id);
 
     @Override
     long count();
 
     @Override
-    void delete(Integer id);
+    void delete(UUID id);
 
     @Override
     void delete(RecommendStore entity);
@@ -33,7 +34,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     @Override
     void deleteAll();
 
-    RecommendStore findByStoreId(String storeId);
+    RecommendStore findByStoreId(UUID storeId);
 
     @Modifying
     @Query(value = "update recommend_stores set pic_url = ?1 where store_id=?2",nativeQuery = true)
@@ -45,7 +46,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,I
     @Query(value = "select COALESCE(max(COALESCE(position,0)),0) from recommend_stores where page = ?1",nativeQuery = true)
     int findMaxPositionByPage(String page);
 
-    @Query(value = "select case when count(*) > 0 then true else false end from recommend_stores where store_id = ?1",nativeQuery = true)
+    @Query(value = "select case when count(*) > 0 then true else false end from recommend_stores where store_id = '?1'",nativeQuery = true)
     boolean existRecommendStore(String storeId);
 
     @Modifying

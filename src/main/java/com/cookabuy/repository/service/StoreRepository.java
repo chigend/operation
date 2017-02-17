@@ -5,22 +5,23 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.UUID;
 
-public interface StoreRepository extends JpaRepository<Store,Long> {
+public interface StoreRepository extends JpaRepository<Store,UUID> {
     @Override
     <S extends Store> S save(S entity);
 
     @Override
-    Store findOne(Long id);
+    Store findOne(UUID id);
 
     @Override
-    boolean exists(Long id);
+    boolean exists(UUID id);
 
     @Override
     long count();
 
     @Override
-    void delete(Long id);
+    void delete(UUID id);
 
     @Override
     void delete(Store entity);

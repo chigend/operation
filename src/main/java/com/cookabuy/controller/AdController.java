@@ -77,6 +77,7 @@ public class AdController {
         ad.setPicUrl(picUrl);
         ad.setPageName(INDEX);
         ad.setCreateTime(new Date());
+        ad.setHidden(true);
         adRepository.save(ad);
         return result;
     }
@@ -84,7 +85,7 @@ public class AdController {
 
     @RequestMapping("delete_ad")
     @RequiresPermissions("ad:delete")
-    public Result deleteAd(@RequestBody List<Integer> ids){
+    public Result deleteAd(@RequestBody List<UUID> ids){
         if(CollectionUtils.isEmpty(ids)){
             return new Result(NOT_ASSIGN_ADS);
         }
