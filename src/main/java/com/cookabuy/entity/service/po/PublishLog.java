@@ -1,5 +1,8 @@
 package com.cookabuy.entity.service.po;
 
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
+
 import javax.persistence.*;
 import java.util.Date;
 import java.util.UUID;
@@ -46,6 +49,9 @@ public class PublishLog {
 
     @Id
     @Column(name = "id", nullable = false)
+    @GeneratedValue(generator = "uuid2")
+    @GenericGenerator(name = "uuid2",strategy = "uuid2")
+    @Type(type = "pg-uuid")
     public UUID getId() {
         return id;
     }
