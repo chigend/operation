@@ -50,7 +50,7 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
 
     @Modifying
     @Query("delete from RecommendItem r where r.id in ?1")
-    void deleteRecommendItemWithIds(List<Integer> ids);
+    void deleteRecommendItemWithIds(List<UUID> ids);
 
     RecommendItem findByPageNameAndLocationAndItemId(String pageName, String location, Long itemId);
 

@@ -43,4 +43,9 @@ public class TestAdRepository extends AbstractServiceJpaTest{
     public void testToggleAdHidden() {
         adRepository.toggleHiddenByAdId(UUID.fromString("b76cfbbd-e8f9-443a-ba70-da7ceb03175e"));
     }
+    @Test
+    public void testFindMaxPosition() {
+        Integer max = adRepository.findMaxPositionByPageName(PageContant.INDEX);
+        System.out.println(max);
+    }
 }

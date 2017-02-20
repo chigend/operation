@@ -45,7 +45,7 @@ public class FileController {
     private DozerBeanMapper mapper;
 
     @RequestMapping("/upload_store_img")
-    public Result uploadStoreImg(@RequestParam("id") UUID storeId, MultipartFile image) {
+    public Result uploadStoreImg(@RequestParam UUID storeId, MultipartFile image) {
         System.out.println(storeId);
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_STORE_PATH, image);
         if (url == null) {

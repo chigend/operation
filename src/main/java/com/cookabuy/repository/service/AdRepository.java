@@ -61,4 +61,11 @@ public interface AdRepository extends JpaRepository<Ad,UUID> {
     void logicDelete(List<UUID> ids);
 
 
+    @Modifying
+    @Query(value = "update Ad ad set ad.position = ?1 where ad.position = ?2")
+    void updateAdPosition(Integer position,Integer original);
+
+    @Query(value = "select coalesce(max(ad.position),0) from Ad ad where ad.pageName = ?1 ")
+    Integer findMaxPositionByPageName(String pageName);
+
 }

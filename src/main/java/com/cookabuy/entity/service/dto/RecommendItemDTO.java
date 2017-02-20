@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * @author yejinbiao
@@ -16,7 +17,7 @@ import java.util.Date;
 @Getter
 @ToString
 public class RecommendItemDTO {
-    private Integer id;
+    private UUID id;
 
     private Long itemId;
 

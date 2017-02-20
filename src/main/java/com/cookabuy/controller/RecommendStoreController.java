@@ -16,6 +16,7 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -105,8 +106,8 @@ public class RecommendStoreController {
 
     @RequestMapping("update_store_img")
     @RequiresPermissions("recommendStore:image:update")
-    public Result updateStoreImg(UUID id, MultipartFile image) {
-        Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findOne(id));
+    public Result updateStoreImg(@RequestParam  UUID storeId, MultipartFile image) {
+        Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findByStoreId(storeId));
         if (!store.isPresent()){
             return new Result(STORE_NOT_IN_RECOMMEND);
         }
@@ -115,7 +116,6 @@ public class RecommendStoreController {
         if (url == null) {
             return new Result(UPLOAD_IMAGE_FAIL);
         }
-        UUID storeId = store.get().getStoreId();
         //获取elastic 索引上原来的url
         Optional <String> cosOriginalUrl = Optional.ofNullable(getService.getStorePicUrl(storeId));
         //更新elastic 索引上的url

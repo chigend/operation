@@ -24,6 +24,8 @@ public class ErrorConstant {
 
     public static final String UPDATE_IMAGE_FAIL = "图片修改失败";
 
+    public static final String CAN_NOT_MOVE = "已是置顶或者置底，无法继续完成移动";
+
     public static final String NOT_ASSIGN_ADS = "未选中任何广告轮播图";
 
     public static final String STORE_NOT_IN_RECOMMEND = "该店铺未在推荐列表";

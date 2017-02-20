@@ -1,5 +1,6 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.constant.AdDirection;
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
 import com.cookabuy.entity.service.dto.SaveAdForm;
@@ -106,6 +107,14 @@ public class AdController {
         return new Result();
     }
 
+    @RequestMapping("move_ad")
+    public Result move(@RequestParam UUID adId, AdDirection direction) {
+        Ad ad = adRepository.findOne(adId);
+        if (ad == null) {
+            return  new Result(NOT_ASSIGN_ADS);
+        }
+        return  adService.moveAd(ad,direction);
+    }
     @RequestMapping("update_ad")
     @RequiresPermissions("ad:update")
     public Result update(UpdateAdForm form,Result result){

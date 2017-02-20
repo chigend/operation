@@ -16,10 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 /**
  * @author yejinbiao
@@ -133,7 +130,7 @@ public class RecommendItemController {
 
     @RequestMapping("delete_item")
     @RequiresPermissions("recommendItem:delete")
-    public Result deleteItems(@RequestBody List<Integer> ids) {
+    public Result deleteItems(@RequestBody List<UUID> ids) {
         recommendRepository.deleteRecommendItemWithIds(ids);
         return new Result();
     }
