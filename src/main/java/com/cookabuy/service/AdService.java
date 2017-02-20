@@ -1,6 +1,5 @@
 package com.cookabuy.service;
 
-import com.cookabuy.constant.AdDirection;
 import com.cookabuy.constant.PublishType;
 import com.cookabuy.entity.service.po.ActiveAd;
 import com.cookabuy.entity.service.po.Ad;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
-import static com.cookabuy.constant.ErrorConstant.CAN_NOT_MOVE;
 import static com.cookabuy.constant.PageContant.INDEX;
 
 /**
@@ -30,6 +28,7 @@ public class AdService {
     private ActiveAdRepository activeAdRepository;
     @Autowired
     private PublishLogRepository publishLogRepository;
+
     @Transactional(value = "serviceTransactionManager", rollbackFor = Exception.class)
     public void publishAds() {
         //清空所有已发布的广告
@@ -37,36 +36,20 @@ public class AdService {
         //重新添加所有启用的广告
         adRepository.findByPageNameOrderByPositionAsc(INDEX).stream().filter(ad -> !ad.isHidden())
                 .forEach(ad -> {
-            ActiveAd aa = new ActiveAd(ad.getAdId());
-            activeAdRepository.save(aa);
-        });
+                    ActiveAd aa = new ActiveAd(ad.getAdId());
+                    activeAdRepository.save(aa);
+                });
         publishLogRepository.save(new PublishLog(PublishType.AD, new Date()));
 
     }
+
     @Transactional(value = "serviceTransactionManager", rollbackFor = Exception.class)
-    public Result moveAd(Ad ad, AdDirection direction) {
+    public Result moveAd(Ad ad, Ad ad2) {
         Integer position = ad.getPosition();
-        switch (direction) {
-            case UP:
-                if (position == 1) {
-                    return new Result(CAN_NOT_MOVE);
-                }
+        Integer position2 = ad2.getPosition();
 
-                adRepository.updateAdPositionByPageName(position,position - 1, INDEX);
-                ad.setPosition(position - 1);
-                adRepository.save(ad);
-                break;
-            case DOWN:
-                Integer maxPosition = adRepository.findMaxPositionByPageName(INDEX);
-                if (position == maxPosition) {
-                    return new Result(CAN_NOT_MOVE);
-                }
-
-                adRepository.updateAdPositionByPageName(position,position + 1, INDEX);
-                ad.setPosition(position + 1);
-                adRepository.save(ad);
-                break;
-        }
+        adRepository.updateAdPositionByPageName(position2, position, INDEX);
+        adRepository.updateAdPositionByPageName(position, position2, INDEX);
         return new Result();
     }
 

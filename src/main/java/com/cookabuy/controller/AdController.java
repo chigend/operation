@@ -107,13 +107,20 @@ public class AdController {
         return new Result();
     }
 
+    /**
+     *
+     * @param adId 两个待交换位置的adId
+     * @param adId2
+     * @return
+     */
     @RequestMapping("move_ad")
-    public Result move(@RequestParam UUID adId, AdDirection direction) {
+    public Result move(@RequestParam UUID adId, @RequestParam UUID adId2) {
         Ad ad = adRepository.findOne(adId);
-        if (ad == null) {
+        Ad ad2 = adRepository.findOne(adId2);
+        if (ad == null || ad2 == null) {
             return  new Result(NOT_ASSIGN_ADS);
         }
-        return  adService.moveAd(ad,direction);
+        return  adService.moveAd(ad,ad2);
     }
     @RequestMapping("update_ad")
     @RequiresPermissions("ad:update")
