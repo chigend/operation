@@ -18,6 +18,8 @@ public class DisPlayAd {
 
     private String picUrl;
 
+    private String tip;
+
     private String activityUrl;
 
     @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
