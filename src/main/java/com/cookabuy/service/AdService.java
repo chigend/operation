@@ -52,7 +52,7 @@ public class AdService {
                     return new Result(CAN_NOT_MOVE);
                 }
 
-                adRepository.updateAdPosition(position,position - 1);
+                adRepository.updateAdPositionByPageName(position,position - 1, INDEX);
                 ad.setPosition(position - 1);
                 adRepository.save(ad);
                 break;
@@ -62,7 +62,7 @@ public class AdService {
                     return new Result(CAN_NOT_MOVE);
                 }
 
-                adRepository.updateAdPosition(position,position + 1);
+                adRepository.updateAdPositionByPageName(position,position + 1, INDEX);
                 ad.setPosition(position + 1);
                 adRepository.save(ad);
                 break;

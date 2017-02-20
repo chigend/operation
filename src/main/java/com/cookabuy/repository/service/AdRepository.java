@@ -57,13 +57,13 @@ public interface AdRepository extends JpaRepository<Ad,UUID> {
     boolean publishActicate();
 
     @Modifying
-    @Query(value = "update Ad ad set ad.deleted = true where ad.adId in ?1")
+    @Query(value = "update Ad ad set ad.deleted = true,ad.position = 0 where ad.adId in ?1")
     void logicDelete(List<UUID> ids);
 
 
     @Modifying
-    @Query(value = "update Ad ad set ad.position = ?1 where ad.position = ?2")
-    void updateAdPosition(Integer position,Integer original);
+    @Query(value = "update Ad ad set ad.position = ?1 where ad.position = ?2 and ad.pageName = ?3")
+    void updateAdPositionByPageName(Integer position,Integer original,String pageName);
 
     @Query(value = "select coalesce(max(ad.position),0) from Ad ad where ad.pageName = ?1 ")
     Integer findMaxPositionByPageName(String pageName);
