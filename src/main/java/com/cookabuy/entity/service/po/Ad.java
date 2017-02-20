@@ -21,6 +21,7 @@ public class Ad {
     private String location;
     private String pageName;
     private String picUrl;
+    private String tip;
     private Integer position;
     private Boolean deleted = false;
     private Date modifyTime;
@@ -127,6 +128,16 @@ public class Ad {
 
     public void setModifyTime(Date modifyTime) {
         this.modifyTime = modifyTime;
+    }
+
+    @Basic
+    @Column(name = "tip")
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
     }
 
     @Override

@@ -18,6 +18,8 @@ public class AddAdForm {
 
     private Integer position;
 
+    private String tip;
+
     private String location;
 
     private String pageName;
