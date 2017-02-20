@@ -39,7 +39,7 @@ public interface AdRepository extends JpaRepository<Ad,UUID> {
     List<Ad> findByPageNameOrderByPositionAsc(String pageName);
 
     @Modifying
-    @Query(value = "update ad set position = ?2 where ad_id=?1",nativeQuery = true)
+    @Query(value = "update Ad ad set ad.position = ?2 where ad.adId=?1")
     void updatePositionById(Integer adId,Integer position);
 
     /**
@@ -54,7 +54,7 @@ public interface AdRepository extends JpaRepository<Ad,UUID> {
     List<Ad> findByPageNameAndLocation(String pageName, String location);
 
     @Query(value = "select count(modify_time)>0 as activate from ad where modify_time > (select max(publish_time) from publish_log)", nativeQuery = true )
-    boolean publishActicate();
+    boolean publishActivate();
 
     @Modifying
     @Query(value = "update Ad ad set ad.deleted = true,ad.position = 0 where ad.adId in ?1")

@@ -26,7 +26,7 @@ public class TestAdRepository extends AbstractServiceJpaTest{
     }
     @Test
     public void testActivate(){
-        boolean activate = adRepository.publishActicate();
+        boolean activate = adRepository.publishActivate();
         System.out.println(activate);
     }
     @Test

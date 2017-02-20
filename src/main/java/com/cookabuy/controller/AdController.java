@@ -60,7 +60,7 @@ public class AdController {
         List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(INDEX);
 
         List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads,DisPlayAd.class);
-        boolean activate = adRepository.publishActicate();
+        boolean activate = adRepository.publishActivate();
         result.addData("ads",disPlayAds);
         result.addData("activate", activate);
         return  result;
