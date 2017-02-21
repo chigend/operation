@@ -1,5 +1,6 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.entity.service.dto.MoveRecommendStoreForm;
 import com.cookabuy.entity.service.dto.RecommendStoreDTO;
 import com.cookabuy.entity.service.dto.UpdateRecommendStoreForm;
 import com.cookabuy.entity.service.po.RecommendStore;
@@ -21,10 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 
 import static com.cookabuy.constant.CosConstant.BUCKET;
 import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_STORE_PATH;
@@ -143,10 +141,28 @@ public class RecommendStoreController {
 
     @RequestMapping("replace_store")
     public Result replaceStore(@RequestBody UpdateRecommendStoreForm form) {
+
+        //todo  delete cos picurl
         RecommendStore store = recommendStoreRepository.findOne(form.getId());
         store.setStoreId(form.getStoreId());
         store.setPicUrl(form.getPicUrl());
         recommendStoreRepository.save(store);
+        return new Result();
+    }
+
+    @RequestMapping("move_store")
+    public Result moveStore(@RequestBody MoveRecommendStoreForm form) {
+        RecommendStore store = recommendStoreRepository.findOne(form.getId());
+        if (store != null) {
+            Integer position = store.getPosition();
+            RecommendStore another = recommendStoreRepository.findByPageAndPosition(INDEX, form.getPosition());
+            if (another == null) {
+                return new Result("移动失败");
+            }
+            store.setPosition(form.getPosition());
+            another.setPosition(position);
+            recommendStoreRepository.save(Arrays.asList(store, another));
+        }
         return new Result();
     }
 

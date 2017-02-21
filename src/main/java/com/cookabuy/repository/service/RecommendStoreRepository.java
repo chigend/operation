@@ -56,4 +56,6 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,U
     @Modifying
     @Query(value = "update RecommendStore store set store.storeId = ?1 where store.position = ?2 and store.page = ?3")
     void updateRecommendStore(UUID storeId, Integer position, String pageName );
+
+    RecommendStore findByPageAndPosition(String page, Integer position);
 }

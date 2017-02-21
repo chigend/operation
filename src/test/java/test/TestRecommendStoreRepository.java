@@ -1,11 +1,14 @@
 package test;
 
 import com.alibaba.fastjson.JSON;
+import com.cookabuy.entity.service.po.RecommendStore;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.UUID;
+
+import static com.cookabuy.constant.PageContant.INDEX;
 
 /**
  * @author yejinbiao
@@ -29,5 +32,11 @@ public class TestRecommendStoreRepository extends AbstractServiceJpaTest {
     public void testExistStoreId() {
         boolean flag = recommendStoreRepository.existRecommendStore(UUID.fromString("ea11fa56-9fdf-461f-8e44-3a3691da6853"));
         System.out.println(flag);
+    }
+
+    @Test
+    public void testFindByPageAndPosition() {
+        RecommendStore store = recommendStoreRepository.findByPageAndPosition(INDEX, 2);
+        System.out.println(store.getStoreId());
     }
 }
