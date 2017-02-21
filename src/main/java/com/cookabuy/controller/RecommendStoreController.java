@@ -1,6 +1,7 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.entity.service.dto.RecommendStoreDTO;
+import com.cookabuy.entity.service.dto.UpdateRecommendStoreForm;
 import com.cookabuy.entity.service.po.RecommendStore;
 import com.cookabuy.entity.service.po.Store;
 import com.cookabuy.repository.service.RecommendStoreRepository;
@@ -138,6 +139,15 @@ public class RecommendStoreController {
     public Result toggoleStoreEffective (Integer id, Result result) {
         recommendStoreRepository.toggleEffectiveById(id);
         return result;
+    }
+
+    @RequestMapping("replace_store")
+    public Result replaceStore(UpdateRecommendStoreForm form) {
+        RecommendStore store = recommendStoreRepository.findOne(form.getId());
+        store.setStoreId(form.getStoreId());
+        store.setPicUrl(form.getPicUrl());
+        recommendStoreRepository.save(store);
+        return new Result();
     }
 
 }

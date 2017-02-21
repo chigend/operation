@@ -52,4 +52,8 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,U
     @Modifying
     @Query(value = "update recommend_stores set is_effective = not is_effective where id = ?1",nativeQuery = true)
     void toggleEffectiveById(Integer id);
+
+    @Modifying
+    @Query(value = "update RecommendStore store set store.storeId = ?1 where store.position = ?2 and store.pageName = ?3")
+    void updateRecommendStore(UUID storeId, Integer position, String pageName );
 }
