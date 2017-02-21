@@ -1,7 +1,6 @@
 package com.cookabuy.repository.service;
 
 import com.cookabuy.entity.service.po.Item;
-import com.cookabuy.entity.service.po.ItemPK;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;

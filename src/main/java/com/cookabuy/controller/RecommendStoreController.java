@@ -4,7 +4,10 @@ import com.cookabuy.constant.PublishType;
 import com.cookabuy.entity.service.dto.MoveRecommendStoreForm;
 import com.cookabuy.entity.service.dto.RecommendStoreDTO;
 import com.cookabuy.entity.service.dto.UpdateRecommendStoreForm;
-import com.cookabuy.entity.service.po.*;
+import com.cookabuy.entity.service.po.ActiveStore;
+import com.cookabuy.entity.service.po.PublishLog;
+import com.cookabuy.entity.service.po.RecommendStore;
+import com.cookabuy.entity.service.po.Store;
 import com.cookabuy.repository.service.ActiveStoreRepository;
 import com.cookabuy.repository.service.PublishLogRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
@@ -180,7 +183,7 @@ public class RecommendStoreController {
     public Result publishStores() {
         activeStoreRepository.deleteAll();
         //重新添加所有启用的广告
-        activeStoreRepository.findByPage(INDEX).stream()
+        recommendStoreRepository.findByPage(INDEX).stream()
                 .forEach(store -> {
                     ActiveStore as = new ActiveStore(store.getStoreId(), store.getPosition(), store.getPicUrl(), store.getPage());
 

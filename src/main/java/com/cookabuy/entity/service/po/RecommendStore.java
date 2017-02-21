@@ -1,6 +1,5 @@
 package com.cookabuy.entity.service.po;
 
-import com.sun.javafx.beans.IDProperty;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 

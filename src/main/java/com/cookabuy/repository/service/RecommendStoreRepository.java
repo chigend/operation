@@ -58,4 +58,6 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,U
     void updateRecommendStore(UUID storeId, Integer position, String pageName );
 
     RecommendStore findByPageAndPosition(String page, Integer position);
+
+    List<RecommendStore> findByPage(String page);
 }
