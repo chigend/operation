@@ -4,6 +4,7 @@ import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -14,25 +15,31 @@ import java.util.UUID;
 @Entity
 @Table(name = "active_ad", schema = "public", catalog = "cookabuy_pc_int2")
 public class ActiveAd {
-    private UUID adId;
     private UUID id;
+
+    private String activityUrl;
+
+    private Date createTime;
+
+    private  String pageName;
+
+    private String picUrl;
+
+    private Integer position;
+
+    private String tip;
+
+    private Date modifyTime;
 
     public ActiveAd() {
     }
 
-    public ActiveAd(UUID adId) {
-        this.adId = adId;
-    }
-
-    @Basic
-    @Column(name = "ad_id",nullable = false)
-    @Type(type = "pg-uuid")
-    public UUID getAdId() {
-        return adId;
-    }
-
-    public void setAdId(UUID adId) {
-        this.adId = adId;
+    public ActiveAd( String activityUrl, String pageName, String picUrl, Integer position, String tip) {
+        this.activityUrl = activityUrl;
+        this.pageName = pageName;
+        this.picUrl = picUrl;
+        this.position = position;
+        this.tip = tip;
     }
 
     @Id
@@ -47,23 +54,73 @@ public class ActiveAd {
         this.id = id;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-
-        ActiveAd activeAd = (ActiveAd) o;
-
-        if (adId != null ? !adId.equals(activeAd.adId) : activeAd.adId != null) return false;
-        if (id != null ? !id.equals(activeAd.id) : activeAd.id != null) return false;
-
-        return true;
+    @Basic
+    @Column(name = "activity_url")
+    public String getActivityUrl() {
+        return activityUrl;
     }
 
-    @Override
-    public int hashCode() {
-        int result = adId != null ? adId.hashCode() : 0;
-        result = 31 * result + (id != null ? id.hashCode() : 0);
-        return result;
+    public void setActivityUrl(String activityUrl) {
+        this.activityUrl = activityUrl;
+    }
+
+    @Basic
+    @Column(name = "create_time")
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    @Basic
+    @Column(name = "page_name")
+    public String getPageName() {
+        return pageName;
+    }
+
+    public void setPageName(String pageName) {
+        this.pageName = pageName;
+    }
+
+    @Basic
+    @Column(name = "pic_url")
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
+    }
+
+    @Basic
+    @Column(name = "position")
+    public Integer getPosition() {
+        return position;
+    }
+
+    public void setPosition(Integer position) {
+        this.position = position;
+    }
+
+    @Basic
+    @Column(name = "tip")
+    public String getTip() {
+        return tip;
+    }
+
+    public void setTip(String tip) {
+        this.tip = tip;
+    }
+
+    @Basic
+    @Column(name = "modify_time")
+    public Date getModifyTime() {
+        return modifyTime;
+    }
+
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 }

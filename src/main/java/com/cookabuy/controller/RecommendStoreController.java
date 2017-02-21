@@ -182,7 +182,6 @@ public class RecommendStoreController {
     @RequestMapping("publish_stores")
     public Result publishStores() {
         activeStoreRepository.deleteAll();
-        //重新添加所有启用的广告
         recommendStoreRepository.findByPage(INDEX).stream()
                 .forEach(store -> {
                     ActiveStore as = new ActiveStore(store.getStoreId(), store.getPosition(), store.getPicUrl(), store.getPage());

@@ -16,14 +16,8 @@ public class TestActiveAdRepository extends  AbstractJpaTest {
     @Autowired
     private ActiveAdRepository activeAdRepository;
     @Test
-    public void testActiveAd() {
-        ActiveAd ad = new ActiveAd();
-        ad.setAdId(UUID.randomUUID());
-        activeAdRepository.save(ad);
-    }
-    @Test
     public void testFindActiveAd() {
         ActiveAd ad = activeAdRepository.findOne(UUID.fromString("aaa8d98d-4b02-439b-a34e-370013abd547"));
-        System.out.println(ad.getAdId());
+        System.out.println(ad.getActivityUrl());
     }
 }

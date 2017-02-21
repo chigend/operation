@@ -37,9 +37,10 @@ public class AdService {
         //重新添加所有启用的广告
         adRepository.findByPageNameOrderByPositionAsc(INDEX).stream().filter(ad -> !ad.isHidden())
                 .forEach(ad -> {
-                    ActiveAd aa = new ActiveAd(ad.getAdId());
+                    ActiveAd aa = new ActiveAd(ad.getActivityUrl(), ad.getPageName(), ad.getPicUrl(), ad.getPosition(), ad.getTip());
                     activeAdRepository.save(aa);
                 });
+        //todo operator
         publishLogRepository.save(new PublishLog(PublishType.AD, new Date()));
 
     }
