@@ -142,7 +142,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("replace_store")
-    public Result replaceStore(UpdateRecommendStoreForm form) {
+    public Result replaceStore(@RequestBody UpdateRecommendStoreForm form) {
         RecommendStore store = recommendStoreRepository.findOne(form.getId());
         store.setStoreId(form.getStoreId());
         store.setPicUrl(form.getPicUrl());
