@@ -54,6 +54,6 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,U
     void toggleEffectiveById(Integer id);
 
     @Modifying
-    @Query(value = "update RecommendStore store set store.storeId = ?1 where store.position = ?2 and store.pageName = ?3")
+    @Query(value = "update RecommendStore store set store.storeId = ?1 where store.position = ?2 and store.page = ?3")
     void updateRecommendStore(UUID storeId, Integer position, String pageName );
 }
