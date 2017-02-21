@@ -7,4 +7,5 @@ package com.cookabuy.constant;
 
 public class PublishType {
     public final static String AD = "轮播图";
+    public final static String STORE = "推荐店铺";
 }

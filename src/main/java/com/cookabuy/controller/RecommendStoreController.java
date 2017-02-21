@@ -1,10 +1,12 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.constant.PublishType;
 import com.cookabuy.entity.service.dto.MoveRecommendStoreForm;
 import com.cookabuy.entity.service.dto.RecommendStoreDTO;
 import com.cookabuy.entity.service.dto.UpdateRecommendStoreForm;
-import com.cookabuy.entity.service.po.RecommendStore;
-import com.cookabuy.entity.service.po.Store;
+import com.cookabuy.entity.service.po.*;
+import com.cookabuy.repository.service.ActiveStoreRepository;
+import com.cookabuy.repository.service.PublishLogRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.repository.service.StoreRepository;
 import com.cookabuy.service.GetService;
@@ -15,6 +17,7 @@ import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,6 +51,13 @@ public class RecommendStoreController {
     private UpdateService updateService;
     @Autowired
     private GetService getService;
+    @Autowired
+    private ActiveStoreRepository activeStoreRepository;
+    @Autowired
+    private PublishLogRepository publishLogRepository;
+    @Autowired
+    private DozerBeanMapper mapper;
+
     @RequestMapping("/recommend_store")
     @RequiresPermissions("recommendStore:add")
     public Result recommendStore(@RequestBody List<RecommendStoreDTO> stores) {
@@ -163,6 +173,20 @@ public class RecommendStoreController {
             another.setPosition(position);
             recommendStoreRepository.save(Arrays.asList(store, another));
         }
+        return new Result();
+    }
+
+    @RequestMapping("publish_stores")
+    public Result publishStores() {
+        activeStoreRepository.deleteAll();
+        //重新添加所有启用的广告
+        activeStoreRepository.findByPage(INDEX).stream()
+                .forEach(store -> {
+                    ActiveStore as = new ActiveStore(store.getStoreId(), store.getPosition(), store.getPicUrl(), store.getPage());
+
+                    activeStoreRepository.save(as);
+                });
+        publishLogRepository.save(new PublishLog(PublishType.STORE, new Date()));
         return new Result();
     }
 
