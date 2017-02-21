@@ -80,7 +80,7 @@ public class AdController {
         ad.setPageName(INDEX);
         ad.setCreateTime(new Date());
         ad.setHidden(true);
-        ad.setPosition(maxPosition);
+        ad.setPosition(maxPosition+1);
         adRepository.save(ad);
         return result;
     }
