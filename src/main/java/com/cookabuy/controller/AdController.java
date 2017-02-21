@@ -1,6 +1,5 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.constant.AdDirection;
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
 import com.cookabuy.entity.service.dto.SaveAdForm;
@@ -75,11 +74,13 @@ public class AdController {
             return result;
         }
         log.info("upload file successfully,source_url is {}",picUrl);
+        Integer maxPosition = adRepository.findMaxPositionByPageName(INDEX);
         Ad ad = dozerBeanMapper.map(form,Ad.class);
         ad.setPicUrl(picUrl);
         ad.setPageName(INDEX);
         ad.setCreateTime(new Date());
         ad.setHidden(true);
+        ad.setPosition(maxPosition);
         adRepository.save(ad);
         return result;
     }

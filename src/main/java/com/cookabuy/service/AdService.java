@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.Date;
 
 import static com.cookabuy.constant.PageContant.INDEX;
@@ -45,11 +46,10 @@ public class AdService {
 
     @Transactional(value = "serviceTransactionManager", rollbackFor = Exception.class)
     public Result moveAd(Ad ad, Ad ad2) {
-        Integer position = ad.getPosition();
-        Integer position2 = ad2.getPosition();
-
-        adRepository.updateAdPositionByPageName(position2, position, INDEX);
-        adRepository.updateAdPositionByPageName(position, position2, INDEX);
+        Integer temp = ad.getPosition();
+        ad.setPosition(ad2.getPosition());
+        ad2.setPosition(temp);
+        adRepository.save(Arrays.asList(ad,ad2));
         return new Result();
     }
 
