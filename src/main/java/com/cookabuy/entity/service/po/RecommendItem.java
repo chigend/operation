@@ -24,10 +24,12 @@ public class RecommendItem {
     private Date insertedAt;
     private Date updatedAt;
     private Integer position;
+    private Integer weight;
+    private String picUrl;
 
     @Id
     @GeneratedValue(generator = "uuid2")
-    @GenericGenerator(name = "uuid2",strategy = "uuid2")
+    @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Type(type = "pg-uuid")
     public UUID getId() {
         return id;
@@ -107,12 +109,34 @@ public class RecommendItem {
         this.updatedAt = updatedAt;
     }
 
+    @Basic
+    @Column(name = "position")
     public Integer getPosition() {
         return position;
     }
 
     public void setPosition(Integer position) {
         this.position = position;
+    }
+
+    @Basic
+    @Column(name = "weight")
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    @Basic
+    @Column(name = "pic_url")
+    public String getPicUrl() {
+        return picUrl;
+    }
+
+    public void setPicUrl(String picUrl) {
+        this.picUrl = picUrl;
     }
 
     @Override

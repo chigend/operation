@@ -1,9 +1,11 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.entity.service.dto.PublishRecommendItemForm;
 import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
 import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
+import com.cookabuy.repository.service.specification.ActiveItemRepository;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.spring.aop.annotation.RequiresPermission;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
@@ -29,7 +31,7 @@ public class RecommendItemController {
     private DozerHelper dozerHelper;
 
     @Autowired
-    private RecommendItemRepository recommendRepository;
+    private RecommendItemRepository recommendItemRepository;
 
     @Autowired
     private ItemRepository itemRepository;
@@ -42,6 +44,12 @@ public class RecommendItemController {
 
     @Autowired
     private StoreRepository storeRepository;
+
+    @Autowired
+    private ActiveItemRepository activeItemRepository;
+
+    @Autowired
+    private PublishLogRepository publishLogRepository;
 
     /**
      * @RequiresPermission   注意此注解并非shiro的@RequiresPermissions,由于爆款专区，热销类目，商品管理模块的推荐
@@ -57,10 +65,10 @@ public class RecommendItemController {
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
         List<RecommendItem> recommendItems = dozerHelper.mapList(data.getItems(), RecommendItem.class);
-        int maxPosition = recommendRepository.findMaxPositionByPageNameAndLocation(data.getPageName(), data.getLocation());
+        int maxPosition = recommendItemRepository.findMaxPositionByPageNameAndLocation(data.getPageName(), data.getLocation());
         for (Iterator<RecommendItem> it = recommendItems.iterator(); it.hasNext(); ) {
             RecommendItem recommend = it.next();
-            RecommendItem old = recommendRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
+            RecommendItem old = recommendItemRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());
             if (old != null) {
                 it.remove();
                 continue;   //同一模块下有相同的商品则跳过，同一模块指同一pageName 和同一location
@@ -71,7 +79,7 @@ public class RecommendItemController {
             recommend.setUpdatedAt(new Date());
 //            recommend.setPosition(++maxPosition);
             System.out.println("recommendId:"+recommend.getId());
-            recommendRepository.save(recommend);
+            recommendItemRepository.save(recommend);
 
         }
         //todo 代码冗余
@@ -99,7 +107,7 @@ public class RecommendItemController {
     @RequestMapping("list_items")
     @MenuItem
     public Result listItems(String pageName, String location, Result result) {
-        List<RecommendItem> recommendItems = recommendRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
+        List<RecommendItem> recommendItems = recommendItemRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
             Item item = itemRepository.findByNumIid(dto.getItemId());
@@ -131,7 +139,30 @@ public class RecommendItemController {
     @RequestMapping("delete_item")
     @RequiresPermissions("recommendItem:delete")
     public Result deleteItems(@RequestBody List<UUID> ids) {
-        recommendRepository.deleteRecommendItemWithIds(ids);
+        recommendItemRepository.deleteRecommendItemWithIds(ids);
+        return new Result();
+    }
+
+    @RequestMapping("publish_items")
+    public Result publishItems(@RequestBody PublishRecommendItemForm form) {
+        List<RecommendItem> itemsToBeSaved = new ArrayList<>();
+        form.getWeights().stream().forEach(itemWeight -> {
+           RecommendItem item = recommendItemRepository.findOne(itemWeight.getId());
+           item.setWeight(itemWeight.getWeight());
+           itemsToBeSaved.add(item);
+        });
+
+        recommendItemRepository.save(itemsToBeSaved);
+        activeItemRepository.deleteAll();
+        List<ActiveItem> itemsToBePublished = new ArrayList<>();
+        recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(form.getPage(),form.getLocation())
+                .stream().limit(10).forEach(item -> {
+                    ActiveItem activeItem = new ActiveItem(item.getItemId(), item.getLocation(), item.getPageName()
+                    , item.getPicUrl(), item.getWeight());
+                    itemsToBePublished.add(activeItem);
+        });
+        activeItemRepository.save(itemsToBePublished);
+        publishLogRepository.save(new PublishLog("item", new Date()));
         return new Result();
     }
 }

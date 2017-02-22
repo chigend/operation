@@ -53,4 +53,6 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
 
     RecommendItem findByPageNameAndLocationAndItemId(String pageName, String location, Long itemId);
 
+    List<RecommendItem> findByPageNameAndLocationOrderByWeightDesc(String pageName, String location);
+
 }
