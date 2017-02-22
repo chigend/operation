@@ -47,6 +47,8 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
 
     List<RecommendItem> findByPageNameAndLocationOrderByPositionAsc(String pageName, String location);
 
+
+
     @Modifying
     @Query("delete from RecommendItem r where r.id in ?1")
     void deleteRecommendItemWithIds(List<UUID> ids);

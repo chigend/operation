@@ -31,7 +31,7 @@ public class RecommendItemDTO {
 
     private String market;
 
-    private Integer weight;
+    private Integer weight = 0;
 
 
     @JsonFormat(pattern = "yyyy-MM-dd ",timezone = "GMT+8")

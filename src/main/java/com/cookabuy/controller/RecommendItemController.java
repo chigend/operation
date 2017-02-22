@@ -78,7 +78,6 @@ public class RecommendItemController {
             recommend.setInsertedAt(new Date());
             recommend.setUpdatedAt(new Date());
 //            recommend.setPosition(++maxPosition);
-            System.out.println("recommendId:"+recommend.getId());
             recommendItemRepository.save(recommend);
 
         }
@@ -107,7 +106,7 @@ public class RecommendItemController {
     @RequestMapping("list_items")
     @MenuItem
     public Result listItems(String pageName, String location, Result result) {
-        List<RecommendItem> recommendItems = recommendItemRepository.findByPageNameAndLocationOrderByPositionAsc(pageName, location);
+        List<RecommendItem> recommendItems = recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(pageName, location);
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
             Item item = itemRepository.findByNumIid(dto.getItemId());
