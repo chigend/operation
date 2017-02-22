@@ -2,8 +2,10 @@ package test;
 
 //import com.cookabuy.repository.service.RecommendRepository;
 import com.alibaba.fastjson.JSON;
+import com.cookabuy.entity.service.po.ActiveItem;
 import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.RecommendItem;
+import com.cookabuy.repository.service.ActiveItemRepository;
 import com.cookabuy.repository.service.ItemRepository;
 import com.cookabuy.repository.service.RecommendItemRepository;
 import org.junit.Test;
@@ -12,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * 2016/12/5
@@ -21,6 +24,8 @@ public class TestRecommendRepository extends AbstractJpaTest {
     private RecommendItemRepository recommendRepository;
     @Autowired
     private ItemRepository itemRepository;
+    @Autowired
+    private ActiveItemRepository activeItemRepository;
 
 //    @Autowired
 //    private Item
@@ -50,10 +55,9 @@ public class TestRecommendRepository extends AbstractJpaTest {
     }
     @Test
     public void testaddRecommend(){
-        itemRepository.findTopAndOffset(162,0).stream().filter(item -> item.getTitle().contains("女装")).limit(20).map(Item::getNumIid).forEach(numiid->{
-            System.out.println(numiid);
+        itemRepository.findTopAndOffset(162,0).stream().filter(item -> item.getTitle().contains("女装")).limit(20).map(Item::getId).forEach(id->{
             RecommendItem recommend = new RecommendItem();
-            recommend.setItemId(numiid);
+            recommend.setItemId(id);
             recommend.setLocation("girl");
             recommend.setPageName("index");
             recommend.setInsertedAt(new Date());
@@ -69,10 +73,10 @@ public class TestRecommendRepository extends AbstractJpaTest {
 
     @Test
     public void testaddRecommend2() {
-        itemRepository.findAll().stream().filter(item -> item.getTitle().contains("男生")).limit(20).map(Item::getNumIid).forEach(numiid -> {
-            System.out.println(numiid);
+        itemRepository.findAll().stream().filter(item -> item.getTitle().contains("男生")).limit(20).map(Item::getId).forEach(id -> {
+            System.out.println(id);
             RecommendItem recommend = new RecommendItem();
-            recommend.setItemId(numiid);
+            recommend.setItemId(id);
             recommend.setLocation("boy");
             recommend.setPageName("index");
             recommend.setInsertedAt(new Date());
@@ -82,15 +86,26 @@ public class TestRecommendRepository extends AbstractJpaTest {
     }
     @Test
     public void testTitle(){
-        itemRepository.findByTitleLike("%春季%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(6).map(Item::getNumIid).forEach(numiid -> {
-            System.out.println(numiid);
+        itemRepository.findByTitleLike("%热销%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(4).map(Item::getId).forEach(id -> {
+            System.out.println(id);
             RecommendItem recommend = new RecommendItem();
-            recommend.setItemId(numiid);
-            recommend.setLocation("girl");
-            recommend.setPageName("hot");
+            recommend.setItemId(id);
+            recommend.setLocation("right");
+            recommend.setPageName("index");
             recommend.setInsertedAt(new Date());
             recommend.setUpdatedAt(new Date());
             recommendRepository.save(recommend);
+        });
+    }
+    @Test
+    public void testAddActiveItem() {
+        itemRepository.findByTitleLike("%爆款%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(4).map(Item::getId).forEach(id -> {
+            System.out.println(id);
+            ActiveItem recommend = new ActiveItem();
+            recommend.setItemId(id);
+            recommend.setLocation("left");
+            recommend.setPageName("index");
+            activeItemRepository.save(recommend);
         });
     }
 
@@ -106,7 +121,7 @@ public class TestRecommendRepository extends AbstractJpaTest {
         RecommendItem recommend = new RecommendItem();
         recommend.setLocation("hello");
         System.out.println(recommend);
-        recommend = recommendRepository.findByPageNameAndLocationAndItemId("index", "hello", 543130633958L);
+        recommend = recommendRepository.findByPageNameAndLocationAndItemId("index", "hello", UUID.fromString("cf9fac09-6579-4d8a-89e5-f1c4fd414701"));
         System.out.println(recommend);
 
     }

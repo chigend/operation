@@ -5,7 +5,7 @@ import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
 import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
-import com.cookabuy.repository.service.specification.ActiveItemRepository;
+import com.cookabuy.repository.service.ActiveItemRepository;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.spring.aop.annotation.RequiresPermission;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
@@ -84,7 +84,7 @@ public class RecommendItemController {
         //todo 代码冗余
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
-            Item item = itemRepository.findByNumIid(dto.getItemId());
+            Item item = itemRepository.findOne(dto.getItemId());
             //todo 如果商品不存在 ，则表示该商品失效，应设置flag
             if (item != null) {
                 dto.setTitle(item.getTitle());
@@ -109,7 +109,7 @@ public class RecommendItemController {
         List<RecommendItem> recommendItems = recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(pageName, location);
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
         dtos.stream().forEach(dto -> {
-            Item item = itemRepository.findByNumIid(dto.getItemId());
+            Item item = itemRepository.findOne(dto.getItemId());
             //todo 如果商品不存在 或者下架，则表示该商品失效，应设置flag
             if (item != null) {
                 dto.setTitle(item.getTitle());
@@ -152,7 +152,7 @@ public class RecommendItemController {
         });
 
         recommendItemRepository.save(itemsToBeSaved);
-        activeItemRepository.deleteAll();
+        activeItemRepository.deleteByPageNameAndLocation(form.getPage(), form.getLocation());
         List<ActiveItem> itemsToBePublished = new ArrayList<>();
         recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(form.getPage(),form.getLocation())
                 .stream().limit(10).forEach(item -> {

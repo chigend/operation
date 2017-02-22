@@ -25,7 +25,7 @@ public class GetService {
         return (String) response.getSourceAsMap().get("pic_url");
     }
 
-    public String getItemPicUrl (Long itemId) {
+    public String getItemPicUrl (UUID itemId) {
         GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, String.valueOf(itemId)).get();
         return (String) response.getSourceAsMap().get("pic_url");
     }

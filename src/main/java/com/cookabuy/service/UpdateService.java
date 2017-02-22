@@ -59,10 +59,10 @@ public class UpdateService {
         return result;
     }
 
-    public Result updateItemUrl(Long itemId, String url) {
+    public Result updateItemUrl(UUID itemId, String url) {
         Map<String, Object> source = new HashMap<>();
         source.put("pic_url", url);
-        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, String.valueOf(itemId), source);
+        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, itemId.toString(), source);
         result.ifSuccess(() -> result.addData("pic_url", url));
         return result;
     }

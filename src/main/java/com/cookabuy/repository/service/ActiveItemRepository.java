@@ -1,7 +1,10 @@
-package com.cookabuy.repository.service.specification;
+package com.cookabuy.repository.service;
 
 import com.cookabuy.entity.service.po.ActiveItem;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.UUID;
 
@@ -11,7 +14,7 @@ import java.util.UUID;
  */
 
 
-
+@Transactional
 public interface ActiveItemRepository extends JpaRepository<ActiveItem,UUID> {
     @Override
     <S extends ActiveItem> S save(S entity);
@@ -36,4 +39,8 @@ public interface ActiveItemRepository extends JpaRepository<ActiveItem,UUID> {
 
     @Override
     void deleteAll();
+
+    @Modifying
+    @Query("delete from ActiveItem item where item.pageName=?1 and item.location=?2")
+    void deleteByPageNameAndLocation(String pageName, String location);
 }

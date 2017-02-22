@@ -60,7 +60,7 @@ public class FileController {
     }
 
     @RequestMapping("/upload_item_img")
-    public Result uploadItemImg(Long itemId, MultipartFile image) {
+    public Result uploadItemImg(UUID itemId, MultipartFile image) {
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_ITEM_PATH, image);
         if (url == null) {
             return new Result(UPLOAD_IMAGE_FAIL);

@@ -19,7 +19,7 @@ import java.util.UUID;
 public class RecommendItemDTO {
     private UUID id;
 
-    private Long itemId;
+    private UUID itemId;
 
     private String picUrl;
 

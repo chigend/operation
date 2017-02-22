@@ -15,7 +15,7 @@ import java.util.UUID;
 @Table(name = "active_recommend_item", schema = "public", catalog = "cookabuy_pc_int2")
 public class ActiveItem {
     private UUID id;
-    private Long itemId;
+    private UUID itemId;
     private String location;
     private String pageName;
     private String picUrl;
@@ -26,7 +26,7 @@ public class ActiveItem {
     public ActiveItem() {
     }
 
-    public ActiveItem(Long itemId, String location, String pageName, String picUrl, Integer weight) {
+    public ActiveItem(UUID itemId, String location, String pageName, String picUrl, Integer weight) {
         this.itemId = itemId;
         this.location = location;
         this.pageName = pageName;
@@ -48,11 +48,12 @@ public class ActiveItem {
 
     @Basic
     @Column(name = "item_id")
-    public Long getItemId() {
+    @Type(type = "pg-uuid")
+    public UUID getItemId() {
         return itemId;
     }
 
-    public void setItemId(Long itemId) {
+    public void setItemId(UUID itemId) {
         this.itemId = itemId;
     }
 

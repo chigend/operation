@@ -37,13 +37,13 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
     @Modifying
     @Query("update RecommendItem recommend set recommend.itemId =?1 where recommend.pageName=?2 " +
             "and recommend.location=?3 and recommend.position=?4")
-    public void replaceRecommendItem(Long numiid, String pagename, String location, Integer position);
+    public void replaceRecommendItem(UUID numiid, String pagename, String location, Integer position);
 
     @Query(value = "select COALESCE(max(COALESCE(position,0)),0) from recommends where page_name = ?1 and location = ?2",nativeQuery = true)
     int findMaxPositionByPageNameAndLocation(String pageName, String location);
 
-    @Query(value = "select case when count (*)>0 then true else false end from recommends where item_id = ?1",nativeQuery = true)
-    boolean exists(Long itemId);
+    @Query(value = "select case when count (*)>0 then true else false end from RecommendItem r where r.itemId = ?1")
+    boolean exists(UUID itemId);
 
     List<RecommendItem> findByPageNameAndLocationOrderByPositionAsc(String pageName, String location);
 
@@ -53,7 +53,7 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
     @Query("delete from RecommendItem r where r.id in ?1")
     void deleteRecommendItemWithIds(List<UUID> ids);
 
-    RecommendItem findByPageNameAndLocationAndItemId(String pageName, String location, Long itemId);
+    RecommendItem findByPageNameAndLocationAndItemId(String pageName, String location, UUID itemId);
 
     List<RecommendItem> findByPageNameAndLocationOrderByWeightDesc(String pageName, String location);
 

@@ -14,6 +14,6 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {TestServiceDataSourceConfiguration.class, ServiceJpaConfiguration.class})
 
-@ComponentScan("com.cookabuy.repository.service")
+@ComponentScan(value = {"com.cookabuy.repository.service","com.cookabuy.service"})
 public abstract class AbstractServiceJpaTest {
 }
