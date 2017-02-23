@@ -103,7 +103,7 @@ public class TestRecommendRepository extends AbstractJpaTest {
             System.out.println(id);
             ActiveItem recommend = new ActiveItem();
             recommend.setItemId(id);
-            recommend.setLocation("right");
+            recommend.setLocation("left");
             recommend.setPageName("index");
             activeItemRepository.save(recommend);
         });
