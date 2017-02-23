@@ -98,12 +98,8 @@ public class RecommendItemController {
                 }
             }
         });
-        Result result = new Result();
-//        boolean activate = publishLogRepository.publishActivate(PublishType)
-        result.addData("items",dtos);
-//        recommendItems
-        return new Result("items", dtos);// 返回添加的items
 
+        return new Result("items",dtos);
     }
 
     @RequestMapping("list_items")
@@ -131,10 +127,11 @@ public class RecommendItemController {
         List<Ad> ads = adRepository.findByPageNameAndLocation(pageName, location);
 
         List<RecommendCategory> categories = recommendCategoryRepository.findByPageNameOrderByOrder(pageName);
-
+        boolean activate = publishLogRepository.publishActivate(location);
         result.addData("picUrl", CollectionUtils.isEmpty(ads) ? null : ads.get(0).getPicUrl());
         result.addData("stores", dtos);
         result.addData("categories", categories);
+        result.addData("activate", activate);
         return result;
     }
 
@@ -164,7 +161,7 @@ public class RecommendItemController {
                     itemsToBePublished.add(activeItem);
         });
         activeItemRepository.save(itemsToBePublished);
-        publishLogRepository.save(new PublishLog("item", new Date()));
+        publishLogRepository.save(new PublishLog(form.getLocation(), new Date()));
         return new Result();
     }
 }

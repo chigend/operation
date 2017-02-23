@@ -99,11 +99,11 @@ public class TestRecommendRepository extends AbstractJpaTest {
     }
     @Test
     public void testAddActiveItem() {
-        itemRepository.findByTitleLike("%爆款%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(4).map(Item::getId).forEach(id -> {
+        itemRepository.findByTitleLike("%爆款%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(8).map(Item::getId).forEach(id -> {
             System.out.println(id);
             ActiveItem recommend = new ActiveItem();
             recommend.setItemId(id);
-            recommend.setLocation("left");
+            recommend.setLocation("right");
             recommend.setPageName("index");
             activeItemRepository.save(recommend);
         });
