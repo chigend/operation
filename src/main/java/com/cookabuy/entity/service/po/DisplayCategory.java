@@ -1,6 +1,5 @@
 package com.cookabuy.entity.service.po;
 
-import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -16,11 +15,11 @@ public class DisplayCategory {
     private UUID id;
     private UUID pid;
     private String name;
+    private Integer weight;
+    private boolean display;
 
     @Id
     @Type(type = "pg-uuid")
-    @GenericGenerator(name = "uuid2", strategy = "uuid2")
-    @GeneratedValue(generator = "uuid2")
     public UUID getId() {
         return id;
     }
@@ -48,5 +47,25 @@ public class DisplayCategory {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "weight")
+    public Integer getWeight() {
+        return weight;
+    }
+
+    public void setWeight(Integer weight) {
+        this.weight = weight;
+    }
+
+    @Basic
+    @Column(name = "display")
+    public boolean isDisplay() {
+        return display;
+    }
+
+    public void setDisplay(boolean display) {
+        this.display = display;
     }
 }

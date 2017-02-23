@@ -31,4 +31,22 @@ public class CategoryLinkPK implements Serializable{
     public void setCid(UUID cid) {
         this.cid = cid;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        CategoryLinkPK that = (CategoryLinkPK) o;
+
+        if (displayId != null ? !displayId.equals(that.displayId) : that.displayId != null) return false;
+        return cid != null ? cid.equals(that.cid) : that.cid == null;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = displayId != null ? displayId.hashCode() : 0;
+        result = 31 * result + (cid != null ? cid.hashCode() : 0);
+        return result;
+    }
 }

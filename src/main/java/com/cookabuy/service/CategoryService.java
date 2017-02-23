@@ -23,7 +23,7 @@ public class CategoryService {
     private DisplayCategoryRepository displayCategoryRepository;
 
     public List<CategoryForm> findAllCategories() {
-        List<DisplayCategory> parents = displayCategoryRepository.findAll();
+        List<DisplayCategory> parents = displayCategoryRepository.findFirstLevelCategory();
         List<CategoryForm> results = new ArrayList<>();
         parents.stream().forEach(category -> {
             CategoryForm categoryForm = new CategoryForm();
@@ -35,9 +35,14 @@ public class CategoryService {
     }
 
     private void findChildCategories(CategoryForm category) {
-        List <DisplayCategory> childs = displayCategoryRepository.findByPid(category.getParent().getId());
+        List<DisplayCategory> childs = displayCategoryRepository.findByPid(category.getParent().getId());
         if (CollectionUtils.isNotEmpty(childs)) {
-            childs.stream().forEach(child -> findChildCategories(category));
+            childs.stream().forEach(child -> {
+                CategoryForm categoryForm = new CategoryForm();
+                categoryForm.setParent(child);
+                findChildCategories(categoryForm);
+
+            });
         }
         category.setChilds(childs);
     }

@@ -40,5 +40,9 @@ public interface DisplayCategoryRepository extends JpaRepository<DisplayCategory
     @Query(value = "select  d from DisplayCategory d where d.id = d.pid")
     List<DisplayCategory> findFirstLevelCategory();
 
+    @Query(value = "select d from DisplayCategory d where d.pid = ?1 and d.id != d.pid ")
     List<DisplayCategory> findByPid(UUID pid);
+
+    @Query(value = "select count(*) from DisplayCategory d where d.pid = ?1 and d.id != d.pid")
+    int findChildCount(UUID pid);
 }

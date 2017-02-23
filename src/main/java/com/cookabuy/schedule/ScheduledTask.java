@@ -5,7 +5,6 @@ import com.cookabuy.entity.service.po.RecommendStore;
 import com.cookabuy.repository.service.RecommendItemRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import static com.cookabuy.constant.LocationConstant.LOCATION_ARRAY;
@@ -27,7 +26,7 @@ public class ScheduledTask {
     @Autowired
     private RecommendItemRepository recommendRepository;
     //todo 正式上服务器应改成合适的cron表达式
-    @Scheduled(cron = "* * 20 * * ?")
+//    @Scheduled(cron = "* * 20 * * ?")
 //    @Scheduled(fixedRate = 10 * 60 * 1000)
     public void refreshRecommendStorePosition() {
         int initPosition = 1; //初始position为1
@@ -42,7 +41,7 @@ public class ScheduledTask {
      *   刷新推荐商品的position  同上
      */
 
-    @Scheduled(cron = "* * 20 * * ?")
+//    @Scheduled(cron = "* * 20 * * ?")
     public void refreshRecommendItemPosition() {
 
         for (String page : PAGE_ARRAY) {
