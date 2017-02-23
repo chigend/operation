@@ -16,5 +16,5 @@ public class AddDisplayCategoryForm {
     private String name;
     private boolean display;
     private Integer weight;
-    private UUID cid;
+    private Integer cid;
 }

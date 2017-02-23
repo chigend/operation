@@ -12,7 +12,7 @@ import java.util.UUID;
 
 public class CategoryLinkPK implements Serializable{
     private UUID displayId;
-    private UUID cid;
+    private Integer cid;
 
     @Type(type="pg-uuid")
     public UUID getDisplayId() {
@@ -23,12 +23,11 @@ public class CategoryLinkPK implements Serializable{
         this.displayId = displayId;
     }
 
-    @Type(type = "pg-uuid")
-    public UUID getCid() {
+    public Integer getCid() {
         return cid;
     }
 
-    public void setCid(UUID cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
 

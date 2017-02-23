@@ -14,13 +14,13 @@ import java.util.UUID;
 @Table(name = "category_link", schema = "public", catalog = "cookabuy_pc_int2")
 public class CategoryLink {
     private UUID displayId;
-    private UUID cid;
+    private Integer cid;
     private String alias;
 
     public CategoryLink() {
     }
 
-    public CategoryLink(UUID displayId, UUID cid, String alias) {
+    public CategoryLink(UUID displayId, Integer cid, String alias) {
         this.displayId = displayId;
         this.cid = cid;
         this.alias = alias;
@@ -39,12 +39,11 @@ public class CategoryLink {
 
     @Id
     @Column(name = "cid")
-    @Type(type = "pg-uuid")
-    public UUID getCid() {
+    public Integer getCid() {
         return cid;
     }
 
-    public void setCid(UUID cid) {
+    public void setCid(Integer cid) {
         this.cid = cid;
     }
 

@@ -1,9 +1,11 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.entity.service.dto.AddDisplayCategoryForm;
+import com.cookabuy.entity.service.po.Category;
 import com.cookabuy.entity.service.po.CategoryLink;
 import com.cookabuy.entity.service.po.DisplayCategory;
 import com.cookabuy.repository.service.CategoryLinkRepository;
+import com.cookabuy.repository.service.CategoryRepository;
 import com.cookabuy.repository.service.DisplayCategoryRepository;
 import com.cookabuy.service.CategoryService;
 import com.cookabuy.util.Result;
@@ -33,9 +35,12 @@ public class CategoryController {
     private DozerBeanMapper mapper;
 
     @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
     private CategoryLinkRepository categoryLinkRepository;
 
-    @RequestMapping("list_categories")
+    @RequestMapping("list_display")
     public Result listCategories(Result result) {
         result.addData("cats", categoryService.findAllCategories());
         return result;
@@ -43,7 +48,7 @@ public class CategoryController {
 
     @RequestMapping("add_category")
     public Result addCategory(AddDisplayCategoryForm form) {
-        UUID cid = form.getCid();
+        Integer cid = form.getCid();
         if (cid == null) {
             DisplayCategory category = mapper.map(form, DisplayCategory.class);
             UUID id = UUID.randomUUID();
@@ -79,4 +84,13 @@ public class CategoryController {
         return new Result();
 
     }
+
+
+    @RequestMapping("list_categories")
+    public Result listCategories(Integer pid) {
+        List<Category> categories = categoryRepository.findByPid(pid);
+        return new Result("categories", categories);
+    }
+
+
 }
