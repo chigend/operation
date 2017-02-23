@@ -21,8 +21,8 @@ public class RecommendItem {
     private String location;
     private String type;
     private String status;
-    private Date insertedAt;
-    private Date updatedAt;
+    private Date createTime;
+    private Date modifyTime;
     private Integer position;
     private Integer weight;
     private String picUrl;
@@ -91,23 +91,23 @@ public class RecommendItem {
     }
 
     @Basic
-    @Column(name = "inserted_at", nullable = false)
-    public Date getInsertedAt() {
-        return insertedAt;
+    @Column(name = "create_time", nullable = false)
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setInsertedAt(Date insertedAt) {
-        this.insertedAt = insertedAt;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Basic
-    @Column(name = "updated_at", nullable = false)
-    public Date getUpdatedAt() {
-        return updatedAt;
+    @Column(name = "modify_time", nullable = false)
+    public Date getModifyTime() {
+        return modifyTime;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     @Basic
@@ -153,10 +153,11 @@ public class RecommendItem {
         if (location != null ? !location.equals(that.location) : that.location != null) return false;
         if (type != null ? !type.equals(that.type) : that.type != null) return false;
         if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (insertedAt != null ? !insertedAt.equals(that.insertedAt) : that.insertedAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-
-        return true;
+        if (createTime != null ? !createTime.equals(that.createTime) : that.createTime != null) return false;
+        if (modifyTime != null ? !modifyTime.equals(that.modifyTime) : that.modifyTime != null) return false;
+        if (position != null ? !position.equals(that.position) : that.position != null) return false;
+        if (weight != null ? !weight.equals(that.weight) : that.weight != null) return false;
+        return picUrl != null ? picUrl.equals(that.picUrl) : that.picUrl == null;
     }
 
     @Override
@@ -167,8 +168,11 @@ public class RecommendItem {
         result = 31 * result + (location != null ? location.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (insertedAt != null ? insertedAt.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (modifyTime != null ? modifyTime.hashCode() : 0);
+        result = 31 * result + (position != null ? position.hashCode() : 0);
+        result = 31 * result + (weight != null ? weight.hashCode() : 0);
+        result = 31 * result + (picUrl != null ? picUrl.hashCode() : 0);
         return result;
     }
 }

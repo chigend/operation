@@ -71,8 +71,8 @@ public class RecommendStoreController {
             if(recommendStoreRepository.findByStoreId(store.getStoreId()) != null){
                 continue;
             }
-            store.setInsertedAt(new Date());
-            store.setUpdatedAt(new Date());
+            store.setCreateTime(new Date());
+            store.setModifyTime(new Date());
             store.setPage(INDEX);
             store.setPosition(++maxPosition);
             updateService.toggleStoreAdded(store.getStoreId());
@@ -98,6 +98,8 @@ public class RecommendStoreController {
             dto.setStoreName(store.getStoreName());
         });
         result.addData("stores", dtos);
+        boolean activate = publishLogRepository.publishActivate(PublishType.STORE);
+        result.addData("activate",activate);
         return result;
     }
 

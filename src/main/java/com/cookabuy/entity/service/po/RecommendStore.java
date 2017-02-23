@@ -23,8 +23,8 @@ public class RecommendStore {
     private String status;
     private String type;
     private String city;
-    private Date insertedAt;
-    private Date updatedAt;
+    private Date createTime;
+    private Date modifyTime;
     private String picUrl;
 
     @Id
@@ -122,23 +122,23 @@ public class RecommendStore {
     }
 
     @Basic
-    @Column(name = "inserted_at", nullable = false)
-    public Date getInsertedAt() {
-        return insertedAt;
+    @Column(name = "create_time", nullable = false)
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setInsertedAt(Date insertedAt) {
-        this.insertedAt = insertedAt;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Basic
-    @Column(name = "updated_at", nullable = false)
-    public Date getUpdatedAt() {
-        return updatedAt;
+    @Column(name = "modify_time", nullable = false)
+    public Date getModifyTime() {
+        return modifyTime;
     }
 
-    public void setUpdatedAt(Date updatedAt) {
-        this.updatedAt = updatedAt;
+    public void setModifyTime(Date modifyTime) {
+        this.modifyTime = modifyTime;
     }
 
     @Override
@@ -146,20 +146,19 @@ public class RecommendStore {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        RecommendStore that = (RecommendStore) o;
+        RecommendStore store = (RecommendStore) o;
 
-        if (id != null ? !id.equals(that.id) : that.id != null) return false;
-        if (storeId != null ? !storeId.equals(that.storeId) : that.storeId != null) return false;
-        if (page != null ? !page.equals(that.page) : that.page != null) return false;
-        if (location != null ? !location.equals(that.location) : that.location != null) return false;
-        if (position != null ? !position.equals(that.position) : that.position != null) return false;
-        if (status != null ? !status.equals(that.status) : that.status != null) return false;
-        if (type != null ? !type.equals(that.type) : that.type != null) return false;
-        if (city != null ? !city.equals(that.city) : that.city != null) return false;
-        if (insertedAt != null ? !insertedAt.equals(that.insertedAt) : that.insertedAt != null) return false;
-        if (updatedAt != null ? !updatedAt.equals(that.updatedAt) : that.updatedAt != null) return false;
-
-        return true;
+        if (id != null ? !id.equals(store.id) : store.id != null) return false;
+        if (storeId != null ? !storeId.equals(store.storeId) : store.storeId != null) return false;
+        if (page != null ? !page.equals(store.page) : store.page != null) return false;
+        if (location != null ? !location.equals(store.location) : store.location != null) return false;
+        if (position != null ? !position.equals(store.position) : store.position != null) return false;
+        if (status != null ? !status.equals(store.status) : store.status != null) return false;
+        if (type != null ? !type.equals(store.type) : store.type != null) return false;
+        if (city != null ? !city.equals(store.city) : store.city != null) return false;
+        if (createTime != null ? !createTime.equals(store.createTime) : store.createTime != null) return false;
+        if (modifyTime != null ? !modifyTime.equals(store.modifyTime) : store.modifyTime != null) return false;
+        return picUrl != null ? picUrl.equals(store.picUrl) : store.picUrl == null;
     }
 
     @Override
@@ -172,8 +171,9 @@ public class RecommendStore {
         result = 31 * result + (status != null ? status.hashCode() : 0);
         result = 31 * result + (type != null ? type.hashCode() : 0);
         result = 31 * result + (city != null ? city.hashCode() : 0);
-        result = 31 * result + (insertedAt != null ? insertedAt.hashCode() : 0);
-        result = 31 * result + (updatedAt != null ? updatedAt.hashCode() : 0);
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
+        result = 31 * result + (modifyTime != null ? modifyTime.hashCode() : 0);
+        result = 31 * result + (picUrl != null ? picUrl.hashCode() : 0);
         return result;
     }
 }

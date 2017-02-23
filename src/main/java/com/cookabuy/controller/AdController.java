@@ -1,11 +1,13 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.constant.PublishType;
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
 import com.cookabuy.entity.service.dto.SaveAdForm;
 import com.cookabuy.entity.service.dto.UpdateAdForm;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
+import com.cookabuy.repository.service.PublishLogRepository;
 import com.cookabuy.service.AdService;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.thirdParty.cos.FileHelper;
@@ -45,6 +47,8 @@ public class AdController {
     private AdRepository adRepository;
 
     @Autowired
+    private PublishLogRepository publishLogRepository;
+    @Autowired
     private DozerHelper dozerHelper;
 
     @Autowired
@@ -59,7 +63,7 @@ public class AdController {
         List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(INDEX);
 
         List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads,DisPlayAd.class);
-        boolean activate = adRepository.publishActivate();
+        boolean activate = publishLogRepository.publishActivate(PublishType.AD);
         result.addData("ads",disPlayAds);
         result.addData("activate", activate);
         return  result;

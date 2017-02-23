@@ -74,8 +74,8 @@ public class RecommendItemController {
             }
             recommend.setLocation(data.getLocation());
             recommend.setPageName(data.getPageName());
-            recommend.setInsertedAt(new Date());
-            recommend.setUpdatedAt(new Date());
+            recommend.setCreateTime(new Date());
+            recommend.setModifyTime(new Date());
 //            recommend.setPosition(++maxPosition);
             recommendItemRepository.save(recommend);
 
@@ -98,6 +98,10 @@ public class RecommendItemController {
                 }
             }
         });
+        Result result = new Result();
+//        boolean activate = publishLogRepository.publishActivate(PublishType)
+        result.addData("items",dtos);
+//        recommendItems
         return new Result("items", dtos);// 返回添加的items
 
     }

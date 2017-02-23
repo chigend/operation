@@ -60,8 +60,8 @@ public class TestRecommendRepository extends AbstractJpaTest {
             recommend.setItemId(id);
             recommend.setLocation("girl");
             recommend.setPageName("index");
-            recommend.setInsertedAt(new Date());
-            recommend.setUpdatedAt(new Date());
+            recommend.setCreateTime(new Date());
+            recommend.setModifyTime(new Date());
             recommendRepository.save(recommend);
         });
     }
@@ -79,8 +79,8 @@ public class TestRecommendRepository extends AbstractJpaTest {
             recommend.setItemId(id);
             recommend.setLocation("boy");
             recommend.setPageName("index");
-            recommend.setInsertedAt(new Date());
-            recommend.setUpdatedAt(new Date());
+            recommend.setCreateTime(new Date());
+            recommend.setModifyTime(new Date());
             recommendRepository.save(recommend);
         });
     }
@@ -92,8 +92,8 @@ public class TestRecommendRepository extends AbstractJpaTest {
             recommend.setItemId(id);
             recommend.setLocation("right");
             recommend.setPageName("index");
-            recommend.setInsertedAt(new Date());
-            recommend.setUpdatedAt(new Date());
+            recommend.setCreateTime(new Date());
+            recommend.setModifyTime(new Date());
             recommendRepository.save(recommend);
         });
     }

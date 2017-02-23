@@ -17,6 +17,6 @@ public class TestCategoryLink extends AbstractServiceJpaTest{
     private CategoryLinkRepository categoryLinkRepository;
     @Test
     public void testaddCategoryLink() {
-        categoryLinkRepository.save(new CategoryLink(UUID.randomUUID(), UUID.randomUUID(), "bieming"));
+        categoryLinkRepository.save(new CategoryLink(UUID.randomUUID(), 1, "bieming"));
     }
 }

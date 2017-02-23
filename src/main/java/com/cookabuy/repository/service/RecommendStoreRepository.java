@@ -37,8 +37,8 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,U
     RecommendStore findByStoreId(UUID storeId);
 
     @Modifying
-    @Query(value = "update recommend_stores set pic_url = ?1 where store_id=?2",nativeQuery = true)
-    void updatePicUrlByStoreId(String picUrl,Long storeId);
+    @Query(value = "update RecommendStore r set r.picUrl = ?1 where r.storeId=?2")
+    void updatePicUrlByStoreId(String picUrl,UUID storeId);
 
 
     List<RecommendStore> findByPageOrderByPositionAsc(String pageName);
@@ -60,4 +60,6 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,U
     RecommendStore findByPageAndPosition(String page, Integer position);
 
     List<RecommendStore> findByPage(String page);
+
+
 }

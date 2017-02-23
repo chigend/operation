@@ -7,7 +7,6 @@ import javax.persistence.*;
  * @create 2017-02-23-上午10:55
  */
 @Entity
-@IdClass(CategoryLinkPK.class)
 @Table(name = "tb_category", schema = "public", catalog = "cookabuy_pc_int2")
 public class Category {
     private Integer id;
@@ -67,7 +66,7 @@ public class Category {
     }
 
     @Basic
-    @Column(name = "order")
+    @Column(name = "sort_order")
     public Integer getOrder() {
         return order;
     }
