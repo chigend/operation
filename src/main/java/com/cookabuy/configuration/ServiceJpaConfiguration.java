@@ -38,6 +38,7 @@ public class ServiceJpaConfiguration {
         p.put("hibernate.show_sql", true);
         p.put("hibernate.format_sql", true);
         p.put("hibernate.hbm2ddl.auto", "update");
+        p.put("hibernate.ejb.entitymanager_factory_name", "service");
         factory.setJpaProperties(p);
         // 设置了Properties之后，需要调用该方法才能完成属性配置
         factory.afterPropertiesSet();

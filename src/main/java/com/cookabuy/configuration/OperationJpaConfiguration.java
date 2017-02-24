@@ -38,6 +38,7 @@ public class OperationJpaConfiguration {
         p.put("hibernate.show_sql", false);
         p.put("hibernate.format_sql", true);
         p.put("hibernate.hbm2ddl.auto", "update");
+        p.put("hibernate.ejb.entitymanager_factory_name", "operation");
         factory.setJpaProperties(p);
         // 设置了Properties之后，需要调用该方法才能完成属性配置
         factory.afterPropertiesSet();

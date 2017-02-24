@@ -1,13 +1,12 @@
 package com.cookabuy.controller;
 
 import com.cookabuy.entity.service.dto.AddDisplayCategoryForm;
-import com.cookabuy.entity.service.po.Category;
-import com.cookabuy.entity.service.po.CategoryLink;
-import com.cookabuy.entity.service.po.DisplayCategory;
-import com.cookabuy.repository.service.CategoryLinkRepository;
-import com.cookabuy.repository.service.CategoryRepository;
-import com.cookabuy.repository.service.DisplayCategoryRepository;
+import com.cookabuy.entity.service.dto.FrontCategory;
+import com.cookabuy.entity.service.dto.PublishCategoryDTO;
+import com.cookabuy.entity.service.po.*;
+import com.cookabuy.repository.service.*;
 import com.cookabuy.service.CategoryService;
+import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,10 +35,19 @@ public class CategoryController {
     private DozerBeanMapper mapper;
 
     @Autowired
+    private DozerHelper dozerHelper;
+
+    @Autowired
     private CategoryRepository categoryRepository;
 
     @Autowired
     private CategoryLinkRepository categoryLinkRepository;
+
+    @Autowired
+    private ActiveDisplayCategoryRepository activeDisplayCategoryRepository;
+
+    @Autowired
+    private ActiveCategoryLinkRepository activeCategoryLinkRepository;
 
     @RequestMapping("list_display")
     public Result listCategories(Result result) {
@@ -90,11 +98,35 @@ public class CategoryController {
     @RequestMapping("list_categories")
     public Result listCategories(Integer pid) {
         List<Category> categories = categoryRepository.findByPid(pid);
-        return new Result("categories", categories);
+        List<FrontCategory> frontCategories = dozerHelper.mapList(categories, FrontCategory.class);
+        return new Result("categories", frontCategories);
     }
 
-//    @RequestMapping("publish_category")
-//    public Result publishCategories() {
-//
-//    }
+    @RequestMapping("publish_category")
+    public Result publishCategories(@RequestBody List<PublishCategoryDTO> dtos) {
+        //先保存当前的状态
+        dtos.stream().forEach(dto -> {
+            DisplayCategory category = displayCategoryRepository.findOne(dto.getId());
+            if (category != null) {
+                category.setWeight(dto.getWeight());
+                category.setDisplay(dto.isDisplay());
+                displayCategoryRepository.save(category);
+            }
+        });
+
+        //先删除已发布的内容
+        displayCategoryRepository.deleteAll();
+        //再发布新的内容
+        displayCategoryRepository.findAll().stream().filter(DisplayCategory::isDisplay).forEach(category -> {
+            ActiveDisplayCategory activeCategory = mapper.map(category, ActiveDisplayCategory.class);
+            activeDisplayCategoryRepository.save(activeCategory);
+        });
+
+        categoryLinkRepository.deleteAll();
+        categoryLinkRepository.findAll().stream().forEach(link -> {
+            ActiveCategoryLink activeLink = mapper.map(link, ActiveCategoryLink.class);
+            activeCategoryLinkRepository.save(activeLink);
+        });
+        return new Result();
+    }
 }
