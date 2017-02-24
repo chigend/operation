@@ -6,6 +6,7 @@ import com.cookabuy.repository.service.AdRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.List;
 import java.util.UUID;
 
 /**
@@ -47,5 +48,10 @@ public class TestAdRepository extends AbstractServiceJpaTest{
     public void testFindMaxPosition() {
         Integer max = adRepository.findMaxPositionByPageName(PageContant.INDEX);
         System.out.println(max);
+    }
+    @Test
+    public void testFindByPageAndName() {
+        List<Ad> ads = adRepository.findByPageNameAndLocation("hot", "boy");
+        ads.stream().forEach(ad -> System.out.println(ad.getPicUrl()));
     }
 }

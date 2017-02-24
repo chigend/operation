@@ -3,6 +3,7 @@ package com.cookabuy.repository.service;
 import com.cookabuy.entity.service.po.DisplayCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +12,7 @@ import java.util.UUID;
  * @author yejinbiao
  * @create 2017-02-22-下午2:23
  */
-
+@Transactional
 public interface DisplayCategoryRepository extends JpaRepository<DisplayCategory,UUID>  {
 
     @Override
