@@ -14,9 +14,5 @@ import java.util.UUID;
 public class TestCategoryLinkRepository extends AbstractServiceJpaTest {
     @Autowired
     private CategoryLinkRepository categoryLinkRepository;
-    @Test
-    public void testFindName() {
-        categoryLinkRepository.findAliasByDisplayId(UUID.fromString("bb2d5383-2f2e-449e-bc83-0975123de47c"))
-                .stream().forEach(System.out::println);
-    }
+
 }
