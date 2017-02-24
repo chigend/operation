@@ -150,8 +150,8 @@ public class RecommendItemController {
            item.setWeight(itemWeight.getWeight());
            itemsToBeSaved.add(item);
         });
-
         recommendItemRepository.save(itemsToBeSaved);
+
         activeItemRepository.deleteByPageNameAndLocation(form.getPage(), form.getLocation());
         List<ActiveItem> itemsToBePublished = new ArrayList<>();
         recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(form.getPage(),form.getLocation())
@@ -161,6 +161,7 @@ public class RecommendItemController {
                     itemsToBePublished.add(activeItem);
         });
         activeItemRepository.save(itemsToBePublished);
+
         publishLogRepository.save(new PublishLog(form.getLocation(), new Date()));
         return new Result();
     }

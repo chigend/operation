@@ -11,6 +11,7 @@ import com.cookabuy.service.CategoryService;
 import com.cookabuy.util.Result;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -47,7 +48,7 @@ public class CategoryController {
     }
 
     @RequestMapping("add_category")
-    public Result addCategory(AddDisplayCategoryForm form) {
+    public Result addCategory(@RequestBody AddDisplayCategoryForm form) {
         Integer cid = form.getCid();
         if (cid == null) {
             DisplayCategory category = mapper.map(form, DisplayCategory.class);
@@ -92,5 +93,8 @@ public class CategoryController {
         return new Result("categories", categories);
     }
 
-
+//    @RequestMapping("publish_category")
+//    public Result publishCategories() {
+//
+//    }
 }
