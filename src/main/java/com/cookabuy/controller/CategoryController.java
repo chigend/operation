@@ -63,6 +63,9 @@ public class CategoryController {
             if (category.getPid() == null) {
                 category.setPid(id);
             }
+            if (category.getWeight() == null) {
+                category.setWeight(0);
+            }
             displayCategoryRepository.save(category);
         }else {
             CategoryLink link = new CategoryLink(form.getPid(), cid, form.getName());
@@ -72,6 +75,7 @@ public class CategoryController {
     }
     @RequestMapping("update_category")
     public Result updateCategory(UpdateDisplayCategoryForm form) {
+        //todo  表单合法性验证
         displayCategoryRepository.updateDisplatCategory(form.getName(),form.isDisplay(),form.getWeight(),form.getId());
         return new Result();
     }
