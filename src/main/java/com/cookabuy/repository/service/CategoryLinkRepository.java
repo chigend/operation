@@ -3,6 +3,7 @@ package com.cookabuy.repository.service;
 import com.cookabuy.entity.service.po.CategoryLink;
 import com.cookabuy.entity.service.po.CategoryLinkPK;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
@@ -36,9 +37,13 @@ public interface CategoryLinkRepository  extends  JpaRepository<CategoryLink,Cat
     @Override
     void deleteAll();
 
-    @Query("select c.alias from CategoryLink c where c.displayId = ?1")
-    List<String> findAliasByDisplayId(UUID displayId);
+    List<CategoryLink> findByDisplayId(UUID displayId);
 
     @Query("select count (*) from CategoryLink c where c.displayId = ?1")
     int findChildsCount(UUID displayId);
+
+    @Modifying
+    @Query("delete from CategoryLink cl where cl.cid = ?1")
+    void deleteByCid(Integer cid);
+
 }

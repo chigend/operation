@@ -2,6 +2,7 @@ package com.cookabuy.controller;
 
 import com.cookabuy.entity.service.dto.AddDisplayCategoryForm;
 import com.cookabuy.entity.service.dto.FrontCategory;
+import com.cookabuy.entity.service.dto.FrontCategoryLink;
 import com.cookabuy.entity.service.dto.PublishCategoryDTO;
 import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
@@ -72,10 +73,17 @@ public class CategoryController {
         }
         return new Result();
     }
-    @RequestMapping("find_third")
-    public Result findThird(@RequestParam UUID pid) {
-        List<String> names = categoryLinkRepository.findAliasByDisplayId(pid);
-        return new Result("names", names);
+    @RequestMapping("list_links")
+    public Result listLinks(@RequestParam UUID pid) {
+        List<CategoryLink> links = categoryLinkRepository.findByDisplayId(pid);
+        List<FrontCategoryLink> flinks = dozerHelper.mapList(links, FrontCategoryLink.class);
+        return new Result("cats", flinks);
+    }
+
+    @RequestMapping("delete_link")
+    public Result deleteLink(Integer cid) {
+        categoryLinkRepository.deleteByCid(cid);
+        return new Result();
     }
 
     @RequestMapping("delete_category")
