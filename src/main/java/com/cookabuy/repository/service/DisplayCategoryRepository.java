@@ -2,6 +2,7 @@ package com.cookabuy.repository.service;
 
 import com.cookabuy.entity.service.po.DisplayCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,4 +47,8 @@ public interface DisplayCategoryRepository extends JpaRepository<DisplayCategory
 
     @Query(value = "select count(*) from DisplayCategory d where d.pid = ?1 and d.id != d.pid")
     int findChildCount(UUID pid);
+
+    @Modifying
+    @Query("update DisplayCategory d set d.name=?1,d.display=?2,d.weight=?3 where d.id=?4")
+    void updateDisplatCategory(String name, boolean display, Integer weight, UUID id);
 }

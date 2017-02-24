@@ -1,9 +1,6 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.entity.service.dto.AddDisplayCategoryForm;
-import com.cookabuy.entity.service.dto.FrontCategory;
-import com.cookabuy.entity.service.dto.FrontCategoryLink;
-import com.cookabuy.entity.service.dto.PublishCategoryDTO;
+import com.cookabuy.entity.service.dto.*;
 import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
 import com.cookabuy.service.CategoryService;
@@ -71,6 +68,11 @@ public class CategoryController {
             CategoryLink link = new CategoryLink(form.getPid(), cid, form.getName());
             categoryLinkRepository.save(link);
         }
+        return new Result();
+    }
+    @RequestMapping("update_category")
+    public Result updateCategory(UpdateDisplayCategoryForm form) {
+        displayCategoryRepository.updateDisplatCategory(form.getName(),form.isDisplay(),form.getWeight(),form.getId());
         return new Result();
     }
     @RequestMapping("list_links")
