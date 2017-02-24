@@ -74,7 +74,7 @@ public class CategoryController {
         return new Result();
     }
     @RequestMapping("update_category")
-    public Result updateCategory(UpdateDisplayCategoryForm form) {
+    public Result updateCategory(@RequestBody UpdateDisplayCategoryForm form) {
         //todo  表单合法性验证
         displayCategoryRepository.updateDisplatCategory(form.getName(),form.isDisplay(),form.getWeight(),form.getId());
         return new Result();
