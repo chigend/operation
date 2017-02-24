@@ -5,6 +5,7 @@ import com.cookabuy.entity.service.po.CategoryLinkPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +13,7 @@ import java.util.UUID;
 /**
  * 2017/2/22
  */
+@Transactional
 public interface CategoryLinkRepository  extends  JpaRepository<CategoryLink,CategoryLinkPK>{
     @Override
     <S extends CategoryLink> S save(S entity);
