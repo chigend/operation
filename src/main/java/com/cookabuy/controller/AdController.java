@@ -144,6 +144,10 @@ public class AdController {
         if(activityUrl != null){
             ad.setActivityUrl(activityUrl);
         }
+        String tip = form.getTip();
+        if (tip != null) {
+            ad.setTip(tip);
+        }
         adRepository.save(ad);
         return new Result();
     }

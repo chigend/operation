@@ -22,4 +22,6 @@ public class UpdateAdForm {
     private MultipartFile image;
 
     private String activityUrl;
+
+    private String tip;
 }

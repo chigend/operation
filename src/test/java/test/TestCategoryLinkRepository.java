@@ -1,10 +1,7 @@
 package test;
 
 import com.cookabuy.repository.service.CategoryLinkRepository;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.UUID;
 
 /**
  * @author yejinbiao
