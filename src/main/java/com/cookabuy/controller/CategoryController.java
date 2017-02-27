@@ -42,10 +42,10 @@ public class CategoryController {
     private CategoryLinkRepository categoryLinkRepository;
 
     @Autowired
-    private PublishedDisplayCategoryRepository activeDisplayCategoryRepository;
+    private PublishedDisplayCategoryRepository publishedDisplayCategoryRepository;
 
     @Autowired
-    private PublishedCategoryLinkRepository activeCategoryLinkRepository;
+    private PublishedCategoryLinkRepository publishedCategoryLinkRepository;
 
     @RequestMapping("list_display")
     public Result listCategories(Result result) {
@@ -118,17 +118,17 @@ public class CategoryController {
     public Result publishCategories() {
 
         //先删除已发布的内容
-        displayCategoryRepository.deleteAll();
+        publishedDisplayCategoryRepository.deleteAll();
         //再发布新的内容
         displayCategoryRepository.findAll().stream().filter(DisplayCategory::isDisplay).forEach(category -> {
             PublishedDisplayCategory activeCategory = mapper.map(category, PublishedDisplayCategory.class);
-            activeDisplayCategoryRepository.save(activeCategory);
+            publishedDisplayCategoryRepository.save(activeCategory);
         });
 
-        categoryLinkRepository.deleteAll();
+        publishedCategoryLinkRepository.deleteAll();
         categoryLinkRepository.findAll().stream().forEach(link -> {
             PublishedCategoryLink activeLink = mapper.map(link, PublishedCategoryLink.class);
-            activeCategoryLinkRepository.save(activeLink);
+            publishedCategoryLinkRepository.save(activeLink);
         });
         return new Result();
     }
