@@ -16,7 +16,7 @@ public class AddAdForm {
 
     private String activityUrl;
 
-    private Integer position;
+    private Integer position = 0;
 
     private String tip;
 

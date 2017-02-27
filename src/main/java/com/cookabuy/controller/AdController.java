@@ -16,6 +16,7 @@ import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.util.CollectionUtils;
+import org.apache.shiro.util.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -78,16 +79,20 @@ public class AdController {
             return result;
         }
         log.info("upload file successfully,source_url is {}",picUrl);
-        Integer maxPosition = adRepository.findMaxPositionByPageName(INDEX);
+        String pageName = form.getPageName();
+        Integer maxPosition = adRepository.findMaxPositionByPageName(pageName);
         Ad ad = dozerBeanMapper.map(form,Ad.class);
         ad.setPicUrl(picUrl);
-        ad.setPageName(INDEX);
+        ad.setPageName(form.getPageName());
+        if (StringUtils.hasLength(form.getLocation())) {
+            ad.setLocation(form.getLocation());
+        }
         ad.setCreateTime(new Date());
         ad.setModifyTime(new Date());
         ad.setHidden(true);
         ad.setPosition(maxPosition+1);
         adRepository.save(ad);
-        return result;
+        return new Result("picUrl", picUrl);
     }
 
 
@@ -203,7 +208,7 @@ public class AdController {
 
     @RequestMapping("publish_ads")
     public Result publishAds() {
-        adService.publishAds();
-        return new Result();
+        int numPublished = adService.publishAds();
+        return numPublished > 0 ? new Result() : new Result("发布失败，未启用任何广告项");
     }
 }

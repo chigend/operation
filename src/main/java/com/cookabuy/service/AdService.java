@@ -14,6 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import static com.cookabuy.constant.PageContant.INDEX;
 
@@ -26,22 +27,25 @@ public class AdService {
     @Autowired
     private AdRepository adRepository;
     @Autowired
-    private PublishedAdRepository activeAdRepository;
+    private PublishedAdRepository publishedAdRepository;
     @Autowired
     private PublishLogRepository publishLogRepository;
 
     @Transactional(value = "serviceTransactionManager", rollbackFor = Exception.class)
-    public void publishAds() {
+    public int publishAds() {
         //清空所有已发布的广告
-        activeAdRepository.deleteAll();
+        publishedAdRepository.deleteAll();
         //重新添加所有启用的广告
-        adRepository.findByPageNameOrderByPositionAsc(INDEX).stream().filter(ad -> !ad.isHidden())
-                .forEach(ad -> {
-                    PublishedAd aa = new PublishedAd(ad.getActivityUrl(), ad.getPageName(), ad.getPicUrl(), ad.getPosition(), ad.getTip());
-                    activeAdRepository.save(aa);
-                });
+        List<Ad>adsToBePublished = adRepository.findByPageNameOrderByPositionAsc(INDEX);
+        long numPublished = adsToBePublished.stream().filter(ad -> !ad.isHidden()).peek(ad -> {
+            PublishedAd aa = new PublishedAd(ad.getActivityUrl(), ad.getPageName(), ad.getPicUrl(), ad.getPosition(), ad.getTip());
+            publishedAdRepository.save(aa);
+        }).count();
         //todo operator
-        publishLogRepository.save(new PublishLog(PublishType.AD, new Date()));
+        if (numPublished > 0) {
+            publishLogRepository.save(new PublishLog(PublishType.AD, new Date()));
+        }
+        return (int)numPublished;
 
     }
 
@@ -50,7 +54,7 @@ public class AdService {
         Integer temp = ad.getPosition();
         ad.setPosition(ad2.getPosition());
         ad2.setPosition(temp);
-        adRepository.save(Arrays.asList(ad,ad2));
+        adRepository.save(Arrays.asList(ad, ad2));
         return new Result();
     }
 
