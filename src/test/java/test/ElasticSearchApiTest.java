@@ -1,6 +1,5 @@
 package test;
 
-import com.cookabuy.constant.ElasticSearchConstant;
 import com.cookabuy.thirdParty.elasticsearch.ItemQuery;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
@@ -36,15 +35,15 @@ public class ElasticSearchApiTest {
 
     @Test
     public void testGetStorePicUrl () throws Exception {
-        GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_STORE, "3686").get();
+        GetResponse response = client.prepareGet(STORE_INDEX_NAME, TYPE_NAME_STORE, "3686").get();
         String url =(String) response.getSourceAsMap().get("pic_url");
         System.out.println(url);
     }
 
     @Test
     public void testUpdateStore () {
-        UpdateRequest updateRequest = new UpdateRequest(ElasticSearchConstant.INDEX_NAME_OPERATION,
-                ElasticSearchConstant.TYPE_NAME_STORE, String.valueOf(3686));
+        UpdateRequest updateRequest = new UpdateRequest(STORE_INDEX_NAME,
+                TYPE_NAME_STORE, String.valueOf(3686));
         String url = "http://test-1252811756.cosgz.myqcloud.com/store/8f9f8f15-83e2-4d3e-85e4-9b324c1bfda3.jpg";
         try {
 
@@ -59,14 +58,14 @@ public class ElasticSearchApiTest {
     }
     @Test
     public void testGetItemUrl() {
-            GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, String.valueOf(535482154236L)).get();
+            GetResponse response = client.prepareGet(ITEM_INDEX_NAME, TYPE_NAME_ITEM, String.valueOf(535482154236L)).get();
             String s =  (String) response.getSourceAsMap().get("pic_url");
             System.out.println(s);
         }
 
     @Test
     public void testUpdateItemUrl() {
-        UpdateRequest updateRequest = new UpdateRequest(INDEX_NAME_OPERATION,
+        UpdateRequest updateRequest = new UpdateRequest(ITEM_INDEX_NAME,
                 TYPE_NAME_ITEM, String.valueOf(535482154236L));
         String url = null;
         try {
@@ -84,7 +83,7 @@ public class ElasticSearchApiTest {
     @Test
     public void testSearch() {
         ItemQuery query = new ItemQuery();
-        SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_ITEM);
+        SearchRequestBuilder requestBuilder = client.prepareSearch(ITEM_INDEX_NAME).setTypes(TYPE_NAME_ITEM);
         //定义组合查询
         BoolQueryBuilder boolQuery = boolQuery().must(matchQuery("added", false));
         if(StringUtils.hasLength(query.getTitle())){

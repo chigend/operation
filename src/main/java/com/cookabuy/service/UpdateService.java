@@ -54,7 +54,7 @@ public class UpdateService {
 //        return result;
         Map<String, Object> source = new HashMap<>();
         source.put("pic_url", url);
-        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_STORE,  storeId.toString(), source);
+        Result result = updateField(STORE_INDEX_NAME, TYPE_NAME_STORE,  storeId.toString(), source);
         result.ifSuccess(() -> result.addData("pic_url", url));
         return result;
     }
@@ -62,7 +62,7 @@ public class UpdateService {
     public Result updateItemUrl(UUID itemId, String url) {
         Map<String, Object> source = new HashMap<>();
         source.put("pic_url", url);
-        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, itemId.toString(), source);
+        Result result = updateField(ITEM_INDEX_NAME, TYPE_NAME_ITEM, itemId.toString(), source);
         result.ifSuccess(() -> result.addData("pic_url", url));
         return result;
     }
@@ -71,7 +71,7 @@ public class UpdateService {
      * 根据storeId 切换elasticsearch上store的是否已添加field  added
      * 在添加推荐店铺和删除店铺时分别调用
      * @see com.cookabuy.controller.RecommendStoreController#recommendStore(List)
-     * @see com.cookabuy.controller.RecommendStoreController#deleteStore(Integer, Result)
+     * @see com.cookabuy.controller.RecommendStoreController#deleteStore(UUID, Result)
      * @param storeId
      * @return
      */
@@ -80,7 +80,7 @@ public class UpdateService {
         boolean added = store == null; //如果推荐店铺为空，则表示即将添加该店铺
         Map<String, Object> source = new HashMap<>();
         source.put("added", added);
-        Result result = updateField(INDEX_NAME_OPERATION, TYPE_NAME_STORE, storeId.toString(), source);
+        Result result = updateField(STORE_INDEX_NAME, TYPE_NAME_STORE, storeId.toString(), source);
         return result;
     }
 

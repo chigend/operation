@@ -29,7 +29,7 @@ public class SearchService {
 
 
     public SearchResponse searchItems(ItemQuery query){
-        SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_ITEM);
+        SearchRequestBuilder requestBuilder = client.prepareSearch(ITEM_INDEX_NAME).setTypes(TYPE_NAME_ITEM);
         //定义组合查询
         BoolQueryBuilder boolQuery = boolQuery();
         if(StringUtils.hasLength(query.getTitle())){
@@ -58,7 +58,7 @@ public class SearchService {
     }
 
     public SearchResponse searchStores(StoreQuery query){
-        SearchRequestBuilder requestBuilder = client.prepareSearch(INDEX_NAME_OPERATION).setTypes(TYPE_NAME_STORE);
+        SearchRequestBuilder requestBuilder = client.prepareSearch(STORE_INDEX_NAME).setTypes(TYPE_NAME_STORE);
 
         BoolQueryBuilder booleanQuery = boolQuery().must(matchQuery("added", false));
         if(StringUtils.hasLength(query.getStoreName())){

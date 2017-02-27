@@ -98,7 +98,7 @@ public class RecommendStoreController {
             dto.setStoreName(store.getStoreName());
         });
         result.addData("stores", dtos);
-        boolean activate = publishLogRepository.publishActivate(PublishType.STORE);
+        boolean activate = recommendStoreRepository.publishActivate(PublishType.STORE);
         result.addData("activate",activate);
         return result;
     }

@@ -21,12 +21,12 @@ public class GetService {
     private TransportClient client;
 
     public String getStorePicUrl (UUID storeId) {
-        GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_STORE, storeId.toString()).get();
+        GetResponse response = client.prepareGet(STORE_INDEX_NAME, TYPE_NAME_STORE, storeId.toString()).get();
         return (String) response.getSourceAsMap().get("pic_url");
     }
 
     public String getItemPicUrl (UUID itemId) {
-        GetResponse response = client.prepareGet(INDEX_NAME_OPERATION, TYPE_NAME_ITEM, String.valueOf(itemId)).get();
+        GetResponse response = client.prepareGet(ITEM_INDEX_NAME, TYPE_NAME_ITEM, String.valueOf(itemId)).get();
         return (String) response.getSourceAsMap().get("pic_url");
     }
 

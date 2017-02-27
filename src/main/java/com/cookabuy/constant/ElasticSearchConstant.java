@@ -7,7 +7,9 @@ package com.cookabuy.constant;
 
 public class ElasticSearchConstant {
 
-    public static final String INDEX_NAME_OPERATION = "operation";
+    public static final String ITEM_INDEX_NAME = "item";
+
+    public static final String STORE_INDEX_NAME = "store";
 
     public static final String TYPE_NAME_ITEM = "item";
 
