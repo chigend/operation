@@ -63,7 +63,7 @@ public class AdController {
         List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(INDEX);
 
         List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads,DisPlayAd.class);
-        boolean activate = publishLogRepository.publishActivate(PublishType.AD);
+        boolean activate = adRepository.publishActivate(PublishType.AD);
         result.addData("ads",disPlayAds);
         result.addData("activate", activate);
         return  result;
@@ -83,6 +83,7 @@ public class AdController {
         ad.setPicUrl(picUrl);
         ad.setPageName(INDEX);
         ad.setCreateTime(new Date());
+        ad.setModifyTime(new Date());
         ad.setHidden(true);
         ad.setPosition(maxPosition+1);
         adRepository.save(ad);
