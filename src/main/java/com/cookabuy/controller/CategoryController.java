@@ -60,9 +60,7 @@ public class CategoryController {
             DisplayCategory category = mapper.map(form, DisplayCategory.class);
             UUID id = UUID.randomUUID();
             category.setId(id);
-            if (category.getPid() == null) {
-                category.setPid(id);
-            }
+
             if (category.getWeight() == null) {
                 category.setWeight(0);
             }

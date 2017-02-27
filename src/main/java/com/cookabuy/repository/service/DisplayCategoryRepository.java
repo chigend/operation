@@ -39,13 +39,13 @@ public interface DisplayCategoryRepository extends JpaRepository<DisplayCategory
 
     @Override
     void deleteAll();
-    @Query(value = "select  d from DisplayCategory d where d.id = d.pid")
+    @Query(value = "select  d from DisplayCategory d where d.pid is null ")
     List<DisplayCategory> findFirstLevelCategory();
 
-    @Query(value = "select d from DisplayCategory d where d.pid = ?1 and d.id != d.pid ")
+    @Query(value = "select d from DisplayCategory d where d.pid = ?1")
     List<DisplayCategory> findByPid(UUID pid);
 
-    @Query(value = "select count(*) from DisplayCategory d where d.pid = ?1 and d.id != d.pid")
+    @Query(value = "select count(*) from DisplayCategory d where d.pid = ?1")
     int findChildCount(UUID pid);
 
     @Modifying
