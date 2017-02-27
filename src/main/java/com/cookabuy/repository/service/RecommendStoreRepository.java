@@ -62,7 +62,7 @@ public interface RecommendStoreRepository extends JpaRepository<RecommendStore,U
     List<RecommendStore> findByPage(String page);
 
 
-    @Query(value = "select case  when count(*) > 0 then true else false end from RecommendStore r where r.modifyTime > (select max(p.publishTime) from PublishLog p where p.type =?1)" )
+    @Query(value = "select case  when count(*) > 0 then true else false end from RecommendStore r where r.modifyTime > (select coalesce( max(p.publishTime),'1970-01-01 00:00:00') from PublishLog p where p.type =?1)" )
     boolean publishActivate(String type);
 
 }
