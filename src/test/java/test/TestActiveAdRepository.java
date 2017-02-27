@@ -1,7 +1,7 @@
 package test;
 
-import com.cookabuy.entity.service.po.ActiveAd;
-import com.cookabuy.repository.service.ActiveAdRepository;
+import com.cookabuy.entity.service.po.PublishedAd;
+import com.cookabuy.repository.service.PublishedAdRepository;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -14,10 +14,10 @@ import java.util.UUID;
 
 public class TestActiveAdRepository extends  AbstractJpaTest {
     @Autowired
-    private ActiveAdRepository activeAdRepository;
+    private PublishedAdRepository activeAdRepository;
     @Test
     public void testFindActiveAd() {
-        ActiveAd ad = activeAdRepository.findOne(UUID.fromString("aaa8d98d-4b02-439b-a34e-370013abd547"));
+        PublishedAd ad = activeAdRepository.findOne(UUID.fromString("aaa8d98d-4b02-439b-a34e-370013abd547"));
         System.out.println(ad.getActivityUrl());
     }
 }

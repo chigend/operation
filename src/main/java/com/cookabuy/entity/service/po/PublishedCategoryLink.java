@@ -11,16 +11,16 @@ import java.util.UUID;
  */
 @Entity
 @IdClass(CategoryLinkPK.class)
-@Table(name = "category_link", schema = "public", catalog = "cookabuy_pc_int2")
-public class ActiveCategoryLink {
+@Table(name = "published_category_link", schema = "public", catalog = "cookabuy_pc_int2")
+public class PublishedCategoryLink {
     private UUID displayId;
     private Integer cid;
     private String alias;
 
-    public ActiveCategoryLink() {
+    public PublishedCategoryLink() {
     }
 
-    public ActiveCategoryLink(UUID displayId, Integer cid, String alias) {
+    public PublishedCategoryLink(UUID displayId, Integer cid, String alias) {
         this.displayId = displayId;
         this.cid = cid;
         this.alias = alias;

@@ -11,8 +11,8 @@ import java.util.UUID;
  */
 
 @Entity
-@Table(name = "active_ad", schema = "public", catalog = "cookabuy_pc_int2")
-public class ActiveDisplayCategory {
+@Table(name = "published_display_category", schema = "public", catalog = "cookabuy_pc_int2")
+public class PublishedDisplayCategory {
     private UUID id;
     private UUID pid;
     private String name;

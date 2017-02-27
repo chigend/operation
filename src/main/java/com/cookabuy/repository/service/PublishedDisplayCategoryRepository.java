@@ -6,7 +6,7 @@ package com.cookabuy.repository.service;
  */
 
 
-import com.cookabuy.entity.service.po.ActiveDisplayCategory;
+import com.cookabuy.entity.service.po.PublishedDisplayCategory;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
@@ -16,13 +16,13 @@ import java.util.UUID;
  * @create 2017-02-22-下午2:23
  */
 
-public interface ActiveDisplayCategoryRepository extends JpaRepository<ActiveDisplayCategory, UUID> {
+public interface PublishedDisplayCategoryRepository extends JpaRepository<PublishedDisplayCategory, UUID> {
 
     @Override
-    <S extends ActiveDisplayCategory> S save(S entity);
+    <S extends PublishedDisplayCategory> S save(S entity);
 
     @Override
-    ActiveDisplayCategory findOne(UUID uuid);
+    PublishedDisplayCategory findOne(UUID uuid);
 
     @Override
     boolean exists(UUID uuid);
@@ -34,10 +34,10 @@ public interface ActiveDisplayCategoryRepository extends JpaRepository<ActiveDis
     void delete(UUID uuid);
 
     @Override
-    void delete(ActiveDisplayCategory entity);
+    void delete(PublishedDisplayCategory entity);
 
     @Override
-    void delete(Iterable<? extends ActiveDisplayCategory> entities);
+    void delete(Iterable<? extends PublishedDisplayCategory> entities);
 
 
 }

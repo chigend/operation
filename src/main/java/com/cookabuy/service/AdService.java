@@ -1,10 +1,10 @@
 package com.cookabuy.service;
 
 import com.cookabuy.constant.PublishType;
-import com.cookabuy.entity.service.po.ActiveAd;
+import com.cookabuy.entity.service.po.PublishedAd;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.entity.service.po.PublishLog;
-import com.cookabuy.repository.service.ActiveAdRepository;
+import com.cookabuy.repository.service.PublishedAdRepository;
 import com.cookabuy.repository.service.AdRepository;
 import com.cookabuy.repository.service.PublishLogRepository;
 import com.cookabuy.util.Result;
@@ -26,7 +26,7 @@ public class AdService {
     @Autowired
     private AdRepository adRepository;
     @Autowired
-    private ActiveAdRepository activeAdRepository;
+    private PublishedAdRepository activeAdRepository;
     @Autowired
     private PublishLogRepository publishLogRepository;
 
@@ -37,7 +37,7 @@ public class AdService {
         //重新添加所有启用的广告
         adRepository.findByPageNameOrderByPositionAsc(INDEX).stream().filter(ad -> !ad.isHidden())
                 .forEach(ad -> {
-                    ActiveAd aa = new ActiveAd(ad.getActivityUrl(), ad.getPageName(), ad.getPicUrl(), ad.getPosition(), ad.getTip());
+                    PublishedAd aa = new PublishedAd(ad.getActivityUrl(), ad.getPageName(), ad.getPicUrl(), ad.getPosition(), ad.getTip());
                     activeAdRepository.save(aa);
                 });
         //todo operator

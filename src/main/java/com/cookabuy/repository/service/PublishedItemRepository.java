@@ -1,6 +1,6 @@
 package com.cookabuy.repository.service;
 
-import com.cookabuy.entity.service.po.ActiveItem;
+import com.cookabuy.entity.service.po.PublishedItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -15,12 +15,12 @@ import java.util.UUID;
 
 
 @Transactional
-public interface ActiveItemRepository extends JpaRepository<ActiveItem,UUID> {
+public interface PublishedItemRepository extends JpaRepository<PublishedItem,UUID> {
     @Override
-    <S extends ActiveItem> S save(S entity);
+    <S extends PublishedItem> S save(S entity);
 
     @Override
-    ActiveItem findOne(UUID uuid);
+    PublishedItem findOne(UUID uuid);
 
     @Override
     boolean exists(UUID uuid);
@@ -32,15 +32,15 @@ public interface ActiveItemRepository extends JpaRepository<ActiveItem,UUID> {
     void delete(UUID uuid);
 
     @Override
-    void delete(ActiveItem entity);
+    void delete(PublishedItem entity);
 
     @Override
-    void delete(Iterable<? extends ActiveItem> entities);
+    void delete(Iterable<? extends PublishedItem> entities);
 
     @Override
     void deleteAll();
 
     @Modifying
-    @Query("delete from ActiveItem item where item.pageName=?1 and item.location=?2")
+    @Query("delete from PublishedItem item where item.pageName=?1 and item.location=?2")
     void deleteByPageNameAndLocation(String pageName, String location);
 }

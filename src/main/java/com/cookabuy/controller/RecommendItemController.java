@@ -45,7 +45,7 @@ public class RecommendItemController {
     private StoreRepository storeRepository;
 
     @Autowired
-    private ActiveItemRepository activeItemRepository;
+    private PublishedItemRepository activeItemRepository;
 
     @Autowired
     private PublishLogRepository publishLogRepository;
@@ -153,10 +153,10 @@ public class RecommendItemController {
         recommendItemRepository.save(itemsToBeSaved);
 
         activeItemRepository.deleteByPageNameAndLocation(form.getPage(), form.getLocation());
-        List<ActiveItem> itemsToBePublished = new ArrayList<>();
+        List<PublishedItem> itemsToBePublished = new ArrayList<>();
         recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(form.getPage(),form.getLocation())
                 .stream().limit(10).forEach(item -> {
-                    ActiveItem activeItem = new ActiveItem(item.getItemId(), item.getLocation(), item.getPageName()
+                    PublishedItem activeItem = new PublishedItem(item.getItemId(), item.getLocation(), item.getPageName()
                     , item.getPicUrl(), item.getWeight());
                     itemsToBePublished.add(activeItem);
         });

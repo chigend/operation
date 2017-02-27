@@ -12,9 +12,9 @@
         <mapping class="com.cookabuy.entity.operation.po.UserOp"/>
         <mapping class="com.cookabuy.entity.service.po.RecommendStore"/>
         <mapping class="com.cookabuy.entity.service.po.RecommendCategory"/>
-        <mapping class="com.cookabuy.entity.service.po.ActiveAd"/>
-        <mapping class="com.cookabuy.entity.service.po.ActiveItem"/>
-        <mapping class="com.cookabuy.entity.service.po.ActiveStore"/>
+        <mapping class="com.cookabuy.entity.service.po.PublishedAd"/>
+        <mapping class="com.cookabuy.entity.service.po.PublishedItem"/>
+        <mapping class="com.cookabuy.entity.service.po.PublishedStore"/>
         <mapping class="com.cookabuy.entity.service.po.PublishLog"/>
         <mapping class="com.cookabuy.entity.service.po.DisplayCategory"/>
         <mapping class="com.cookabuy.entity.service.po.RecommendStore"/>

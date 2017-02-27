@@ -1,16 +1,16 @@
 package com.cookabuy.repository.service;
 
-import com.cookabuy.entity.service.po.ActiveAd;
+import com.cookabuy.entity.service.po.PublishedAd;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.UUID;
 
-public interface ActiveAdRepository extends JpaRepository<ActiveAd,UUID> {
+public interface PublishedAdRepository extends JpaRepository<PublishedAd,UUID> {
     @Override
-    <S extends ActiveAd> S save(S entity);
+    <S extends PublishedAd> S save(S entity);
 
     @Override
-    ActiveAd findOne(UUID uuid);
+    PublishedAd findOne(UUID uuid);
 
     @Override
     boolean exists(UUID uuid);
@@ -22,10 +22,10 @@ public interface ActiveAdRepository extends JpaRepository<ActiveAd,UUID> {
     void delete(UUID uuid);
 
     @Override
-    void delete(ActiveAd entity);
+    void delete(PublishedAd entity);
 
     @Override
-    void delete(Iterable<? extends ActiveAd> entities);
+    void delete(Iterable<? extends PublishedAd> entities);
 
     @Override
     void deleteAll();

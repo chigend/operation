@@ -6,19 +6,19 @@ package com.cookabuy.repository.service;
  */
 
 
-import com.cookabuy.entity.service.po.ActiveCategoryLink;
+import com.cookabuy.entity.service.po.PublishedCategoryLink;
 import com.cookabuy.entity.service.po.CategoryLinkPK;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
  * 2017/2/22
  */
-public interface ActiveCategoryLinkRepository  extends JpaRepository<ActiveCategoryLink,CategoryLinkPK> {
+public interface PublishedCategoryLinkRepository extends JpaRepository<PublishedCategoryLink,CategoryLinkPK> {
     @Override
-    <S extends ActiveCategoryLink> S save(S entity);
+    <S extends PublishedCategoryLink> S save(S entity);
 
     @Override
-    ActiveCategoryLink findOne(CategoryLinkPK id);
+    PublishedCategoryLink findOne(CategoryLinkPK id);
 
     @Override
     boolean exists(CategoryLinkPK id);
@@ -30,10 +30,10 @@ public interface ActiveCategoryLinkRepository  extends JpaRepository<ActiveCateg
     void delete(CategoryLinkPK id);
 
     @Override
-    void delete(ActiveCategoryLink entity);
+    void delete(PublishedCategoryLink entity);
 
     @Override
-    void delete(Iterable<? extends ActiveCategoryLink> entities);
+    void delete(Iterable<? extends PublishedCategoryLink> entities);
 
     @Override
     void deleteAll();

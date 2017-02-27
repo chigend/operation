@@ -42,10 +42,10 @@ public class CategoryController {
     private CategoryLinkRepository categoryLinkRepository;
 
     @Autowired
-    private ActiveDisplayCategoryRepository activeDisplayCategoryRepository;
+    private PublishedDisplayCategoryRepository activeDisplayCategoryRepository;
 
     @Autowired
-    private ActiveCategoryLinkRepository activeCategoryLinkRepository;
+    private PublishedCategoryLinkRepository activeCategoryLinkRepository;
 
     @RequestMapping("list_display")
     public Result listCategories(Result result) {
@@ -117,28 +117,19 @@ public class CategoryController {
     }
 
     @RequestMapping("publish_category")
-    public Result publishCategories(@RequestBody List<PublishCategoryDTO> dtos) {
-        //先保存当前的状态
-        dtos.stream().forEach(dto -> {
-            DisplayCategory category = displayCategoryRepository.findOne(dto.getId());
-            if (category != null) {
-                category.setWeight(dto.getWeight());
-                category.setDisplay(dto.isDisplay());
-                displayCategoryRepository.save(category);
-            }
-        });
+    public Result publishCategories() {
 
         //先删除已发布的内容
         displayCategoryRepository.deleteAll();
         //再发布新的内容
         displayCategoryRepository.findAll().stream().filter(DisplayCategory::isDisplay).forEach(category -> {
-            ActiveDisplayCategory activeCategory = mapper.map(category, ActiveDisplayCategory.class);
+            PublishedDisplayCategory activeCategory = mapper.map(category, PublishedDisplayCategory.class);
             activeDisplayCategoryRepository.save(activeCategory);
         });
 
         categoryLinkRepository.deleteAll();
         categoryLinkRepository.findAll().stream().forEach(link -> {
-            ActiveCategoryLink activeLink = mapper.map(link, ActiveCategoryLink.class);
+            PublishedCategoryLink activeLink = mapper.map(link, PublishedCategoryLink.class);
             activeCategoryLinkRepository.save(activeLink);
         });
         return new Result();

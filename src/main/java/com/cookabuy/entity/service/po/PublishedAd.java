@@ -13,8 +13,8 @@ import java.util.UUID;
  */
 
 @Entity
-@Table(name = "active_ad", schema = "public", catalog = "cookabuy_pc_int2")
-public class ActiveAd {
+@Table(name = "published_ad", schema = "public", catalog = "cookabuy_pc_int2")
+public class PublishedAd {
     private UUID id;
 
     private String activityUrl;
@@ -31,10 +31,10 @@ public class ActiveAd {
 
     private Date modifyTime;
 
-    public ActiveAd() {
+    public PublishedAd() {
     }
 
-    public ActiveAd( String activityUrl, String pageName, String picUrl, Integer position, String tip) {
+    public PublishedAd(String activityUrl, String pageName, String picUrl, Integer position, String tip) {
         this.activityUrl = activityUrl;
         this.pageName = pageName;
         this.picUrl = picUrl;

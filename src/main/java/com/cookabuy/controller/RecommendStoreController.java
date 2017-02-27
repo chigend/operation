@@ -4,11 +4,11 @@ import com.cookabuy.constant.PublishType;
 import com.cookabuy.entity.service.dto.MoveRecommendStoreForm;
 import com.cookabuy.entity.service.dto.RecommendStoreDTO;
 import com.cookabuy.entity.service.dto.UpdateRecommendStoreForm;
-import com.cookabuy.entity.service.po.ActiveStore;
+import com.cookabuy.entity.service.po.PublishedStore;
 import com.cookabuy.entity.service.po.PublishLog;
 import com.cookabuy.entity.service.po.RecommendStore;
 import com.cookabuy.entity.service.po.Store;
-import com.cookabuy.repository.service.ActiveStoreRepository;
+import com.cookabuy.repository.service.PublishedStoreRepository;
 import com.cookabuy.repository.service.PublishLogRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
 import com.cookabuy.repository.service.StoreRepository;
@@ -55,7 +55,7 @@ public class RecommendStoreController {
     @Autowired
     private GetService getService;
     @Autowired
-    private ActiveStoreRepository activeStoreRepository;
+    private PublishedStoreRepository activeStoreRepository;
     @Autowired
     private PublishLogRepository publishLogRepository;
     @Autowired
@@ -186,7 +186,7 @@ public class RecommendStoreController {
         activeStoreRepository.deleteAll();
         recommendStoreRepository.findByPage(INDEX).stream()
                 .forEach(store -> {
-                    ActiveStore as = new ActiveStore(store.getStoreId(), store.getPosition(), store.getPicUrl(), store.getPage());
+                    PublishedStore as = new PublishedStore(store.getStoreId(), store.getPosition(), store.getPicUrl(), store.getPage());
 
                     activeStoreRepository.save(as);
                 });

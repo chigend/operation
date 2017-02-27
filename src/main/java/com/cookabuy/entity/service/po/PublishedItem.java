@@ -12,8 +12,8 @@ import java.util.UUID;
  * @create 2017-02-21-下午5:53
  */
 @Entity
-@Table(name = "active_recommend_item", schema = "public", catalog = "cookabuy_pc_int2")
-public class ActiveItem {
+@Table(name = "published_recommend_item", schema = "public", catalog = "cookabuy_pc_int2")
+public class PublishedItem {
     private UUID id;
     private UUID itemId;
     private String location;
@@ -23,10 +23,10 @@ public class ActiveItem {
     private Date createTime;
     private Date modifyTime;
 
-    public ActiveItem() {
+    public PublishedItem() {
     }
 
-    public ActiveItem(UUID itemId, String location, String pageName, String picUrl, Integer weight) {
+    public PublishedItem(UUID itemId, String location, String pageName, String picUrl, Integer weight) {
         this.itemId = itemId;
         this.location = location;
         this.pageName = pageName;

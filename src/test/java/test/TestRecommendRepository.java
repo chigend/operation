@@ -2,10 +2,10 @@ package test;
 
 //import com.cookabuy.repository.service.RecommendRepository;
 import com.alibaba.fastjson.JSON;
-import com.cookabuy.entity.service.po.ActiveItem;
+import com.cookabuy.entity.service.po.PublishedItem;
 import com.cookabuy.entity.service.po.Item;
 import com.cookabuy.entity.service.po.RecommendItem;
-import com.cookabuy.repository.service.ActiveItemRepository;
+import com.cookabuy.repository.service.PublishedItemRepository;
 import com.cookabuy.repository.service.ItemRepository;
 import com.cookabuy.repository.service.RecommendItemRepository;
 import org.junit.Test;
@@ -25,7 +25,7 @@ public class TestRecommendRepository extends AbstractJpaTest {
     @Autowired
     private ItemRepository itemRepository;
     @Autowired
-    private ActiveItemRepository activeItemRepository;
+    private PublishedItemRepository activeItemRepository;
 
 //    @Autowired
 //    private Item
@@ -101,7 +101,7 @@ public class TestRecommendRepository extends AbstractJpaTest {
     public void testAddActiveItem() {
         itemRepository.findByTitleLike("%爆款%").stream().filter(item -> !item.getTitle().contains("情侣")).limit(8).map(Item::getId).forEach(id -> {
             System.out.println(id);
-            ActiveItem recommend = new ActiveItem();
+            PublishedItem recommend = new PublishedItem();
             recommend.setItemId(id);
             recommend.setLocation("left");
             recommend.setPageName("index");
