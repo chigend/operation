@@ -57,6 +57,6 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
 
     List<RecommendItem> findByPageNameAndLocationOrderByWeightDesc(String pageName, String location);
 
-    @Query("select case  when count(*) > 0 then true else false end from RecommendItem r where r.modifyTime > (select coalesce(max(p.publishTime),'1970-01-01 00:00:00') from PublishLog p where p.type =?1)")
+    @Query("select case  when count(*) > 0 then true else false end from RecommendItem r where r.location = ?1 and  r.modifyTime > (select coalesce(max(p.publishTime),'1970-01-01 00:00:00') from PublishLog p where p.type =?2)")
     boolean publishActivate(String location);
 }
