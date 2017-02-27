@@ -72,5 +72,11 @@ public class FileController {
         return result;
     }
 
+    @RequestMapping("/delete_item_img")
+    public Result deleteItemImg(@RequestParam UUID itemId) {
+        updateService.updateItemUrl(itemId, null);
+        return new Result();
+    }
+
 
 }

@@ -50,6 +50,7 @@ public class SearchService {
         requestBuilder.setFrom(query.getFrom()).setSize(query.getSize());
         if(StringUtils.isEmpty(query.getTitle()) && StringUtils.isEmpty(query.getStore()) &&
                 StringUtils.isEmpty(query.getLocation())) {
+            log.info("the search condition is empty");
             requestBuilder.addSort("price", SortOrder.ASC);
         }
 //        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));
