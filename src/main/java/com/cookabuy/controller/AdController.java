@@ -92,7 +92,7 @@ public class AdController {
         ad.setHidden(true);
         ad.setPosition(maxPosition+1);
         adRepository.save(ad);
-        return new Result("picUrl", picUrl);
+        return new Result("ad", ad);
     }
 
 

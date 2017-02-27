@@ -128,7 +128,7 @@ public class RecommendItemController {
 
         List<RecommendCategory> categories = recommendCategoryRepository.findByPageNameOrderByOrder(pageName);
         boolean activate = recommendItemRepository.publishActivate(location);
-        result.addData("picUrl", CollectionUtils.isEmpty(ads) ? null : ads.get(0).getPicUrl());
+        result.addData("ad", CollectionUtils.isEmpty(ads) ? null : ads.get(0));
         result.addData("stores", dtos);
         result.addData("categories", categories);
         result.addData("activate", activate);
