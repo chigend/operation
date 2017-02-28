@@ -14,7 +14,6 @@ import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.util.CollectionUtils;
-import org.apache.shiro.util.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -82,10 +81,7 @@ public class MarketController {
         Integer maxPosition = adRepository.findMaxPositionByPageName(pageName);
         Ad ad = dozerBeanMapper.map(form,Ad.class);
         ad.setPicUrl(picUrl);
-        ad.setPageName(form.getPageName());
-        if (StringUtils.hasLength(form.getLocation())) {
-            ad.setLocation(form.getLocation());
-        }
+      ad.setPageName(MARKET);
         ad.setCreateTime(new Date());
         ad.setModifyTime(new Date());
         ad.setHidden(true);

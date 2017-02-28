@@ -31,7 +31,6 @@ import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_AD_PATH;
 import static com.cookabuy.constant.ErrorConstant.NOT_ASSIGN_ADS;
 import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
 import static com.cookabuy.constant.PageContant.INDEX;
-import static com.cookabuy.constant.PageContant.MARKET;
 import static com.cookabuy.constant.PublishType.INDEX_AD;
 
 /**
@@ -83,7 +82,7 @@ public class AdController {
         Integer maxPosition = adRepository.findMaxPositionByPageName(pageName);
         Ad ad = dozerBeanMapper.map(form,Ad.class);
         ad.setPicUrl(picUrl);
-        ad.setPageName(MARKET);
+        ad.setPageName(INDEX);
 
         ad.setCreateTime(new Date());
         ad.setModifyTime(new Date());
