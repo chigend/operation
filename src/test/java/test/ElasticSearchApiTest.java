@@ -30,7 +30,7 @@ public class ElasticSearchApiTest {
     @Before
     public void init() throws Exception{
         client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("192.168.11.6"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
     }
 
     @Test
@@ -43,7 +43,7 @@ public class ElasticSearchApiTest {
     @Test
     public void testUpdateStore () {
         UpdateRequest updateRequest = new UpdateRequest(STORE_INDEX_NAME,
-                TYPE_NAME_STORE, String.valueOf(3686));
+                TYPE_NAME_STORE, "7ad50c09-ab68-43fc-8d1b-6969c5abdd20");
         String url = "http://test-1252811756.cosgz.myqcloud.com/store/8f9f8f15-83e2-4d3e-85e4-9b324c1bfda3.jpg";
         try {
 
@@ -53,7 +53,7 @@ public class ElasticSearchApiTest {
                     .endObject());
             client.update(updateRequest).get();
         }catch (Exception e){
-            System.out.println("更新失败");
+            System.out.print(e);
         }
     }
     @Test
@@ -66,8 +66,8 @@ public class ElasticSearchApiTest {
     @Test
     public void testUpdateItemUrl() {
         UpdateRequest updateRequest = new UpdateRequest(ITEM_INDEX_NAME,
-                TYPE_NAME_ITEM, String.valueOf(535482154236L));
-        String url = null;
+                TYPE_NAME_ITEM, "6be1a96a-c313-43fd-b8a7-5e558fe2c094");
+        String url = "http://test-1252811756.cosgz.myqcloud.com/item/74941b2e-bb58-4cc3-ab6e-1d1462bf28d5.jpg";
         try {
 
             updateRequest.doc(jsonBuilder()
@@ -76,7 +76,7 @@ public class ElasticSearchApiTest {
                     .endObject());
             client.update(updateRequest).get();
         }catch (Exception e){
-            System.out.println("更新失败");
+            System.out.println(e);
         }
     }
 

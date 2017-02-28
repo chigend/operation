@@ -1,5 +1,6 @@
 package com.cookabuy.controller;
 
+import com.cookabuy.entity.service.dto.DisPlayAd;
 import com.cookabuy.entity.service.dto.PublishRecommendItemForm;
 import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
@@ -10,6 +11,7 @@ import com.cookabuy.spring.aop.annotation.RequiresPermission;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
@@ -49,6 +51,9 @@ public class RecommendItemController {
 
     @Autowired
     private PublishLogRepository publishLogRepository;
+
+    @Autowired
+    private DozerBeanMapper mapper;
 
     /**
      * @RequiresPermission   注意此注解并非shiro的@RequiresPermissions,由于爆款专区，热销类目，商品管理模块的推荐
@@ -123,15 +128,21 @@ public class RecommendItemController {
                 }
             }
         });
-
-        List<Ad> ads = adRepository.findByPageNameAndLocation(pageName, location);
-
-        List<RecommendCategory> categories = recommendCategoryRepository.findByPageNameOrderByOrder(pageName);
-        boolean activate = recommendItemRepository.publishActivate(location);
-        result.addData("ad", CollectionUtils.isEmpty(ads) ? null : ads.get(0));
+        //商品数据
         result.addData("stores", dtos);
+
+        //爆款专区男装和女装区域的广告图
+        List<Ad> ads = adRepository.findByPageNameAndLocation(pageName, location);
+        result.addData("ad", CollectionUtils.isEmpty(ads) ? null : mapper.map(ads.get(0), DisPlayAd.class));
+
+        //下拉框可选类目
+        List<RecommendCategory> categories = recommendCategoryRepository.findByPageNameOrderByOrder(pageName);
         result.addData("categories", categories);
+
+        //发布按钮是否激活
+        boolean activate = recommendItemRepository.publishActivate(location);
         result.addData("activate", activate);
+
         return result;
     }
 
