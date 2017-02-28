@@ -1,12 +1,11 @@
 package com.cookabuy.service;
 
-import com.cookabuy.constant.PublishType;
-import com.cookabuy.entity.service.po.PublishedAd;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.entity.service.po.PublishLog;
-import com.cookabuy.repository.service.PublishedAdRepository;
+import com.cookabuy.entity.service.po.PublishedAd;
 import com.cookabuy.repository.service.AdRepository;
 import com.cookabuy.repository.service.PublishLogRepository;
+import com.cookabuy.repository.service.PublishedAdRepository;
 import com.cookabuy.util.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,7 +31,7 @@ public class AdService {
     private PublishLogRepository publishLogRepository;
 
     @Transactional(value = "serviceTransactionManager", rollbackFor = Exception.class)
-    public int publishAds() {
+    public int publishAds(String publishType) {
         //清空所有已发布的广告
         publishedAdRepository.deleteAll();
         //重新添加所有启用的广告
@@ -43,7 +42,7 @@ public class AdService {
         }).count();
         //todo operator
         if (numPublished > 0) {
-            publishLogRepository.save(new PublishLog(PublishType.AD, new Date()));
+            publishLogRepository.save(new PublishLog(publishType, new Date()));
         }
         return (int)numPublished;
 

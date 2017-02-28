@@ -2,7 +2,6 @@ package com.cookabuy.controller;
 
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
-import com.cookabuy.entity.service.dto.SaveAdForm;
 import com.cookabuy.entity.service.dto.UpdateAdForm;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
@@ -31,17 +30,17 @@ import static com.cookabuy.constant.CosConstant.BUCKET;
 import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_AD_PATH;
 import static com.cookabuy.constant.ErrorConstant.NOT_ASSIGN_ADS;
 import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
-import static com.cookabuy.constant.PageContant.INDEX;
-import static com.cookabuy.constant.PublishType.INDEX_AD;
+import static com.cookabuy.constant.PageContant.MARKET;
+import static com.cookabuy.constant.PublishType.MARKET_AD;
 
 /**
  * @author yejinbiao
  * @create 2016-12-23-11:30
  */
 @RestController
-@RequestMapping("operate")
+@RequestMapping("market")
 @Slf4j
-public class AdController {
+public class MarketController {
     @Autowired
     private AdService adService;
     @Autowired
@@ -60,11 +59,11 @@ public class AdController {
 
     @RequestMapping("ads")
     @MenuItem
-    public Result findIndexAds(Result result){
-        List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(INDEX);
+    public Result findMarketAds(Result result){
+        List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(MARKET);
 
         List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads,DisPlayAd.class);
-        boolean activate = adRepository.publishActivate(INDEX_AD);
+        boolean activate = adRepository.publishActivate(MARKET_AD);
         result.addData("ads",disPlayAds);
         result.addData("activate", activate);
         return  result;
@@ -107,16 +106,16 @@ public class AdController {
         return new Result();
     }
     //根据adId 来更新每一个广告的position
-    @RequestMapping("save_ad")
-    @RequiresPermissions("ad:move")
-    public Result save(@RequestBody List<SaveAdForm> list){
-        if(CollectionUtils.isEmpty(list)){
-            return new Result(NOT_ASSIGN_ADS);
-        }
-        list.stream().filter(ad-> ad.getAdId()!=null && ad.getPosition()!=null).forEach(ad->
-            adRepository.updatePositionById(ad.getAdId(),ad.getPosition()));
-        return new Result();
-    }
+//    @RequestMapping("save_ad")
+//    @RequiresPermissions("ad:move")
+//    public Result save(@RequestBody List<SaveAdForm> list){
+//        if(CollectionUtils.isEmpty(list)){
+//            return new Result(NOT_ASSIGN_ADS);
+//        }
+//        list.stream().filter(ad-> ad.getAdId()!=null && ad.getPosition()!=null).forEach(ad->
+//                adRepository.updatePositionById(ad.getAdId(),ad.getPosition()));
+//        return new Result();
+//    }
 
     /**
      *
@@ -140,11 +139,11 @@ public class AdController {
         if(form.getImage() != null){
 //          如果广告图片修改过，那么把之前把存储在cos的图片进行删除
 //            fileHelper.deleteFile(CosConstant.BUCKET,ad.getPicUrl());
-           String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH,form.getImage());
-           if (picUrl != null){
-               fileHelper.deleteFile(BUCKET, ad.getPicUrl());
-               ad.setPicUrl(picUrl);
-           }
+            String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH,form.getImage());
+            if (picUrl != null){
+                fileHelper.deleteFile(BUCKET, ad.getPicUrl());
+                ad.setPicUrl(picUrl);
+            }
         }
         String activityUrl = form.getActivityUrl();
         if(activityUrl != null){
@@ -208,7 +207,7 @@ public class AdController {
 
     @RequestMapping("publish_ads")
     public Result publishAds() {
-        int numPublished = adService.publishAds(INDEX_AD);
+        int numPublished = adService.publishAds(MARKET_AD);
         return numPublished > 0 ? new Result() : new Result("发布失败，未启用任何广告项");
     }
 }

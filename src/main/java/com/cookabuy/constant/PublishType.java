@@ -6,7 +6,8 @@ package com.cookabuy.constant;
  */
 
 public class PublishType {
-    public final static String AD = "轮播图";
+    public final static String INDEX_AD = "轮播图";
+    public final static String MARKET_AD = "逛市场";
     public final static String STORE = "推荐店铺";
 //    public final static
 }
