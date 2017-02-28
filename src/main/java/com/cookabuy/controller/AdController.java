@@ -15,7 +15,6 @@ import com.cookabuy.util.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.util.CollectionUtils;
-import org.apache.shiro.util.StringUtils;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -32,6 +31,7 @@ import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_AD_PATH;
 import static com.cookabuy.constant.ErrorConstant.NOT_ASSIGN_ADS;
 import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
 import static com.cookabuy.constant.PageContant.INDEX;
+import static com.cookabuy.constant.PageContant.MARKET;
 import static com.cookabuy.constant.PublishType.INDEX_AD;
 
 /**
@@ -83,10 +83,8 @@ public class AdController {
         Integer maxPosition = adRepository.findMaxPositionByPageName(pageName);
         Ad ad = dozerBeanMapper.map(form,Ad.class);
         ad.setPicUrl(picUrl);
-        ad.setPageName(form.getPageName());
-        if (StringUtils.hasLength(form.getLocation())) {
-            ad.setLocation(form.getLocation());
-        }
+        ad.setPageName(MARKET);
+
         ad.setCreateTime(new Date());
         ad.setModifyTime(new Date());
         ad.setHidden(true);
