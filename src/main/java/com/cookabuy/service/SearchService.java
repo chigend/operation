@@ -54,7 +54,6 @@ public class SearchService {
             requestBuilder.addSort("price", SortOrder.ASC);
         }
 //        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));
-        System.out.println(requestBuilder.toString());
         return requestBuilder.get();
     }
 
