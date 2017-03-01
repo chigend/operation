@@ -1,16 +1,15 @@
 package com.cookabuy.controller;
 
-import com.cookabuy.entity.service.dto.DisPlayAd;
-import com.cookabuy.entity.service.dto.PublishRecommendItemForm;
-import com.cookabuy.entity.service.dto.RecommendItemDTO;
-import com.cookabuy.entity.service.dto.RecommendItemEntity;
+import com.cookabuy.entity.service.dto.*;
 import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
 import com.cookabuy.service.UpdateService;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.spring.aop.annotation.RequiresPermission;
+import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.*;
 
+import static com.cookabuy.constant.CosConstant.BUCKET;
+import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_AD_PATH;
+import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
+
 /**
  * @author yejinbiao
  * @create 2016-12-29-11:44
  */
+@Slf4j
 @RestController
 @RequestMapping("/operate")
 public class RecommendItemController {
@@ -55,6 +59,9 @@ public class RecommendItemController {
 
     @Autowired
     private DozerBeanMapper mapper;
+
+    @Autowired
+    private FileHelper fileHelper;
 
     @Autowired
     private UpdateService updateService;
@@ -181,4 +188,27 @@ public class RecommendItemController {
         publishLogRepository.save(new PublishLog(form.getLocation(), new Date()));
         return new Result();
     }
+
+    //
+    @RequestMapping("upload_ad")
+    public Result uploadAd(AddAdForm form , Result result){
+        String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
+        if(picUrl == null){
+            result.setError(UPLOAD_IMAGE_FAIL);
+            return result;
+        }
+        log.info("upload file successfully,source_url is {}",picUrl);
+        String pageName = form.getPageName();
+        Ad ad = mapper.map(form,Ad.class);
+        ad.setPicUrl(picUrl);
+        ad.setPageName(pageName);
+        ad.setLocation(form.getLocation());
+        ad.setCreateTime(new Date());
+        ad.setModifyTime(new Date());
+        ad.setHidden(true);
+        adRepository.save(ad);
+        return new Result("ad", mapper.map(ad, DisPlayAd.class);
+    }
+
+
 }
