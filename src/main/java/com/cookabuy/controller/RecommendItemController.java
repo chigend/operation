@@ -106,7 +106,7 @@ public class RecommendItemController {
                 store.ifPresent(value -> {
                     dto.setShopName(value.getStoreName());
                     dto.setMarket(value.getMarket());
-                    dto.setStall(value.getLocation());
+                    dto.setStall(resolveStoreLocation(value.getLocation()));
                 });
                 if (StringUtils.isEmpty(dto.getPicUrl())) {
                     dto.setPicUrl(item.getPicUrl());
@@ -132,7 +132,7 @@ public class RecommendItemController {
                 store.ifPresent(value -> {
                     dto.setShopName(value.getStoreName());
                     dto.setMarket(value.getMarket());
-                    dto.setStall(value.getLocation());
+                    dto.setStall(resolveStoreLocation(value.getLocation()));
                 });
                 if (StringUtils.isEmpty(dto.getPicUrl())) {
                     dto.setPicUrl(item.getPicUrl());
@@ -207,8 +207,21 @@ public class RecommendItemController {
         ad.setModifyTime(new Date());
         ad.setHidden(true);
         adRepository.save(ad);
-        return new Result("ad", mapper.map(ad, DisPlayAd.class);
+        return new Result("ad", mapper.map(ad, DisPlayAd.class));
     }
 
+
+    /**
+     * 处理档口号，由于数据库中存储的档口号前拼接了市场名称，所以需要截取
+     * @param location  截取前的档口号  如：新百佳 - 大门口A - A11022
+     * @return  截取后的档口号 如：大门口A - A11022
+     */
+    private String resolveStoreLocation(String location) {
+        if (location == null) {
+            return location;
+        }
+        int index = location.indexOf("-");
+        return location.substring(index + 1);
+    }
 
 }

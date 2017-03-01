@@ -156,26 +156,13 @@ public class MainTest {
 
    }
 
-  public static void main(String [] args) {
-
-  }
-
-   public boolean canMeasureWater(int x, int y, int z) {
-      if (x == 0 || y == 0) {
-         if (z == x + y) {
-            return true;
-         }else {
-            return false;
-         }
-      }
-
-      if (z > Math.max(x,y)) {
-         return false;
-      }
-      if (z % (Math.abs(x-y)) != 0) {
-         return false;
-      }
-      return true;
+   @Test
+   public void testSubstring () {
+      String location = "新百佳 - 大门口A - A11022";
+      int index  = location.indexOf('-');
+      location = location.substring(index + 1);
+      System.out.println(location);
    }
+
 
 }
