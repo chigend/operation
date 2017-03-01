@@ -58,7 +58,8 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
             " and r.deleted=false ")
     RecommendItem findByPageNameAndLocationAndItemId(String pageName, String location, UUID itemId);
 
-    @Query(value = "select r from RecommendItem r where r.pageName=?1 and r.location=?2 and r.deleted=false")
+    @Query(value = "select r from RecommendItem r where r.pageName=?1 and r.location=?2 and r.deleted=false order by " +
+            " r.weight desc")
     List<RecommendItem> findByPageNameAndLocationOrderByWeightDesc(String pageName, String location);
 
     @Query("select case  when count(*) > 0 then true else false end from RecommendItem r where r.location = ?1 and  r.modifyTime > (select coalesce(max(p.publishTime),'1970-01-01 00:00:00') from PublishLog p where p.type =?1)")
