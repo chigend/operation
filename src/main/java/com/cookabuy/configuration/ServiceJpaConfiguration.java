@@ -27,6 +27,7 @@ public class ServiceJpaConfiguration {
 
         LocalContainerEntityManagerFactoryBean factory = new LocalContainerEntityManagerFactoryBean();
         // 设置数据源
+        System.out.println(dataSource);
         factory.setDataSource(dataSource);
         // 指定Jpa持久化实现厂商类,这里以Hibernate为例
         factory.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
