@@ -84,6 +84,7 @@ public class RecommendItemController {
             recommend.setPageName(data.getPageName());
             recommend.setCreateTime(new Date());
             recommend.setModifyTime(new Date());
+            recommend.setDeleted(false);
             recommendItemRepository.save(recommend);
 
         }
