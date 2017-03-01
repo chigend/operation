@@ -32,8 +32,8 @@ public class AdService {
 
     @Transactional(value = "serviceTransactionManager", rollbackFor = Exception.class)
     public int publishAds(String publishType) {
-        //清空所有已发布的广告
-        publishedAdRepository.deleteAll();
+        //清空所有已发布的广告//todo
+        publishedAdRepository.deleteByPageName(INDEX);
         //重新添加所有启用的广告
         List<Ad>adsToBePublished = adRepository.findByPageNameOrderByPositionAsc(INDEX);
         long numPublished = adsToBePublished.stream().filter(ad -> !ad.isHidden()).peek(ad -> {

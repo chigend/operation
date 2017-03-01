@@ -31,6 +31,8 @@ public class PublishedAd {
 
     private Date modifyTime;
 
+    private String location;
+
     public PublishedAd() {
     }
 
@@ -118,6 +120,16 @@ public class PublishedAd {
     @Column(name = "modify_time")
     public Date getModifyTime() {
         return modifyTime;
+    }
+
+    @Basic
+    @Column(name = "location")
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 
     public void setModifyTime(Date modifyTime) {

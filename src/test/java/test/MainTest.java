@@ -164,5 +164,15 @@ public class MainTest {
       System.out.println(location);
    }
 
+   @Test
+   public void testPage() {
+      int total = 10;
+      int size = 5;
+      int index = 9;
+      int left = index - size/2;
+      int right = index + size/2;
+      int start = left < 0 ? 1: (right > 100 ? total-size-1: left);
+      System.out.println(start);
+   }
 
 }

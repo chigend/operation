@@ -7,6 +7,7 @@ import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.search.SearchResponse;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.search.sort.SortOrder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class SearchService {
             log.info("the search condition is empty");
             requestBuilder.addSort("price", SortOrder.ASC);
         }
-//        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));
+        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));
         return requestBuilder.get();
     }
 

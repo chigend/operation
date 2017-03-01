@@ -6,8 +6,8 @@ package com.cookabuy.repository.service;
  */
 
 
-import com.cookabuy.entity.service.po.PublishedCategoryLink;
 import com.cookabuy.entity.service.po.CategoryLinkPK;
+import com.cookabuy.entity.service.po.PublishedCategoryLink;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

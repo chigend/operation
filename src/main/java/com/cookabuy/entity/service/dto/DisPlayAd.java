@@ -22,7 +22,8 @@ public class DisPlayAd {
 
     private String activityUrl;
 
-    @JsonFormat(pattern = "yyyy-MM-dd hh:mm:ss",timezone = "GMT+8")
+    //todo 修改时间
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss",timezone = "GMT+16")
     private Date createTime;
 
     private String pageName;
