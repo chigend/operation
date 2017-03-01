@@ -37,5 +37,5 @@ public class RecommendItemDTO {
 
 
     @JsonFormat(pattern = "yyyy-MM-dd ",timezone = "GMT+8")
-    private Date insertedAt;
+    private Date createTime;
 }
