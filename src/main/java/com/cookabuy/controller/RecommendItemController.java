@@ -72,7 +72,6 @@ public class RecommendItemController {
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
         List<RecommendItem> recommendItems = dozerHelper.mapList(data.getItems(), RecommendItem.class);
-        int maxPosition = recommendItemRepository.findMaxPositionByPageNameAndLocation(data.getPageName(), data.getLocation());
         for (Iterator<RecommendItem> it = recommendItems.iterator(); it.hasNext(); ) {
             RecommendItem recommend = it.next();
             RecommendItem old = recommendItemRepository.findByPageNameAndLocationAndItemId(data.getPageName(), data.getLocation(), recommend.getItemId());

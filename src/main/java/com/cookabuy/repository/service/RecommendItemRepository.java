@@ -54,7 +54,8 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
     @Query("update RecommendItem  r set  r.deleted=true where r.id in ?1")
     void deleteRecommendItemWithIds(List<UUID> ids);
 
-    @Query("select r from RecommendItem r where r.pageName=?1 and r.location=?2 and r.deleted=false ")
+    @Query("select r from RecommendItem r where r.pageName=?1 and r.location=?2 and r.itemId=?3 " +
+            " and r.deleted=false ")
     RecommendItem findByPageNameAndLocationAndItemId(String pageName, String location, UUID itemId);
 
     @Query(value = "select r from RecommendItem r where r.pageName=?1 and r.location=?2 and r.deleted=false")
