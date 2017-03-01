@@ -6,6 +6,7 @@ import com.cookabuy.entity.service.dto.RecommendItemDTO;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
 import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
+import com.cookabuy.service.UpdateService;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.spring.aop.annotation.RequiresPermission;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
@@ -55,6 +56,8 @@ public class RecommendItemController {
     @Autowired
     private DozerBeanMapper mapper;
 
+    @Autowired
+    private UpdateService updateService;
     /**
      * @RequiresPermission   注意此注解并非shiro的@RequiresPermissions,由于爆款专区，热销类目，商品管理模块的推荐
      * 功能一样，只是参数不同，故不能将权限粒度控制在以上3个页面上的每个操作上（即如果使用shiro的注解，以上3个页面三个页面
@@ -81,7 +84,6 @@ public class RecommendItemController {
             recommend.setPageName(data.getPageName());
             recommend.setCreateTime(new Date());
             recommend.setModifyTime(new Date());
-//            recommend.setPosition(++maxPosition);
             recommendItemRepository.save(recommend);
 
         }
@@ -97,6 +99,7 @@ public class RecommendItemController {
                 store.ifPresent(value -> {
                     dto.setShopName(value.getStoreName());
                     dto.setMarket(value.getMarket());
+                    dto.setStall(value.getLocation());
                 });
                 if (StringUtils.isEmpty(dto.getPicUrl())) {
                     dto.setPicUrl(item.getPicUrl());
@@ -122,6 +125,7 @@ public class RecommendItemController {
                 store.ifPresent(value -> {
                     dto.setShopName(value.getStoreName());
                     dto.setMarket(value.getMarket());
+                    dto.setStall(value.getLocation());
                 });
                 if (StringUtils.isEmpty(dto.getPicUrl())) {
                     dto.setPicUrl(item.getPicUrl());
@@ -150,6 +154,7 @@ public class RecommendItemController {
     @RequiresPermissions("recommendItem:delete")
     public Result deleteItems(@RequestBody List<UUID> ids) {
         recommendItemRepository.deleteRecommendItemWithIds(ids);
+
         return new Result();
     }
 

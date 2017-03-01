@@ -39,24 +39,32 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
             "and recommend.location=?3 and recommend.position=?4")
     public void replaceRecommendItem(UUID numiid, String pagename, String location, Integer position);
 
-    @Query(value = "select COALESCE(max(COALESCE(position,0)),0) from recommends where page_name = ?1 and location = ?2",nativeQuery = true)
+    @Query(value = "select COALESCE(max(COALESCE(r.position,0)),0) from RecommendItem  r where r.pageName= ?1 and r.location = ?2")
     int findMaxPositionByPageNameAndLocation(String pageName, String location);
 
     @Query(value = "select case when count (*)>0 then true else false end from RecommendItem r where r.itemId = ?1")
     boolean exists(UUID itemId);
 
+    @Query(value = "select r from RecommendItem r where r.pageName=?1 and r.location=?2")
     List<RecommendItem> findByPageNameAndLocationOrderByPositionAsc(String pageName, String location);
 
 
 
     @Modifying
-    @Query("delete from RecommendItem r where r.id in ?1")
+    @Query("update RecommendItem  r set  r.deleted=true where r.id in ?1")
     void deleteRecommendItemWithIds(List<UUID> ids);
 
     RecommendItem findByPageNameAndLocationAndItemId(String pageName, String location, UUID itemId);
 
+    @Query(value = "select r from RecommendItem r where r.pageName=?1 and r.location=?2 and r.deleted=false")
     List<RecommendItem> findByPageNameAndLocationOrderByWeightDesc(String pageName, String location);
 
     @Query("select case  when count(*) > 0 then true else false end from RecommendItem r where r.location = ?1 and  r.modifyTime > (select coalesce(max(p.publishTime),'1970-01-01 00:00:00') from PublishLog p where p.type =?1)")
     boolean publishActivate(String location);
+
+    @Query(value = "select r from RecommendItem r where r.itemId=?1 and r.deleted = false ")
+    public RecommendItem findByItemId(UUID itemId);
+
+
+
 }

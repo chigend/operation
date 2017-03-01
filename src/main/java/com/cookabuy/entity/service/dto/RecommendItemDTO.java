@@ -31,6 +31,8 @@ public class RecommendItemDTO {
 
     private String market;
 
+    private String stall;
+
     private Integer weight = 0;
 
 

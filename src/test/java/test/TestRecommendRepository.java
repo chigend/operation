@@ -19,7 +19,7 @@ import java.util.UUID;
 /**
  * 2016/12/5
  */
-public class TestRecommendRepository extends AbstractJpaTest {
+public class TestRecommendRepository extends AbstractServiceJpaTest {
     @Autowired
     private RecommendItemRepository recommendRepository;
     @Autowired
@@ -125,4 +125,5 @@ public class TestRecommendRepository extends AbstractJpaTest {
         System.out.println(recommend);
 
     }
+
 }

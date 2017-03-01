@@ -68,9 +68,9 @@ public class Item implements Serializable{
     private Date updatedAt;
     private Store store;
 
-//    @ManyToOne
-//    @JoinColumn(name="store_id")
-    @Transient
+    @ManyToOne
+    @JoinColumn(name="store_id")
+//    @Transient
     public Store getStore() {
         return store;
     }

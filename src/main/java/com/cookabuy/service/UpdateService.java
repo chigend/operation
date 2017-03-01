@@ -1,5 +1,6 @@
 package com.cookabuy.service;
 
+import com.cookabuy.entity.service.po.RecommendItem;
 import com.cookabuy.entity.service.po.RecommendStore;
 import com.cookabuy.repository.service.RecommendItemRepository;
 import com.cookabuy.repository.service.RecommendStoreRepository;
@@ -83,6 +84,16 @@ public class UpdateService {
         Result result = updateField(STORE_INDEX_NAME, TYPE_NAME_STORE, storeId.toString(), source);
         return result;
     }
+
+    public Result toggleItemAdded(UUID itemId) {
+        RecommendItem item = recommendRepository.findByItemId(itemId);
+        boolean added = item == null; //如果推荐店铺为空，则表示即将添加该店铺
+        Map<String, Object> source = new HashMap<>();
+        source.put("added", added);
+        Result result = updateField(ITEM_INDEX_NAME, TYPE_NAME_ITEM, itemId.toString(), source);
+        return result;
+    }
+
 
     private Result updateField(String index, String type, String id, Map<String, Object> source) {
         UpdateRequest updateRequest = new UpdateRequest(index,

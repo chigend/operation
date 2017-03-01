@@ -26,6 +26,7 @@ public class RecommendItem {
     private Integer position;
     private Integer weight;
     private String picUrl;
+    private boolean deleted = false;
 
     @Id
     @GeneratedValue(generator = "uuid2")
@@ -138,6 +139,16 @@ public class RecommendItem {
 
     public void setPicUrl(String picUrl) {
         this.picUrl = picUrl;
+    }
+
+    @Basic
+    @Column(name = "deleted")
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 
     @Override

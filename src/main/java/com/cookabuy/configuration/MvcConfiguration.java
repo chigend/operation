@@ -16,4 +16,6 @@ public class MvcConfiguration extends WebMvcConfigurerAdapter {
         registry.addConverter(new StringToUUIDConverter());
         super.addFormatters(registry);
     }
+
+
 }
