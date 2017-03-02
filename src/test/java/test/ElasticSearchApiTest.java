@@ -8,7 +8,6 @@ import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
 import org.elasticsearch.index.query.BoolQueryBuilder;
-import org.elasticsearch.search.aggregations.AggregationBuilders;
 import org.elasticsearch.transport.client.PreBuiltTransportClient;
 import org.junit.Before;
 import org.junit.Test;
@@ -99,7 +98,7 @@ public class ElasticSearchApiTest {
         );
         requestBuilder.setQuery(boolQuery);
         requestBuilder.setFrom(query.getFrom()).setSize(query.getSize());
-        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));
-        System.out.println(requestBuilder.get());
+//        requestBuilder.addAggregation(AggregationBuilders.terms("markets").field("market"));
+        requestBuilder.get().toString();
     }
 }

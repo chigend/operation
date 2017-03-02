@@ -91,6 +91,7 @@ public class ShiroConfiguration {
         Map<String,String> definition = new HashMap<String,String>();
         definition.put("/login", "anon");
         definition.put("/**", "authc");
+        definition.put("/menus", "authc");
 
         shiroFilterFactoryBean.setFilterChainDefinitionMap(definition);
         shiroFilterFactoryBean.setFilters(filters);

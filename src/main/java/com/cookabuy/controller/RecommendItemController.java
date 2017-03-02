@@ -3,6 +3,7 @@ package com.cookabuy.controller;
 import com.cookabuy.entity.service.dto.*;
 import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
+import com.cookabuy.service.AdService;
 import com.cookabuy.service.UpdateService;
 import com.cookabuy.spring.aop.annotation.MenuItem;
 import com.cookabuy.spring.aop.annotation.RequiresPermission;
@@ -24,6 +25,9 @@ import java.util.*;
 import static com.cookabuy.constant.CosConstant.BUCKET;
 import static com.cookabuy.constant.CosConstant.DIRECTORY_PREFIX_AD_PATH;
 import static com.cookabuy.constant.ErrorConstant.UPLOAD_IMAGE_FAIL;
+import static com.cookabuy.constant.LocationConstant.TOP_BLOCK;
+import static com.cookabuy.constant.PageContant.HOT;
+import static com.cookabuy.constant.PublishType.HOT_AD;
 
 /**
  * @author yejinbiao
@@ -61,6 +65,9 @@ public class RecommendItemController {
     private DozerBeanMapper mapper;
 
     @Autowired
+    private AdService adService;
+
+    @Autowired
     private FileHelper fileHelper;
 
     @Autowired
@@ -88,7 +95,6 @@ public class RecommendItemController {
             }
             recommend.setLocation(data.getLocation());
             recommend.setPageName(data.getPageName());
-            recommend.setCreateTime(new Date());
             recommend.setModifyTime(new Date());
             recommend.setDeleted(false);
             recommendItemRepository.save(recommend);
@@ -134,9 +140,6 @@ public class RecommendItemController {
                     dto.setMarket(value.getMarket());
                     dto.setStall(resolveStoreLocation(value.getLocation()));
                 });
-                if (StringUtils.isEmpty(dto.getPicUrl())) {
-                    dto.setPicUrl(item.getPicUrl());
-                }
             }
         });
         //商品数据
@@ -151,7 +154,7 @@ public class RecommendItemController {
         result.addData("categories", categories);
 
         //发布按钮是否激活
-        boolean activate = recommendItemRepository.publishActivate(location);
+        boolean activate = recommendItemRepository.publishActivate(pageName,location,getPublishType(pageName,location));
         result.addData("activate", activate);
 
         return result;
@@ -167,6 +170,7 @@ public class RecommendItemController {
 
     @RequestMapping("publish_items")
     public Result publishItems(@RequestBody PublishRecommendItemForm form) {
+        //先保存权重信息
         List<RecommendItem> itemsToBeSaved = new ArrayList<>();
         form.getWeights().stream().forEach(itemWeight -> {
            RecommendItem item = recommendItemRepository.findOne(itemWeight.getId());
@@ -175,9 +179,13 @@ public class RecommendItemController {
         });
         recommendItemRepository.save(itemsToBeSaved);
 
-        activeItemRepository.deleteByPageNameAndLocation(form.getPage(), form.getLocation());
+        //按照模块（不同pageName和location）来清除原先发布的内容
+        String pageName = form.getPage();
+        String location = form.getLocation();
+        activeItemRepository.deleteByPageNameAndLocation(pageName, location);
+        //重新发布新的内容
         List<PublishedItem> itemsToBePublished = new ArrayList<>();
-        recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(form.getPage(),form.getLocation())
+        recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(pageName,location)
                 .stream().limit(10).forEach(item -> {
                     PublishedItem activeItem = new PublishedItem(item.getItemId(), item.getLocation(), item.getPageName()
                     , item.getPicUrl(), item.getWeight());
@@ -185,7 +193,14 @@ public class RecommendItemController {
         });
         activeItemRepository.save(itemsToBePublished);
 
-        publishLogRepository.save(new PublishLog(form.getLocation(), new Date()));
+        //并要写一条发布记录
+        publishLogRepository.save(new PublishLog(getPublishType(pageName, location), new Date()));
+
+        //男装爆款和女装爆款有广告图可以发布 今日爆款无广告图
+        if (!TOP_BLOCK.equals(location)) {
+            adService.publishAds(HOT, location, HOT_AD);
+        }
+
         return new Result();
     }
 
@@ -203,9 +218,8 @@ public class RecommendItemController {
         ad.setPicUrl(picUrl);
         ad.setPageName(pageName);
         ad.setLocation(form.getLocation());
-        ad.setCreateTime(new Date());
         ad.setModifyTime(new Date());
-        ad.setHidden(true);
+        ad.setHidden(false);
         adRepository.save(ad);
         return new Result("ad", mapper.map(ad, DisPlayAd.class));
     }
@@ -222,6 +236,10 @@ public class RecommendItemController {
         }
         int index = location.indexOf("-");
         return location.substring(index + 1);
+    }
+
+    private String getPublishType(String pageName, String location) {
+        return pageName.concat(location);
     }
 
 }

@@ -175,4 +175,36 @@ public class MainTest {
       System.out.println(start);
    }
 
+
+   @Test
+   public void testCoffee() {
+      int money = 100;
+      int oneTurnCoffee = money/20;
+      int totalCoffee = oneTurnCoffee;
+      int cover = oneTurnCoffee;
+      int cup = oneTurnCoffee;
+      System.out.printf("有杯盖%d个,空杯%d个，总共喝了%d杯咖啡",cover,cup,totalCoffee);
+      System.out.println();
+      while (!(cover < 4 && cup < 2)) {
+         int coverTurn = cover / 4;
+         System.out.printf("使用盖子%d个换了%d杯咖啡",coverTurn*4,coverTurn);
+         System.out.println();
+         cover = cover -  coverTurn*3;
+         cup += coverTurn;
+         totalCoffee += coverTurn;
+         System.out.printf("有杯盖%d个,空杯%d个，总共喝了%d杯咖啡",cover,cup,totalCoffee);
+         System.out.println();
+         int cupTurn = cup / 2;
+         System.out.printf("使用空杯%d个换了%d杯咖啡",cupTurn*2,cupTurn);
+         System.out.println();
+         cup = cup - cupTurn;
+         cover += cupTurn;
+         totalCoffee += cupTurn;
+         System.out.printf("有杯盖%d个,空杯%d个，总共喝了%d杯咖啡",cover,cup,totalCoffee);
+         System.out.println();
+
+      }
+      System.out.println(totalCoffee);
+   }
+
 }
