@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -83,9 +82,6 @@ public class AdController {
         Ad ad = dozerBeanMapper.map(form,Ad.class);
         ad.setPicUrl(picUrl);
         ad.setPageName(INDEX);
-
-        ad.setCreateTime(new Date());
-        ad.setModifyTime(new Date());
         ad.setHidden(true);
         ad.setPosition(maxPosition+1);
         adRepository.save(ad);
