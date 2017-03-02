@@ -47,7 +47,9 @@ public class TestAdRepository extends AbstractServiceJpaTest{
     }
     @Test
     public void testFindByPageAndName() {
-        List<Ad> ads = adRepository.findByPageNameAndLocation("hot", "boy");
+        List<Ad> ads = adRepository.findByPageNameAndLocation("index", null);
         ads.stream().forEach(ad -> System.out.println(ad.getPicUrl()));
     }
+
+
 }

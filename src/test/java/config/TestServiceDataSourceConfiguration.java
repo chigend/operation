@@ -17,10 +17,10 @@ public class TestServiceDataSourceConfiguration {
     public DataSource serviceDataSource() {
         DruidDataSource dataSource = new DruidDataSource();
         PropertiesUtil.loadProperties("application.properties");
-        dataSource.setDriverClassName(PropertiesUtil.getValue("spring.datasource.driver-class-name"));
-        dataSource.setUrl(PropertiesUtil.getValue("spring.datasource.url"));
-        dataSource.setUsername(PropertiesUtil.getValue("spring.datasource.username"));
-        dataSource.setPassword(PropertiesUtil.getValue("spring.datasource.password"));
+        dataSource.setDriverClassName(PropertiesUtil.getValue("service.datasource.driver-class-name"));
+        dataSource.setUrl(PropertiesUtil.getValue("service.datasource.url"));
+        dataSource.setUsername(PropertiesUtil.getValue("service.datasource.username"));
+        dataSource.setPassword(PropertiesUtil.getValue("service.datasource.password"));
         return dataSource;
     }
 }

@@ -15,8 +15,6 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
-import static com.cookabuy.constant.PageContant.INDEX;
-
 /**
  * @author yejinbiao
  * @create 2017-02-13-下午3:09
@@ -31,13 +29,22 @@ public class AdService {
     private PublishLogRepository publishLogRepository;
 
     @Transactional(value = "serviceTransactionManager", rollbackFor = Exception.class)
-    public int publishAds(String publishType) {
+    public int publishAds(String pageName,String location,String publishType) {
+        List<Ad> adsToBePublished = null;
         //清空所有已发布的广告//todo
-        publishedAdRepository.deleteByPageName(INDEX);
+        if (location == null) {
+            publishedAdRepository.deleteByPageName(pageName);
+            adsToBePublished = adRepository.findByPageName(pageName);
+        }else {
+            publishedAdRepository.deleteByPageNameAndLocation(pageName,location);
+            adsToBePublished = adRepository.findByPageNameAndLocation(pageName,location);
+        }
+
         //重新添加所有启用的广告
-        List<Ad>adsToBePublished = adRepository.findByPageNameOrderByPositionAsc(INDEX);
+
         long numPublished = adsToBePublished.stream().filter(ad -> !ad.isHidden()).peek(ad -> {
-            PublishedAd aa = new PublishedAd(ad.getActivityUrl(), ad.getPageName(), ad.getPicUrl(), ad.getPosition(), ad.getTip());
+            System.out.println("ad:="+ad.getPicUrl());
+            PublishedAd aa = new PublishedAd(ad.getActivityUrl(), ad.getLocation(), ad.getPageName(), ad.getPicUrl(), ad.getPosition(), ad.getTip());
             publishedAdRepository.save(aa);
         }).count();
         //todo operator

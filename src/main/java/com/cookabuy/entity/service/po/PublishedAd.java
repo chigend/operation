@@ -36,8 +36,9 @@ public class PublishedAd {
     public PublishedAd() {
     }
 
-    public PublishedAd(String activityUrl, String pageName, String picUrl, Integer position, String tip) {
+    public PublishedAd(String activityUrl,String location, String pageName, String picUrl, Integer position, String tip) {
         this.activityUrl = activityUrl;
+        this.location = location;
         this.pageName = pageName;
         this.picUrl = picUrl;
         this.position = position;

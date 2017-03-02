@@ -52,6 +52,7 @@ public interface AdRepository extends JpaRepository<Ad, UUID> {
     @Query(value = "update Ad ad set ad.hidden = case ad.hidden when true then false else true end where ad.adId = ?1")
     void toggleHiddenByAdId(UUID id);
 
+    @Query(value = "select ad from Ad ad where ad.pageName=?1 and ad.location=?2 and ad.deleted=false")
     List<Ad> findByPageNameAndLocation(String pageName, String location);
 
 
@@ -69,4 +70,7 @@ public interface AdRepository extends JpaRepository<Ad, UUID> {
 
     @Query(value = "select case when count(*) > 0 then true else false end from Ad ad where ad.modifyTime > (select coalesce(max(p.publishTime),'1970-01-01 00:00:00') from PublishLog p where p.type =?1)")
     boolean publishActivate(String type);
+
+    @Query(value = "select ad from Ad ad where ad.pageName=?1 and ad.deleted=false")
+    List<Ad> findByPageName(String pageName);
 }

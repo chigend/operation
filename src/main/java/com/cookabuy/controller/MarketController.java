@@ -202,7 +202,7 @@ public class MarketController {
 
     @RequestMapping("publish_ads")
     public Result publishAds() {
-        int numPublished = adService.publishAds(MARKET_AD);
+        int numPublished = adService.publishAds(MARKET, null,MARKET_AD);
         return numPublished > 0 ? new Result() : new Result("发布失败，未启用任何广告项");
     }
 }
