@@ -31,7 +31,7 @@ public class AdService {
     @Transactional(value = "serviceTransactionManager", rollbackFor = Exception.class)
     public int publishAds(String pageName,String location,String publishType) {
         List<Ad> adsToBePublished = null;
-        //清空所有已发布的广告//todo
+        //清空所有已发布的广告
         if (location == null) {
             publishedAdRepository.deleteByPageName(pageName);
             adsToBePublished = adRepository.findByPageName(pageName);

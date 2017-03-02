@@ -15,7 +15,6 @@ import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.dozer.DozerBeanMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -95,30 +94,14 @@ public class RecommendItemController {
             }
             recommend.setLocation(data.getLocation());
             recommend.setPageName(data.getPageName());
-            recommend.setModifyTime(new Date());
             recommend.setDeleted(false);
             recommendItemRepository.save(recommend);
+            recommend.setCreateTime(new Date());
 
         }
-        //todo 代码冗余
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
-        dtos.stream().forEach(dto -> {
-            Item item = itemRepository.findOne(dto.getItemId());
-            //todo 如果商品不存在 ，则表示该商品失效，应设置flag
-            if (item != null) {
-                dto.setTitle(item.getTitle());
-                dto.setPrice(item.getPrice());
-                Optional<Store> store = Optional.ofNullable(item.getStore());
-                store.ifPresent(value -> {
-                    dto.setShopName(value.getStoreName());
-                    dto.setMarket(value.getMarket());
-                    dto.setStall(resolveStoreLocation(value.getLocation()));
-                });
-                if (StringUtils.isEmpty(dto.getPicUrl())) {
-                    dto.setPicUrl(item.getPicUrl());
-                }
-            }
-        });
+
+        setItemInfo(dtos);
 
         return new Result("items",dtos);
     }
@@ -128,20 +111,7 @@ public class RecommendItemController {
     public Result listItems(String pageName, String location, Result result) {
         List<RecommendItem> recommendItems = recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(pageName, location);
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
-        dtos.stream().forEach(dto -> {
-            Item item = itemRepository.findOne(dto.getItemId());
-            //todo 如果商品不存在 或者下架，则表示该商品失效，应设置flag
-            if (item != null) {
-                dto.setTitle(item.getTitle());
-                dto.setPrice(item.getPrice());
-                Optional<Store> store = Optional.ofNullable(item.getStore());
-                store.ifPresent(value -> {
-                    dto.setShopName(value.getStoreName());
-                    dto.setMarket(value.getMarket());
-                    dto.setStall(resolveStoreLocation(value.getLocation()));
-                });
-            }
-        });
+        setItemInfo(dtos);
         //商品数据
         result.addData("stores", dtos);
 
@@ -159,6 +129,8 @@ public class RecommendItemController {
 
         return result;
     }
+
+
 
     @RequestMapping("delete_item")
     @RequiresPermissions("recommendItem:delete")
@@ -242,4 +214,23 @@ public class RecommendItemController {
         return pageName.concat(location);
     }
 
+    /**
+     *根据itemId 来设置RecommendItem中相关的商品信息,标题价格等
+     */
+    private void setItemInfo(List<RecommendItemDTO> dtos) {
+        dtos.stream().forEach(dto -> {
+            Item item = itemRepository.findOne(dto.getItemId());
+            //todo 如果商品不存在 或者下架，则表示该商品失效，应设置flag
+            if (item != null) {
+                dto.setTitle(item.getTitle());
+                dto.setPrice(item.getPrice());
+                Optional<Store> store = Optional.ofNullable(item.getStore());
+                store.ifPresent(value -> {
+                    dto.setShopName(value.getStoreName());
+                    dto.setMarket(value.getMarket());
+                    dto.setStall(resolveStoreLocation(value.getLocation()));
+                });
+            }
+        });
+    }
 }
