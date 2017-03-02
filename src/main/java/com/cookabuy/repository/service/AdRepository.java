@@ -54,8 +54,6 @@ public interface AdRepository extends JpaRepository<Ad, UUID> {
 
     List<Ad> findByPageNameAndLocation(String pageName, String location);
 
-    @Query(value = "select count(modify_time)>0 as activate from ad where modify_time > (select max(publish_time) from publish_log)", nativeQuery = true)
-    boolean publishActivate();
 
     @Modifying
     @Query(value = "update Ad ad set ad.deleted = true,ad.position = 0 where ad.adId in ?1")
@@ -66,7 +64,7 @@ public interface AdRepository extends JpaRepository<Ad, UUID> {
     @Query(value = "update Ad ad set ad.position = ?1 where ad.position = ?2 and ad.pageName = ?3")
     void updateAdPositionByPageName(Integer position, Integer original, String pageName);
 
-    @Query(value = "select coalesce(max(ad.position),0) from Ad ad where ad.pageName = ?1 ")
+    @Query(value = "select coalesce(max(ad.position),0) from Ad ad where ad.pageName = ?1 and ad.deleted=false ")
     Integer findMaxPositionByPageName(String pageName);
 
     @Query(value = "select case when count(*) > 0 then true else false end from Ad ad where ad.modifyTime > (select coalesce(max(p.publishTime),'1970-01-01 00:00:00') from PublishLog p where p.type =?1)")

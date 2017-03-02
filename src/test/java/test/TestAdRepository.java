@@ -25,11 +25,7 @@ public class TestAdRepository extends AbstractServiceJpaTest{
         ad.setPosition(3);
         adRepository.save(ad);
     }
-    @Test
-    public void testActivate(){
-        boolean activate = adRepository.publishActivate();
-        System.out.println(activate);
-    }
+
     @Test
     public void testDelete() {
     }

@@ -58,34 +58,33 @@ public class MarketController {
 
     @RequestMapping("ads")
     @MenuItem
-    public Result findMarketAds(Result result){
+    public Result findMarketAds(Result result) {
         List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(MARKET);
 
-        List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads,DisPlayAd.class);
+        List<DisPlayAd> disPlayAds = dozerHelper.mapList(ads, DisPlayAd.class);
         boolean activate = adRepository.publishActivate(MARKET_AD);
-        result.addData("ads",disPlayAds);
+        result.addData("ads", disPlayAds);
         result.addData("activate", activate);
-        return  result;
+        return result;
     }
 
     @RequestMapping("add_ad")
     @RequiresPermissions("ad:add")
-    public Result addAd(AddAdForm form , Result result){
+    public Result addAd(AddAdForm form, Result result) {
         String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
-        if(picUrl == null){
+        if (picUrl == null) {
             result.setError(UPLOAD_IMAGE_FAIL);
             return result;
         }
-        log.info("upload file successfully,source_url is {}",picUrl);
-        String pageName = form.getPageName();
-        Integer maxPosition = adRepository.findMaxPositionByPageName(pageName);
-        Ad ad = dozerBeanMapper.map(form,Ad.class);
+        log.info("upload file successfully,source_url is {}", picUrl);
+        Integer maxPosition = adRepository.findMaxPositionByPageName(MARKET);
+        Ad ad = dozerBeanMapper.map(form, Ad.class);
         ad.setPicUrl(picUrl);
-      ad.setPageName(MARKET);
+        ad.setPageName(MARKET);
         ad.setCreateTime(new Date());
         ad.setModifyTime(new Date());
         ad.setHidden(true);
-        ad.setPosition(maxPosition+1);
+        ad.setPosition(maxPosition + 1);
         adRepository.save(ad);
         return new Result("ad", ad);
     }
@@ -93,8 +92,8 @@ public class MarketController {
 
     @RequestMapping("delete_ad")
     @RequiresPermissions("ad:delete")
-    public Result deleteAd(@RequestBody List<UUID> ids){
-        if(CollectionUtils.isEmpty(ids)){
+    public Result deleteAd(@RequestBody List<UUID> ids) {
+        if (CollectionUtils.isEmpty(ids)) {
             return new Result(NOT_ASSIGN_ADS);
         }
         //todo  删除对应的存储在cos上的图片
@@ -114,8 +113,7 @@ public class MarketController {
 //    }
 
     /**
-     *
-     * @param adId 两个待交换位置的adId
+     * @param adId  两个待交换位置的adId
      * @param adId2
      * @return
      */
@@ -124,25 +122,26 @@ public class MarketController {
         Ad ad = adRepository.findOne(adId);
         Ad ad2 = adRepository.findOne(adId2);
         if (ad == null || ad2 == null) {
-            return  new Result(NOT_ASSIGN_ADS);
+            return new Result(NOT_ASSIGN_ADS);
         }
-        return  adService.moveAd(ad,ad2);
+        return adService.moveAd(ad, ad2);
     }
+
     @RequestMapping("update_ad")
     @RequiresPermissions("ad:update")
-    public Result update(UpdateAdForm form,Result result){
+    public Result update(UpdateAdForm form, Result result) {
         Ad ad = adRepository.findOne(form.getAdId());
-        if(form.getImage() != null){
+        if (form.getImage() != null) {
 //          如果广告图片修改过，那么把之前把存储在cos的图片进行删除
 //            fileHelper.deleteFile(CosConstant.BUCKET,ad.getPicUrl());
-            String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH,form.getImage());
-            if (picUrl != null){
+            String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
+            if (picUrl != null) {
                 fileHelper.deleteFile(BUCKET, ad.getPicUrl());
                 ad.setPicUrl(picUrl);
             }
         }
         String activityUrl = form.getActivityUrl();
-        if(activityUrl != null){
+        if (activityUrl != null) {
             ad.setActivityUrl(activityUrl);
         }
         String tip = form.getTip();
@@ -155,7 +154,7 @@ public class MarketController {
 
     @RequestMapping("toggle_hidden")
     @RequiresPermissions("ad:hide")
-    public Result toggle(@RequestParam UUID adId, Result result){
+    public Result toggle(@RequestParam UUID adId, Result result) {
 
         adRepository.toggleHiddenByAdId(adId);
         return result;
@@ -174,7 +173,7 @@ public class MarketController {
             Ad ad = dozerBeanMapper.map(addAdForm, Ad.class);
             ad.setPicUrl(url);
             adRepository.save(ad);
-        }else {
+        } else {
             Ad ad = ads.get(0);
             if (ad.getPicUrl() != null) {
                 fileHelper.deleteFile(BUCKET, ad.getPicUrl());
@@ -191,7 +190,7 @@ public class MarketController {
         List<Ad> ads = adRepository.findByPageNameAndLocation(page, location);
         if (CollectionUtils.isEmpty(ads)) {
             return new Result("改模块广告图已删除");
-        }else {
+        } else {
             Ad ad = ads.get(0);
             if (ad.getPicUrl() != null) {
                 fileHelper.deleteFile(BUCKET, ad.getPicUrl());
