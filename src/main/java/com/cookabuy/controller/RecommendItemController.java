@@ -197,7 +197,7 @@ public class RecommendItemController {
 
     //
     @RequestMapping("upload_ad")
-    @RequiresPermissions("recommendItem:boom:ad:add")
+    @RequiresPermissions("recommendItem:hot:ad:add")
     public Result uploadAd(AddAdForm form , Result result){
         String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
         if(picUrl == null){

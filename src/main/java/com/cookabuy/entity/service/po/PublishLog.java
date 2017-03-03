@@ -16,6 +16,7 @@ import java.util.UUID;
 @Table(name = "publish_log", schema = "public", catalog = "cookabuy_pc_int2")
 public class PublishLog {
     private String type;
+
     private Date publishTime;
     private UUID id;
 
