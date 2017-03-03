@@ -27,8 +27,8 @@ public class GlobalConfiguration {
     public Map<String, String> getPublishItemPermissionsMap() {
         HashMap<String, String> permissionMap = new HashMap<>();
         permissionMap.put("public", "recommendItem:public:publish");
-        permissionMap.put("index", "recommendItem:hot:publish");
-        permissionMap.put("hot", "recommendItem:index:publish");
+        permissionMap.put("index", "recommendItem:index:publish");
+        permissionMap.put("hot", "recommendItem:hot:publish");
         return permissionMap;
     }
 
