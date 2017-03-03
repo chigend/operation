@@ -94,9 +94,10 @@ public class RecommendItemController {
             }
             recommend.setLocation(data.getLocation());
             recommend.setPageName(data.getPageName());
+            recommend.setCreateTime(new Date());
+            recommend.setModifyTime(new Date());
             recommend.setDeleted(false);
             recommendItemRepository.save(recommend);
-            recommend.setCreateTime(new Date());
 
         }
         List<RecommendItemDTO> dtos = dozerHelper.mapList(recommendItems, RecommendItemDTO.class);
@@ -124,6 +125,7 @@ public class RecommendItemController {
         result.addData("categories", categories);
 
         //发布按钮是否激活
+        if (HOT.equals(pageName) && !TOP_BLOCK.equals(location)) {}
         boolean activate = recommendItemRepository.publishActivate(pageName,location,getPublishType(pageName,location));
         result.addData("activate", activate);
 
@@ -181,7 +183,9 @@ public class RecommendItemController {
 
 
         //并要写一条发布记录
-        publishLogRepository.save(new PublishLog(getPublishType(pageName, location)));
+        PublishLog publishLog = new PublishLog(getPublishType(pageName, location));
+        publishLog.setPublishTime(new Date());
+        publishLogRepository.save(publishLog);
 
         //男装爆款和女装爆款有广告图可以发布 今日爆款无广告图
         if (!TOP_BLOCK.equals(location)) {
