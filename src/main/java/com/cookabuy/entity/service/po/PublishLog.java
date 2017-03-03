@@ -22,9 +22,8 @@ public class PublishLog {
     public PublishLog() {
     }
 
-    public PublishLog(String type, Date publishTime) {
+    public PublishLog(String type) {
         this.type = type;
-        this.publishTime = publishTime;
     }
 
     @Basic

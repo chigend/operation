@@ -181,7 +181,7 @@ public class RecommendItemController {
 
 
         //并要写一条发布记录
-        publishLogRepository.save(new PublishLog(getPublishType(pageName, location), new Date()));
+        publishLogRepository.save(new PublishLog(getPublishType(pageName, location)));
 
         //男装爆款和女装爆款有广告图可以发布 今日爆款无广告图
         if (!TOP_BLOCK.equals(location)) {
