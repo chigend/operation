@@ -46,6 +46,7 @@ public class PermissionAspect {
          * 拿当前用户拥有的权限与此页面进入需要的权限
          * @see com.cookabuy.shiro.realm.OperationUserRealm#doGetAuthorizationInfo(PrincipalCollection)
          */
+        System.out.println(permission);
         boolean permitted = SecurityUtils.getSubject().isPermitted(permission);
         if (!permitted) {
             /**
