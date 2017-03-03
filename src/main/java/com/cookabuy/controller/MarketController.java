@@ -69,7 +69,7 @@ public class MarketController {
     }
 
     @RequestMapping("add_ad")
-    @RequiresPermissions("ad:add")
+    @RequiresPermissions("market:ad:add")
     public Result addAd(AddAdForm form, Result result) {
         String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
         if (picUrl == null) {
@@ -91,7 +91,7 @@ public class MarketController {
 
 
     @RequestMapping("delete_ad")
-    @RequiresPermissions("ad:delete")
+    @RequiresPermissions("market:ad:delete")
     public Result deleteAd(@RequestBody List<UUID> ids) {
         if (CollectionUtils.isEmpty(ids)) {
             return new Result(NOT_ASSIGN_ADS);
@@ -118,6 +118,7 @@ public class MarketController {
      * @return
      */
     @RequestMapping("move_ad")
+    @RequiresPermissions("market:ad:move")
     public Result move(@RequestParam UUID adId, @RequestParam UUID adId2) {
         Ad ad = adRepository.findOne(adId);
         Ad ad2 = adRepository.findOne(adId2);
@@ -128,7 +129,7 @@ public class MarketController {
     }
 
     @RequestMapping("update_ad")
-    @RequiresPermissions("ad:update")
+    @RequiresPermissions("market:ad:update")
     public Result update(UpdateAdForm form, Result result) {
         Ad ad = adRepository.findOne(form.getAdId());
         if (form.getImage() != null) {
@@ -153,7 +154,7 @@ public class MarketController {
     }
 
     @RequestMapping("toggle_hidden")
-    @RequiresPermissions("ad:hide")
+    @RequiresPermissions("market:ad:enable")
     public Result toggle(@RequestParam UUID adId, Result result) {
 
         adRepository.toggleHiddenByAdId(adId);
