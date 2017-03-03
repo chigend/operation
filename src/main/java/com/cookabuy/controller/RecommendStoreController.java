@@ -194,6 +194,7 @@ public class RecommendStoreController {
                     activeStoreRepository.save(as);
                 });
         PublishLog publishLog = new PublishLog(PublishType.STORE);
+        System.out.println(new Date());
         publishLog.setPublishTime(new Date());
         publishLogRepository.save(publishLog);
         return new Result();
