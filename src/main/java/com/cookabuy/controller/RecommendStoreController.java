@@ -71,8 +71,6 @@ public class RecommendStoreController {
             if(recommendStoreRepository.findByStoreId(store.getStoreId()) != null){
                 continue;
             }
-            store.setCreateTime(new Date());
-            store.setModifyTime(new Date());
             store.setPage(INDEX);
             store.setPosition(++maxPosition);
             updateService.toggleStoreAdded(store.getStoreId());
@@ -194,8 +192,6 @@ public class RecommendStoreController {
                     activeStoreRepository.save(as);
                 });
         PublishLog publishLog = new PublishLog(PublishType.STORE);
-        System.out.println(new Date());
-        publishLog.setPublishTime(new Date());
         publishLogRepository.save(publishLog);
         return new Result();
     }

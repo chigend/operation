@@ -38,7 +38,7 @@ public class PublishLog {
     }
 
     @Basic
-    @Column(name = "publish_time", nullable = false)
+    @Column(name = "publish_time",insertable = false,nullable = false)
     public Date getPublishTime() {
         return publishTime;
     }

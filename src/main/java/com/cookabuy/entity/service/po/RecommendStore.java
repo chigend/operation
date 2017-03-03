@@ -122,7 +122,7 @@ public class RecommendStore {
     }
 
     @Basic
-    @Column(name = "create_time", nullable = false)
+    @Column(name = "create_time",insertable = false,nullable = false)
     public Date getCreateTime() {
         return createTime;
     }
@@ -132,7 +132,7 @@ public class RecommendStore {
     }
 
     @Basic
-    @Column(name = "modify_time", nullable = false)
+    @Column(name = "modify_time", insertable = false,nullable = false)
     public Date getModifyTime() {
         return modifyTime;
     }

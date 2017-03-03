@@ -94,8 +94,6 @@ public class RecommendItemController {
             }
             recommend.setLocation(data.getLocation());
             recommend.setPageName(data.getPageName());
-            recommend.setCreateTime(new Date());
-            recommend.setModifyTime(new Date());
             recommend.setDeleted(false);
             recommendItemRepository.save(recommend);
 
@@ -184,11 +182,10 @@ public class RecommendItemController {
 
         //并要写一条发布记录
         PublishLog publishLog = new PublishLog(getPublishType(pageName, location));
-        publishLog.setPublishTime(new Date());
         publishLogRepository.save(publishLog);
 
         //男装爆款和女装爆款有广告图可以发布 今日爆款无广告图
-        if (!TOP_BLOCK.equals(location)) {
+        if (HOT.equals(pageName) && !TOP_BLOCK.equals(location)) {
             adService.publishAds(HOT, location, HOT_AD);
         }
 

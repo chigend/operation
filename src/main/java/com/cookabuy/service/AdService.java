@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -52,7 +51,6 @@ public class AdService {
         //todo operator
         if (numPublished > 0) {
             PublishLog publishLog = new PublishLog(publishType);
-            publishLog.setPublishTime(new Date());
             publishLogRepository.save(publishLog);
         }
         return (int)numPublished;
