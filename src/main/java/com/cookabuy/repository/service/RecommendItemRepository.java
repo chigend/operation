@@ -66,7 +66,14 @@ public interface RecommendItemRepository extends JpaRepository<RecommendItem, UU
     boolean publishActivate(String pageName,String location,String type);
 
     @Query(value = "select r from RecommendItem r where r.itemId=?1 and r.deleted = false ")
-    public RecommendItem findByItemId(UUID itemId);
+     RecommendItem findByItemId(UUID itemId);
+
+    /**
+     * 根据模块（模块指同一个pageName和location）删除标记为deleted的项
+     */
+    @Modifying
+    @Query(value = "delete from RecommendItem i where i.pageName=?1 and i.location=?2 and i.deleted=true")
+    void deleteHasDeletedFlagByPageNameAndLocation(String pageName, String location);
 
 
 

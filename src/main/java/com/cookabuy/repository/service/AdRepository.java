@@ -73,4 +73,12 @@ public interface AdRepository extends JpaRepository<Ad, UUID> {
 
     @Query(value = "select ad from Ad ad where ad.pageName=?1 and ad.deleted=false")
     List<Ad> findByPageName(String pageName);
+
+    @Modifying
+    @Query(value = "delete from Ad ad where ad.pageName=?1 and ad.deleted=true")
+    void deleteHasDeletedFlagByPageName(String pageName);
+
+    @Modifying
+    @Query(value = "delete from Ad ad where ad.pageName=?1 and ad.location=?2 and ad.deleted=true")
+    void deleteHasDeletedFlagByPageNameAndLocation(String pageName, String location);
 }

@@ -1,12 +1,12 @@
 package com.cookabuy.spring.aop.aspect;
 
 import com.cookabuy.configuration.GlobalConfiguration;
-import com.cookabuy.controller.ExceptionHandlerAdvice;
+import com.cookabuy.entity.service.dto.PublishRecommendItemForm;
 import com.cookabuy.entity.service.dto.RecommendItemEntity;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationToken;
 import org.apache.shiro.authz.AuthorizationException;
+import org.apache.shiro.subject.PrincipalCollection;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.springframework.stereotype.Component;
@@ -26,28 +26,34 @@ import java.util.Map;
 @Slf4j
 public class PermissionAspect {
 
-    @Resource(name = "permissionMap")
-    private Map<String, String> permissionMap;
+    @Resource(name = "addItemPermissions")
+    private Map<String, String> addItemPermissions;
+    @Resource(name = "publishItemPermissions")
+    private Map<String, String> publishItemPermissions;
 
-    @Before(value = "@annotation(com.cookabuy.spring.aop.annotation.RequiresPermission) && args(parameter)")
+    @Before(value = "@annotation(com.cookabuy.spring.aop.annotation.CheckPermission) && args(parameter)")
     public void checkPermission( Object parameter) {
-       if (parameter instanceof RecommendItemEntity) {
+        String permission = null;
+        if (parameter instanceof PublishRecommendItemForm) {
+            String pageName = ((PublishRecommendItemForm) parameter).getPage();
+            permission = publishItemPermissions.get(pageName);
+        }else if(parameter instanceof RecommendItemEntity) {
            RecommendItemEntity itemEntity = (RecommendItemEntity) parameter;
            String page = itemEntity.getPageName();
-           String permission = permissionMap.get(page);
-           /**
-            * 拿当前用户拥有的权限与此页面进入需要的权限
-            * @see com.cookabuy.shiro.realm.OperationUserRealm#doGetAuthenticationInfo(AuthenticationToken)
-            */
-           boolean permitted = SecurityUtils.getSubject().isPermitted(permission);
-           if (!permitted) {
-               /**
-                *该异常与shiro的没有权限时抛出的异常一致，并被spring的全局捕获
-                * @see ExceptionHandlerAdvice#catchAuthorizationException()
-                */
-               throw new AuthorizationException();
-           }
+           permission = addItemPermissions.get(page);
        }
+        /**
+         * 拿当前用户拥有的权限与此页面进入需要的权限
+         * @see com.cookabuy.shiro.realm.OperationUserRealm#doGetAuthorizationInfo(PrincipalCollection)
+         */
+        boolean permitted = SecurityUtils.getSubject().isPermitted(permission);
+        if (!permitted) {
+            /**
+             *该异常与shiro的没有权限时抛出的异常一致，并被spring的全局捕获
+             * @see ExceptionHandlerAdvice#catchAuthorizationException()
+             */
+            throw new AuthorizationException();
+        }
 
     }
 }

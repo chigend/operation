@@ -119,7 +119,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("update_store_img")
-    @RequiresPermissions("recommendStore:image:update")
+    @RequiresPermissions("recommendStore:image:modify")
     public Result updateStoreImg(@RequestParam  UUID storeId, MultipartFile image) {
         Optional<RecommendStore> store = Optional.ofNullable(recommendStoreRepository.findByStoreId(storeId));
         if (!store.isPresent()){
@@ -147,14 +147,15 @@ public class RecommendStoreController {
         return result;
     }
 
-    @RequestMapping("toggle_store_effective")
-    @RequiresPermissions("recommendStore:hide")
-    public Result toggoleStoreEffective (Integer id, Result result) {
-        recommendStoreRepository.toggleEffectiveById(id);
-        return result;
-    }
+//    @RequestMapping("toggle_store_effective")
+//    @RequiresPermissions("recommendStore:hide")
+//    public Result toggoleStoreEffective (Integer id, Result result) {
+//        recommendStoreRepository.toggleEffectiveById(id);
+//        return result;
+//    }
 
     @RequestMapping("replace_store")
+    @RequiresPermissions("recommendStore:modify")
     public Result replaceStore(@RequestBody UpdateRecommendStoreForm form) {
 
         //todo  delete cos picurl
@@ -166,6 +167,7 @@ public class RecommendStoreController {
     }
 
     @RequestMapping("move_store")
+    @RequiresPermissions("recommendStore:move")
     public Result moveStore(@RequestBody MoveRecommendStoreForm form) {
         RecommendStore store = recommendStoreRepository.findOne(form.getId());
         if (store != null) {
@@ -181,6 +183,7 @@ public class RecommendStoreController {
         return new Result();
     }
 
+    @RequiresPermissions("recommendStore:publish")
     @RequestMapping("publish_stores")
     public Result publishStores() {
         activeStoreRepository.deleteAll();

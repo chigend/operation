@@ -15,13 +15,21 @@ import java.util.Map;
 @Configuration
 @EnableScheduling //开启计划任务
 public class GlobalConfiguration {
-    @Bean(name = "permissionMap")
+    @Bean(name = "addItemPermissions")
     public Map<String, String> getRecommendItemPermissionMap() {
        HashMap<String, String> permissionMap = new HashMap<>();
-       permissionMap.put("public", "recommendItem:product:add");
+       permissionMap.put("public", "recommendItem:public:add");
        permissionMap.put("index", "recommendItem:hot:add");
        permissionMap.put("hot", "recommendItem:boom:add");
        return permissionMap;
+    }
+    @Bean(name = "publishItemPermissions")
+    public Map<String, String> getPublishItemPermissionsMap() {
+        HashMap<String, String> permissionMap = new HashMap<>();
+        permissionMap.put("public", "recommendItem:public:publish");
+        permissionMap.put("index", "recommendItem:hot:publish");
+        permissionMap.put("hot", "recommendItem:index:publish");
+        return permissionMap;
     }
 
     /**

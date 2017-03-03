@@ -8,6 +8,6 @@ import java.lang.annotation.*;
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-public @interface RequiresPermission {
+public @interface CheckPermission {
     String value() default "";
 }

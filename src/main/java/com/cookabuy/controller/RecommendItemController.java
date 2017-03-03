@@ -5,8 +5,8 @@ import com.cookabuy.entity.service.po.*;
 import com.cookabuy.repository.service.*;
 import com.cookabuy.service.AdService;
 import com.cookabuy.service.UpdateService;
+import com.cookabuy.spring.aop.annotation.CheckPermission;
 import com.cookabuy.spring.aop.annotation.MenuItem;
-import com.cookabuy.spring.aop.annotation.RequiresPermission;
 import com.cookabuy.thirdParty.cos.FileHelper;
 import com.cookabuy.thirdParty.dozer.DozerHelper;
 import com.cookabuy.util.Result;
@@ -72,16 +72,16 @@ public class RecommendItemController {
     @Autowired
     private UpdateService updateService;
     /**
-     * @RequiresPermission   注意此注解并非shiro的@RequiresPermissions,由于爆款专区，热销类目，商品管理模块的推荐
+     * @CheckPermission   注意此注解并非shiro的@RequiresPermissions,由于爆款专区，热销类目，商品管理模块的推荐
      * 功能一样，只是参数不同，故不能将权限粒度控制在以上3个页面上的每个操作上（即如果使用shiro的注解，以上3个页面三个页面
      * 的操作权限是同步的，要么都能进入，要么都不能进入方法,故通过spring aop实现自己的逻辑）
      * @see com.cookabuy.spring.aop.aspect.PermissionAspect#checkPermission(Object)
-     * @see RequiresPermission
+     * @see CheckPermission
      * @param data
      * @return
      */
     @RequestMapping("/recommend_item")
-    @RequiresPermission
+    @CheckPermission
     public Result recommendItem(@RequestBody RecommendItemEntity data) {
         //todo 修改该参数类名
         List<RecommendItem> recommendItems = dozerHelper.mapList(data.getItems(), RecommendItem.class);
@@ -131,7 +131,18 @@ public class RecommendItemController {
     }
 
 
-
+    /**
+     * 将recommend_item标记为deleted，由于发布按钮是否激活是根据recommend_item表中的modify_time
+     * 和发布记录表publish_log中最新的发布时间publish_time
+     * 比较的
+        @see RecommendItemRepository#publishActivate(String, String, String)
+      * 所以只能逻辑删除，如果是物理删除，那么在运营后台删除一条推荐商品时，根据以上规则计算出的
+        的发布按钮是否为激活状态的指为false，这与运营发布规则是冲突的（即删除一条记录后，应该可以重新再次发布）
+        可以在发布动作执行时，确定删除这些逻辑删除的项（也就是标记为deleted的项）
+        @see RecommendItemController#publishItems(PublishRecommendItemForm)
+     *  @param ids
+     * @return
+     */
     @RequestMapping("delete_item")
     @RequiresPermissions("recommendItem:delete")
     public Result deleteItems(@RequestBody List<UUID> ids) {
@@ -141,6 +152,7 @@ public class RecommendItemController {
     }
 
     @RequestMapping("publish_items")
+    @CheckPermission
     public Result publishItems(@RequestBody PublishRecommendItemForm form) {
         //先保存权重信息
         List<RecommendItem> itemsToBeSaved = new ArrayList<>();
@@ -163,7 +175,10 @@ public class RecommendItemController {
                     , item.getPicUrl(), item.getWeight());
                     itemsToBePublished.add(activeItem);
         });
+        //删除已经标记为逻辑删除的项
+        recommendItemRepository.deleteHasDeletedFlagByPageNameAndLocation(pageName, location);
         activeItemRepository.save(itemsToBePublished);
+
 
         //并要写一条发布记录
         publishLogRepository.save(new PublishLog(getPublishType(pageName, location), new Date()));
@@ -178,6 +193,7 @@ public class RecommendItemController {
 
     //
     @RequestMapping("upload_ad")
+    @RequiresPermissions("recommendItem:boom:ad:add")
     public Result uploadAd(AddAdForm form , Result result){
         String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
         if(picUrl == null){

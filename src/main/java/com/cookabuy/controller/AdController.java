@@ -2,7 +2,6 @@ package com.cookabuy.controller;
 
 import com.cookabuy.entity.service.dto.AddAdForm;
 import com.cookabuy.entity.service.dto.DisPlayAd;
-import com.cookabuy.entity.service.dto.SaveAdForm;
 import com.cookabuy.entity.service.dto.UpdateAdForm;
 import com.cookabuy.entity.service.po.Ad;
 import com.cookabuy.repository.service.AdRepository;
@@ -58,6 +57,7 @@ public class AdController {
 
     @RequestMapping("ads")
     @MenuItem
+
     public Result findIndexAds(Result result){
         List<Ad> ads = adRepository.findByPageNameOrderByPositionAsc(INDEX);
 
@@ -69,7 +69,7 @@ public class AdController {
     }
 
     @RequestMapping("add_ad")
-    @RequiresPermissions("ad:add")
+    @RequiresPermissions("index:ad:add")
     public Result addAd(AddAdForm form , Result result){
         String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, form.getImage());
         if(picUrl == null){
@@ -90,7 +90,7 @@ public class AdController {
 
 
     @RequestMapping("delete_ad")
-    @RequiresPermissions("ad:delete")
+    @RequiresPermissions("index:ad:delete")
     public Result deleteAd(@RequestBody List<UUID> ids){
         if(CollectionUtils.isEmpty(ids)){
             return new Result(NOT_ASSIGN_ADS);
@@ -100,16 +100,16 @@ public class AdController {
         return new Result();
     }
     //根据adId 来更新每一个广告的position
-    @RequestMapping("save_ad")
-    @RequiresPermissions("ad:move")
-    public Result save(@RequestBody List<SaveAdForm> list){
-        if(CollectionUtils.isEmpty(list)){
-            return new Result(NOT_ASSIGN_ADS);
-        }
-        list.stream().filter(ad-> ad.getAdId()!=null && ad.getPosition()!=null).forEach(ad->
-            adRepository.updatePositionById(ad.getAdId(),ad.getPosition()));
-        return new Result();
-    }
+//    @RequestMapping("save_ad")
+//    @RequiresPermissions("ad:move")
+//    public Result save(@RequestBody List<SaveAdForm> list){
+//        if(CollectionUtils.isEmpty(list)){
+//            return new Result(NOT_ASSIGN_ADS);
+//        }
+//        list.stream().filter(ad-> ad.getAdId()!=null && ad.getPosition()!=null).forEach(ad->
+//            adRepository.updatePositionById(ad.getAdId(),ad.getPosition()));
+//        return new Result();
+//    }
 
     /**
      *
@@ -118,6 +118,7 @@ public class AdController {
      * @return
      */
     @RequestMapping("move_ad")
+    @RequiresPermissions("index:ad:move")
     public Result move(@RequestParam UUID adId, @RequestParam UUID adId2) {
         Ad ad = adRepository.findOne(adId);
         Ad ad2 = adRepository.findOne(adId2);
@@ -127,7 +128,7 @@ public class AdController {
         return  adService.moveAd(ad,ad2);
     }
     @RequestMapping("update_ad")
-    @RequiresPermissions("ad:update")
+    @RequiresPermissions("index:ad:update")
     public Result update(UpdateAdForm form,Result result){
         Ad ad = adRepository.findOne(form.getAdId());
         if(form.getImage() != null){
@@ -152,7 +153,7 @@ public class AdController {
     }
 
     @RequestMapping("toggle_hidden")
-    @RequiresPermissions("ad:hide")
+    @RequiresPermissions("index:ad:enable")
     public Result toggle(@RequestParam UUID adId, Result result){
 
         adRepository.toggleHiddenByAdId(adId);
@@ -161,7 +162,7 @@ public class AdController {
 
     //用于爆款专区的广告图上传
     @RequestMapping("/upload_ad_img")
-    @RequiresPermissions("recommendItem:boom:adimage:add")
+    @RequiresPermissions("recommendItem:boom:ad:add")
     public Result uploadAdImg(AddAdForm addAdForm) {
         String url = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH, addAdForm.getImage());
         if (url == null) {
@@ -185,6 +186,7 @@ public class AdController {
 
     //用于爆款专区的广告图删除
     @RequestMapping("/delete_ad_img")
+    @RequiresPermissions("recommendItem:boom:ad:delete")
     public Result deleteAdImage(String page, String location) {
         List<Ad> ads = adRepository.findByPageNameAndLocation(page, location);
         if (CollectionUtils.isEmpty(ads)) {
@@ -200,6 +202,7 @@ public class AdController {
     }
 
     @RequestMapping("publish_ads")
+    @RequiresPermissions("index:ad:publish")
     public Result publishAds() {
         int numPublished = adService.publishAds(INDEX, null, INDEX_AD);
         return numPublished > 0 ? new Result() : new Result("发布失败，未启用任何广告项");
