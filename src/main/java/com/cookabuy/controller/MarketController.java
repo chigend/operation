@@ -202,6 +202,7 @@ public class MarketController {
     }
 
     @RequestMapping("publish_ads")
+    @RequiresPermissions("market:ad:publish")
     public Result publishAds() {
         int numPublished = adService.publishAds(MARKET, null,MARKET_AD);
         return numPublished > 0 ? new Result() : new Result("发布失败，未启用任何广告项");
