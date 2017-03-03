@@ -50,7 +50,7 @@ public class Ad {
     }
 
     @Basic
-    @Column(name = "create_time", nullable = true)
+    @Column(name = "create_time", insertable = false,nullable = true)
     public Date getCreateTime() {
         return createTime;
     }
@@ -121,7 +121,7 @@ public class Ad {
 
 
     @Basic
-    @Column(name = "modify_time", nullable = true)
+    @Column(name = "modify_time",insertable = false,nullable = true)
     public Date getModifyTime() {
         return modifyTime;
     }
