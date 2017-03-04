@@ -170,7 +170,7 @@ public class RecommendItemController {
         //重新发布新的内容
         List<PublishedItem> itemsToBePublished = new ArrayList<>();
         recommendItemRepository.findByPageNameAndLocationOrderByWeightDesc(pageName,location)
-                .stream().limit(10).forEach(item -> {
+                .stream().forEach(item -> {
                     PublishedItem activeItem = new PublishedItem(item.getItemId(), item.getLocation(), item.getPageName()
                     , item.getPicUrl(), item.getWeight());
                     itemsToBePublished.add(activeItem);
