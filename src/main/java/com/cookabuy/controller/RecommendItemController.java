@@ -123,8 +123,10 @@ public class RecommendItemController {
         result.addData("categories", categories);
 
         //发布按钮是否激活
-        if (HOT.equals(pageName) && !TOP_BLOCK.equals(location)) {}
         boolean activate = recommendItemRepository.publishActivate(pageName,location,getPublishType(pageName,location));
+        if (HOT.equals(pageName) && !TOP_BLOCK.equals(location)) {
+            //如果是爆款专区男装或者女装模块
+        }
         result.addData("activate", activate);
 
         return result;
