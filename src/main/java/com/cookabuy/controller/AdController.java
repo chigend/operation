@@ -193,9 +193,6 @@ public class AdController {
             return new Result("改模块广告图已删除");
         }else {
             Ad ad = ads.get(0);
-            if (ad.getPicUrl() != null) {
-                fileHelper.deleteFile(BUCKET, ad.getPicUrl());
-            }
             adRepository.delete(ad);
         }
         return new Result();
