@@ -3,6 +3,7 @@ package com.cookabuy.entity.service.po;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -16,6 +17,7 @@ public class CategoryLink {
     private UUID displayId;
     private Integer cid;
     private String alias;
+    private Date createTime;
 
     public CategoryLink() {
     }
@@ -55,5 +57,15 @@ public class CategoryLink {
 
     public void setAlias(String alias) {
         this.alias = alias;
+    }
+
+    @Basic
+    @Column(name = "create_time", insertable = false)
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 }
