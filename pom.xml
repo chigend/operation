@@ -173,9 +173,9 @@
         </dependency>
         <!--elasticsearch 2.4.3客户端-->
         <!--<dependency>-->
-            <!--<groupId>org.elasticsearch</groupId>-->
-            <!--<artifactId>elasticsearch</artifactId>-->
-            <!--<version>2.4.3</version>-->
+        <!--<groupId>org.elasticsearch</groupId>-->
+        <!--<artifactId>elasticsearch</artifactId>-->
+        <!--<version>2.4.3</version>-->
         <!--</dependency>-->
         <!--elasticsearch 5.1.1客户端jar-->
 
