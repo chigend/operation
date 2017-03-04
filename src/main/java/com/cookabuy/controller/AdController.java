@@ -186,7 +186,7 @@ public class AdController {
 
     //用于爆款专区的广告图删除
     @RequestMapping("/delete_ad_img")
-    @RequiresPermissions("recommendItem:boom:ad:delete")
+    @RequiresPermissions("recommendItem:hot:ad:delete")
     public Result deleteAdImage(String page, String location) {
         List<Ad> ads = adRepository.findByPageNameAndLocation(page, location);
         if (CollectionUtils.isEmpty(ads)) {
