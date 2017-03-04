@@ -60,7 +60,7 @@ public class PublishedCategoryLink {
     }
 
     @Basic
-    @Column(name = "create_time",insertable = false)
+    @Column(name = "create_time")
     public Date getCreateTime() {
         return createTime;
     }
