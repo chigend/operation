@@ -136,7 +136,7 @@ public class AdController {
 //            fileHelper.deleteFile(CosConstant.BUCKET,ad.getPicUrl());
            String picUrl = fileHelper.uploadFile(BUCKET, DIRECTORY_PREFIX_AD_PATH,form.getImage());
            if (picUrl != null){
-               fileHelper.deleteFile(BUCKET, ad.getPicUrl());
+//               fileHelper.deleteFile(BUCKET, ad.getPicUrl());
                ad.setPicUrl(picUrl);
            }
         }

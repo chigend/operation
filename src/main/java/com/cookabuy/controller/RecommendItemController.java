@@ -126,6 +126,7 @@ public class RecommendItemController {
         boolean activate = recommendItemRepository.publishActivate(pageName,location,getPublishType(pageName,location));
         if (HOT.equals(pageName) && !TOP_BLOCK.equals(location)) {
             //如果是爆款专区男装或者女装模块
+            activate |= adRepository.publishActivate(getPublishType(HOT_AD, location));
         }
         result.addData("activate", activate);
 
@@ -188,7 +189,7 @@ public class RecommendItemController {
 
         //男装爆款和女装爆款有广告图可以发布 今日爆款无广告图
         if (HOT.equals(pageName) && !TOP_BLOCK.equals(location)) {
-            adService.publishAds(HOT, location, HOT_AD);
+            adService.publishAds(HOT, location, getPublishType(HOT_AD, location));
         }
 
         return new Result();
