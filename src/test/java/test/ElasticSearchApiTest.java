@@ -4,6 +4,7 @@ import com.cookabuy.thirdParty.elasticsearch.ItemQuery;
 import org.elasticsearch.action.get.GetResponse;
 import org.elasticsearch.action.search.SearchRequestBuilder;
 import org.elasticsearch.action.update.UpdateRequest;
+import org.elasticsearch.client.Client;
 import org.elasticsearch.client.transport.TransportClient;
 import org.elasticsearch.common.settings.Settings;
 import org.elasticsearch.common.transport.InetSocketTransportAddress;
@@ -26,10 +27,13 @@ import static org.elasticsearch.index.query.QueryBuilders.*;
 
 public class ElasticSearchApiTest {
     TransportClient client;
+    Client client2 ;
     @Before
     public void init() throws Exception{
+
         client = new PreBuiltTransportClient(Settings.EMPTY)
-                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("localhost"), 9300));
+                .addTransportAddress(new InetSocketTransportAddress(InetAddress.getByName("119.29.205.164"), 9300));
+
     }
 
     @Test
